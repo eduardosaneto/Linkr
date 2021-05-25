@@ -1,5 +1,6 @@
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
+import GlobalStyle from '../styles/GlobalStyle';
 import Hashtag from './Hashtag';
 import LogIn from './LogIn';
 import Mylikes from './MyLikes';
@@ -17,6 +18,7 @@ export default function App(){
 
     return (
         <UserContext.Provider value={{user, setUser}}>
+            <GlobalStyle />
             <BrowserRouter>
                 <Switch>
                     <Route path="/" exact>
