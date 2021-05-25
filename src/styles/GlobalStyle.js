@@ -1,4 +1,4 @@
-import { createGlobalStyles } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle `
     body {
@@ -6,3 +6,5 @@ const GlobalStyle = createGlobalStyle `
         font-family: 'Leto', sans-serif;
     }
 `;
+
+export default GlobalStyle;

@@ -1,5 +1,9 @@
+import {Container, Trending, Posts} from '../styledComponents/Content'
+
 export default function Timeline(){
     return(
-        <div>Timeline</div>
+        <Container>
+        <div>Timeline</div>    
+        </Container>
     )
 }

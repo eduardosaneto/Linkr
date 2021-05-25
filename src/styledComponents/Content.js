@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const Container = styled.div`
+export const Container = styled.div`
     margin: 0 auto;
     margin-top: 125px;
     width: 937px;
@@ -18,7 +18,7 @@ const Container = styled.div`
     }
 `;
 
-const Trending = styled.div`
+export const Trending = styled.div`
     background: #171717;
     width: 32.1%;
     height: 406px;
@@ -42,7 +42,7 @@ const Trending = styled.div`
     }
 `;
 
-const Posts = styled.div`
+export const Posts = styled.div`
     width: 65.2%;
 
     ul {
@@ -58,7 +58,4 @@ const Posts = styled.div`
     border-radius: 16px;
     margin-bottom: 16px;
     }
-`
-export default Container;
-export default Trending;
-export default Posts;
+`;
