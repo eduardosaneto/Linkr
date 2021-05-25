@@ -5,7 +5,7 @@ import Hashtag from './Hashtag';
 import LogIn from './LogIn';
 import Mylikes from './MyLikes';
 import MyPosts from './MyPosts';
-import SingUp from './SingUp';
+import SignUp from './SignUp';
 import Timeline from './Timeline';
 import User from './User';
 
@@ -24,8 +24,8 @@ export default function App(){
                     <Route path="/" exact>
                         <LogIn />
                     </Route>
-                    <Route path="/sing-up" exact>
-                        <SingUp />
+                    <Route path="/sign-up" exact>
+                        <SignUp />
                     </Route>
                     <Route path="/timeline" exact>
                         <Timeline />
