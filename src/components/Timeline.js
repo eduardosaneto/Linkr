@@ -7,18 +7,19 @@ import Post from './Post';
 import UserContext from "../contexts/UserContext";
 
 export default function Timeline(){
-    {/*const {user} = useContext(UserContext)*/};
+    const {user} = useContext(UserContext);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {loadingPosts()},[])
-    
+    console.log(user)
     function loadingPosts() {
         setIsLoading(true)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer 732249a2-af53-4731-bd8f-4a7c79b3015a`}};        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
+        const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
 
         request.then( response => {
             const data = response.data.posts
