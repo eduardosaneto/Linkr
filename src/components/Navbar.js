@@ -42,7 +42,7 @@ export default function Navbar() {
                 </div>
             </Header>
             {showMenu === 1 && 
-                <NavMenu>
+                <NavMenu ref={node}>
                     <Link to='/my-posts'>
                         <h1>My posts</h1>
                     </Link>
