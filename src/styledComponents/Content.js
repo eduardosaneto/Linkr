@@ -40,12 +40,12 @@ export const Trending = styled.div`
     ul {
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: flex-start;
         height: 70%;
         color: #FFF;
         font-weight: 700;
         font-size: 19px;
-        padding-left: 16px;
+        padding: 22px 0 30px 16px;
     }
 `;
 

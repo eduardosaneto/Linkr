@@ -46,7 +46,10 @@ export default function Timeline(){
                 </Posts>
                 <Trending >
                     <h1>trending</h1>
-                    <ul> <li>#javascript</li> </ul>
+                    <ul> 
+                        <li>#javascript</li> 
+                        <li>#javascript</li>
+                    </ul>
                 </Trending>
             </div>
         </Container>
