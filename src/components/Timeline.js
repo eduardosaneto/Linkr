@@ -14,7 +14,7 @@ export default function Timeline(){
     const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {loadingPosts()},[])
-    console.log(user)
+
     function loadingPosts() {
         setIsLoading(true)
         setIsError(false)
@@ -23,9 +23,9 @@ export default function Timeline(){
 
         request.then( response => {
             const data = response.data.posts
-            setPosts([...data])
+            setPosts([...response.data.posts])
             setIsLoading(false)
-            if(posts.length === data.length) {
+            if(posts === data) {
                 setIsEmpty(true)
             } else {
                 setIsEmpty(false)
@@ -41,7 +41,7 @@ export default function Timeline(){
                 <Posts>
                     { isLoading ? <Load>Loading</Load> : ""}
                     { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                    { isEmpty ? <Load>Nenhum post encontrado</Load> : ""}
+                    { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
                     {/*Caixa para publicar post*/}
                     {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
                 </Posts>

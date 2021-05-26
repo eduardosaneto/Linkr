@@ -8,7 +8,7 @@ export default function Post({post, user}) {
     return (
         <PostContainer>
             <Profile>
-                <Link to={`user/${user.id}`}><img src={user.avatar}/></Link>
+                <Link to={`user/${user.id}`}><img src={user.avatar} alt={`${user.username}' profile`}/></Link>
                 <div>
                     <HeartIcon/>
                     <p>13 likes</p>
@@ -30,7 +30,7 @@ export default function Post({post, user}) {
                         <p>{post.linkDescription}</p>
                         <div>{post.link}</div>
                     </Text>
-                    <img src={post.linkImage} />
+                    <img src={post.linkImage} alt="website" />
                 </LinkSnippet>
             </Content>
         </PostContainer>
