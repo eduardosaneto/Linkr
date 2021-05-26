@@ -1,26 +1,26 @@
 import styled from 'styled-components'
 import { BsHeart } from 'react-icons/bs'
 
-export default function Post() {
+export default function Post({post}) {
     return (
         <PostContainer>
             <Profile>
-                <img src="https://yt3.ggpht.com/ytc/AAUvwniFYPUGdxQlEddGuOuxuP9Va39N-vU616xjBjle=s900-c-k-c0x00ffffff-no-rj"/>
+                <img src={post.user.avatar}/>
                 <div>
                     <HearIcon/>
                     <p>13 likes</p>
                 </div>
             </Profile>
             <Content>
-                <h2>Juvenal Juvêncio</h2>
-                <p>Muito maneiro esse tutorial de Material UI com React, deem uma olhada! #react #material</p>
-                <LinkNews>
+                <h2>{post.user.username}</h2>
+                <p>{post.text}</p>
+                <LinkNews href={post.link}>
                     <div>
-                        <h2>Como aplicar o Material UI em um projeto React</h2>
-                        <p>Hey! I have moved this tutorial to my personal blog. Same content, new location. Sorry about making you click through to another page.</p>
-                        <div>https://medium.com/@pshrmn/a-simple-react-router</div>
+                        <h2>{post.linkTitle}</h2>
+                        <p>{post.linkDescription}</p>
+                        <div>{post.link}</div>
                     </div>
-                    <img src="https://yt3.ggpht.com/ytc/AAUvwniFYPUGdxQlEddGuOuxuP9Va39N-vU616xjBjle=s900-c-k-c0x00ffffff-no-rj" />
+                    <img src={post.linkImage} />
                 </LinkNews>
             </Content>
         </PostContainer>
@@ -81,7 +81,7 @@ const Content = styled.div`
     }
 `
 
-const LinkNews = styled.div`
+const LinkNews = styled.a`
     border-radius: 11px;
     border: 1px solid #4D4D4D;
     height: 155px;

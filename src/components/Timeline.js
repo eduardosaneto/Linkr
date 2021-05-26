@@ -10,12 +10,11 @@ export default function Timeline(){
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {loadingPosts()},[])
-
+    
     function loadingPosts(){
-        {/*const config = { headers:{ Authorization: `Bearer ${user.token}`}}*/}
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', {})
+        const config = { headers:{ Authorization: `Bearer 732249a2-af53-4731-bd8f-4a7c79b3015a`}};        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
 
-        request.then( response => setPosts(response.data))
+        request.then( response => {setPosts(response.data.posts); console.log(response.data.posts)})
         request.catch( () => alert("Houve uma falha ao obter os posts, por favor atualize a página"))
     }
 
@@ -25,10 +24,9 @@ export default function Timeline(){
             <h1>timeline</h1>
             <div>
                 <Posts>
-                    {/*posts.map( post => <Post post={post}/>)*/}
-                    <Post/>
+                    {posts.map( post => <Post key={post.id} post={post}/>)}
                 </Posts>
-                <Trending>
+                <Trending >
                     <h1>trending</h1>
                     <ul><li># javascript</li></ul>
                 </Trending>
