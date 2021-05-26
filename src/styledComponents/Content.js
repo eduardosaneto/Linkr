@@ -11,7 +11,7 @@ export const Container = styled.div`
         color: #FFF;
     }
 
-    div {
+    > div {
         display: flex;
         justify-content: space-between;
         margin-top: 43px;
