@@ -113,7 +113,8 @@ const LinkNews = styled.a`
     }
 
     img {
-        border-radius: 0%;
+        border-top-right-radius: 11px;
+        border-bottom-right-radius: 11px;
         height: 100%;
         width: 154px;
     }
