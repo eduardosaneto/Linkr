@@ -21,11 +21,9 @@ export default function SignUp() {
             info
         );
         request.then((e) => {
-            console.log(e.data);
             history.push("/");
         });
         request.catch((e) => {
-            console.log(e.response.status);
             if (e.response.status === 403) {
                 alert("O email inserido já está cadastrado!");
                 return;

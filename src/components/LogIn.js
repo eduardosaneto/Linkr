@@ -24,12 +24,10 @@ export default function LogIn(){
             info
         );
         request.then((e) => {
-            console.log(e.data);
             setUser(e.data);
             history.push("/timeline");
         });
         request.catch((e) => {
-            console.log(e.response.status);
             if (e.response.status === 403) {
                 alert("Usuário de email/senha incorretos");
                 return;
