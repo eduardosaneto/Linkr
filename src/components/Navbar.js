@@ -9,19 +9,19 @@ import Download from '../image-test/Download.jpg';
 export default function Navbar() {
 
     // const [search, setSearch] = useState("");
-    const [showMenu, setShowMenu] = useState(false);
+    const [showMenu, setShowMenu] = useState(0);
     const { user } = useContext(UserContext);
     const node = useRef();
 
     function toggleMenu() {
-        !showMenu ? setShowMenu(true) : setShowMenu(false);
+        !showMenu ? setShowMenu(1) : setShowMenu(0);
     }
 
     const handleClick = e => {
         if (node.current.contains(e.target)) {
           return;
         }
-        setShowMenu(false);
+        setShowMenu(0);
       };
     
       useEffect(() => {
@@ -49,10 +49,10 @@ export default function Navbar() {
                 </form> */}
                 <div ref={node}>
                     <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
-                    <div></div>
+                    <div onClick={toggleMenu}></div>
                 </div>
             </Header>
-            {showMenu && 
+            {showMenu === 1 && 
                 <NavMenu>
                     <Link to='/my-posts'>
                         <h1>My posts</h1>
