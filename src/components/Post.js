@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
 import { Link } from 'react-router-dom'
-import { BsHeart } from 'react-icons/bs'
+import { BsHeart} from 'react-icons/bs'
 
 export default function Post({post, user}) {
 
@@ -17,19 +17,21 @@ export default function Post({post, user}) {
             <Content>
                 <h2>{user.username}</h2>
                 <p>
-                {<ReactHashtag renderHashtag={(hashtagValue) => (
-                   <Link to={`hashtag/${hashtagValue}`.replace("#","")}><Hashtag >{hashtagValue}</Hashtag></Link>)}>
+                <ReactHashtag renderHashtag={(hashtagValue) => (
+                    <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                       <Hashtag>{hashtagValue}</Hashtag>
+                    </Link>)}>
                     {post.text} 
-                </ReactHashtag>}
+                </ReactHashtag>
                 </p>
-                <LinkNews href={post.link} target={"_blank"}>
-                    <div>
+                <LinkSnippet href={post.link} target={"_blank"}>
+                    <Text>
                         <h2>{post.linkTitle}</h2>
                         <p>{post.linkDescription}</p>
                         <div>{post.link}</div>
-                    </div>
+                    </Text>
                     <img src={post.linkImage} />
-                </LinkNews>
+                </LinkSnippet>
             </Content>
         </PostContainer>
     )
@@ -52,6 +54,7 @@ const Profile = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 104px;
+    
     img {
         border-radius: 50%;
         width: 50px;
@@ -75,6 +78,7 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    
     >h2{
         color: #FFF;
         font-size: 19px;
@@ -84,31 +88,13 @@ const Content = styled.div`
         color: #B7B7B7;
     }
 `;
-const LinkNews = styled.a`
+const LinkSnippet = styled.a`
     border-radius: 11px;
     border: 1px solid #4D4D4D;
     height: 155px;
     display: flex;
     justify-content: space-between;
-}
-    > div{
-        margin: 23px 27px 23px 19px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        h2{
-            font-size: 16px;
-            color: #CECECE;
-        }
-        p{
-            color: #9B9595;
-            font-size: 11px;
-        }
-        div {
-            color: #CECECE;
-            font-size: 11px;
-        }
-    }
+
     img {
         border-top-right-radius: 11px;
         border-bottom-right-radius: 11px;
@@ -116,11 +102,29 @@ const LinkNews = styled.a`
         width: 154px;
     }
 `;
-
+const Text = styled.div`
+    margin: 23px 27px 23px 19px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    h2{
+        font-size: 16px;
+        color: #CECECE;
+    }
+    p{
+        color: #9B9595;
+        font-size: 11px;
+        line-height: 15px;
+    }
+    div {
+        color: #CECECE;
+        font-size: 11px;
+    }
+`;
 const HeartIcon = styled(BsHeart)`
     color: #FFF;
 `;
-
 const Hashtag = styled.p`
     color: #FFF;
     font-weight: 700;
