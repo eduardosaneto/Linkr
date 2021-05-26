@@ -1,5 +1,10 @@
+import Navbar from './Navbar';
+
 export default function MyPosts(){
     return(
-        <div>MyPosts</div>
+        <>
+            <Navbar />
+            <div>MyPosts</div>
+        </>
     )
 }

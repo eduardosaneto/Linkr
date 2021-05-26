@@ -1,64 +1,80 @@
-import { useState, useContext, useRef, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
-import UserContext from '../contexts/UserContext';
-import Download from '../image-test/Download.jpg';
+import Usercontext from '../contexts/UserContext';
+import ClickAwayListener from 'react-click-away-listener';
 
 export default function Navbar() {
 
+    const { user } = useContext(Usercontext);
     const [showMenu, setShowMenu] = useState(0);
-    const { user } = useContext(UserContext);
-    const node = useRef();
 
     function toggleMenu() {
-        !showMenu ? setShowMenu(1) : setShowMenu(0);
+        showMenu === 0 ? setShowMenu(1) : setShowMenu(0);
     }
-
-    const handleClick = e => {
-        if (node.current.contains(e.target)) {
-          return;
-        }
-        setShowMenu(0);
-      };
     
-      useEffect(() => {
-        document.addEventListener("mousedown", handleClick);
-    
-        return () => {
-          document.removeEventListener("mousedown", handleClick);
-        };
-      }, []);
-
     return (
         <>
-            <Header direction={showMenu} avatar={Download}>
+            <Header >
                 <Link to='/timeline'>
                     <h1>linkr</h1>
                 </Link>
-                <div ref={node}>
-                    <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
-                    <div onClick={toggleMenu}></div>
-                </div>
+                <div></div>
             </Header>
-            {showMenu === 1 && 
-                <NavMenu ref={node}>
-                    <Link to='/my-posts'>
-                        <h1>My posts</h1>
-                    </Link>
-                    <Link to='/my-posts'>
-                        <h2>My likes</h2>
-                    </Link>
-                    <Link to='/'>
-                        <h3>Logout</h3>
-                    </Link>
+            <ClickAwayListener onClickAway={() => setShowMenu(0)}>
+                <NavMenu >
+                    <Menu direction={showMenu} avatar={user.user.avatar}>
+                        <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
+                        <div onClick={toggleMenu}></div>
+                    </Menu>
+                    {showMenu === 1 && 
+                    <Links >
+                        <Link to='/my-posts'>
+                            <h2>My posts</h2>
+                        </Link>
+                        <Link to='/my-likes'>
+                            <h2>My likes</h2>
+                        </Link>
+                        <Link to='/'>
+                            <h3>Logout</h3>
+                        </Link>
+                    </Links>
+                    }
                 </NavMenu>
-            }
+            </ClickAwayListener>
         </>
     )
 }
 
-const NavMenu = styled.div`
+const Menu = styled.div`
+    width: 100%;
+    height: 53px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 18px;
+    padding-right: 26px;
+
+    .arrow {
+        font-size: 30px;
+        color: #fff;
+        cursor: pointer;
+        transform: ${props => props.direction ? "rotateZ(180deg)" : "none"};
+        transition: 0.2s;  	
+    }
+
+    > div {
+        width: 53px;
+        height: 53px;
+        margin-left: 12px;
+        border-radius: 26.5px;
+        background-image: url("${props => props.avatar}");
+        background-size: cover;
+    }
+`;
+
+const Links = styled.div`
     width: 132px;
     height: 109px;
     padding: 17px 22px;
@@ -81,6 +97,18 @@ const NavMenu = styled.div`
         letter-spacing: 2px;
         color: #fff;
     }
+`;
+
+const NavMenu = styled.div`
+    width: 132px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 10;
 `;
 
 const Header = styled.div`
@@ -107,26 +135,6 @@ const Header = styled.div`
     > div {
         width: 110px;
         height: 53px;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-
-    .arrow {
-        font-size: 30px;
-        color: #fff;
-        cursor: pointer;
-        transform: ${props => props.direction ? `rotateZ(180deg)` : "none"};
-        transition: 0.2s;  	
-    }
-
-    > div div {
-        width: 53px;
-        height: 53px;
-        margin-left: 12px;
-        border-radius: 26.5px;
-        background-image: url("${props => props.avatar}");
-        background-size: cover;
     }
 `;
 
