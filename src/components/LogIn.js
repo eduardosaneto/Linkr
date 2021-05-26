@@ -20,7 +20,7 @@ export default function LogIn(){
         const info = { email, password }
         
         const request = axios.post(
-            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-up",
+            "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/sign-in",
             info
         );
         request.then((e) => {
@@ -67,7 +67,7 @@ export default function LogIn(){
                                 disabled={disabled}
                             />
                             
-                            <button type="submit" disabled={disabled}>Sign Up</button>
+                            <button type="submit" disabled={disabled}>Log In</button>
                             <p><Link to="/sign-up">First time? Create an account!</Link></p>
                         </form>
                     </Inputs>
