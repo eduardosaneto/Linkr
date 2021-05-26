@@ -1,8 +1,6 @@
 import axios from 'axios'
-import styled from 'styled-components'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import ReactHashtag from 'react-hashtag'
 import Usercontext from '../contexts/UserContext'
 
 export default function TrendingBar() {
@@ -27,9 +25,3 @@ export default function TrendingBar() {
         </>
     )
 }
-
-const Hashtag = styled.span`
-    color: #FFF;
-    font-size: 19px;
-    font-weight: 700;
-`

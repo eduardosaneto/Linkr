@@ -18,7 +18,7 @@ export const Container = styled.div`
     }
 `;
 
-export const Trending = styled.div`
+export const Trending = styled.aside`
     display: flex;
     flex-direction: column;
     background: #171717;
