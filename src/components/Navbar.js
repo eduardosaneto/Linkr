@@ -2,13 +2,11 @@ import { useState, useContext, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
-// import { IoIosSearch } from "react-icons/io";
 import UserContext from '../contexts/UserContext';
 import Download from '../image-test/Download.jpg';
 
 export default function Navbar() {
 
-    // const [search, setSearch] = useState("");
     const [showMenu, setShowMenu] = useState(0);
     const { user } = useContext(UserContext);
     const node = useRef();
@@ -38,15 +36,6 @@ export default function Navbar() {
                 <Link to='/timeline'>
                     <h1>linkr</h1>
                 </Link>
-                {/* <form>
-                    <input 
-                        type="search" placeholder="Search for people and friends"
-                        value={search} onChange={(e) => setSearch(e.target.value)}
-                    />
-                    <button type="submit">
-                        <IoIosSearch className="search"/>  
-                    </button>            
-                </form> */}
                 <div ref={node}>
                     <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
                     <div onClick={toggleMenu}></div>
@@ -113,48 +102,6 @@ const Header = styled.div`
         letter-spacing: 2px;
         line-height: 54px;
         color: #fff;
-    }
-
-    form {
-        position: relative;
-    }
-    input {
-        width: 563px;
-        height: 45px;
-        padding: 12px 0px 10px 17px;
-        border: none;
-        border-radius: 8px;
-        background: #FFFFFF;
-        font-size: 19px;
-        line-height: 23px;
-        color: #666;
-        cursor: pointer;
-    }
-
-    button {
-        height: 43px;
-        border: none;
-        border-radius: 8px;
-        padding: 10px;
-        position: absolute;
-        top: 1px;
-        right: 0;
-        background: #fff;
-    }
-
-    .search {
-        font-size: 26px;
-        color: #C6C6C6
-    }
-
-    input::placeholder {
-        color: #C6C6C6;
-    }
-
-    input:focus, button:focus {
-        border: 0px solid #333;
-        box-shadow: 0 0 0 0;
-        outline: 0;
     }
 
     > div {
