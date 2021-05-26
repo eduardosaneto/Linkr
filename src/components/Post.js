@@ -1,11 +1,12 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { BsHeart } from 'react-icons/bs'
 
 export default function Post({post}) {
     return (
         <PostContainer>
             <Profile>
-                <img src={post.user.avatar}/>
+                <Link to={`user/${post.user.id}`}><img src={post.user.avatar}/></Link>
                 <div>
                     <HearIcon/>
                     <p>13 likes</p>
