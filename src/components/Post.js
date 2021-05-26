@@ -19,7 +19,7 @@ export default function Post({post, user}) {
                 <p>
                 {<ReactHashtag renderHashtag={(hashtagValue) => (
                    <Link to={`hashtag/${hashtagValue}`.replace("#","")}><Hashtag >{hashtagValue}</Hashtag></Link>)}>
-                    {post.text + "#javascript"} 
+                    {post.text} 
                 </ReactHashtag>}
                 </p>
                 <LinkNews href={post.link} target={"_blank"}>
