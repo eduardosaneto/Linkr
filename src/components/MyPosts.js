@@ -1,14 +1,12 @@
 import styled from "styled-components";
-//import UserContext from "../contexts/UserContext";
 import { useContext, useState } from "react";
 import axios from "axios";
+
 export default function MyPosts() {
-  //const { user } = useContext(UserContext);
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const token = '732249a2-af53-4731-bd8f-4a7c79b3015a';
-  console.log(text, link, isDisabled, link.length);
 
   function Submit(event) {
     event.preventDefault();
@@ -38,15 +36,10 @@ export default function MyPosts() {
          setIsDisabled(false);
          setLink("");
          setText("");
-         //atualizar lista de posts da timeline
-         console.log(response.data, 'sucess');
-        // Em caso de sucesso no envio, os campos e botões devem  ser re-habilitados,
-       
       });
 
       request.catch(() => {
         alert("Houve um erro ao publicar seu link");
-        console.log('error', isDisabled);
         setIsDisabled(false);
       });
     }
@@ -115,7 +108,7 @@ const Post = styled.div`
   color: #707070;
 
   h1 {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
   }
 `;
 
