@@ -125,7 +125,7 @@ const Text = styled.div`
 const HeartIcon = styled(BsHeart)`
     color: #FFF;
 `;
-const Hashtag = styled.p`
+const Hashtag = styled.span`
     color: #FFF;
     font-weight: 700;
 `;
