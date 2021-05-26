@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 const GlobalStyle = createGlobalStyle `
     body {
         background: #333;
-        font-family: 'Leto', sans-serif;
+        font-family: 'Lato', sans-serif;
     }
 `;
 

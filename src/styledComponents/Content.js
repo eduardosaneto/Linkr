@@ -11,7 +11,7 @@ export const Container = styled.div`
         color: #FFF;
     }
 
-    div {
+    > div {
         display: flex;
         justify-content: space-between;
         margin-top: 43px;
@@ -19,21 +19,28 @@ export const Container = styled.div`
 `;
 
 export const Trending = styled.div`
+    display: flex;
+    flex-direction: column;
     background: #171717;
     width: 32.1%;
     height: 406px;
     border-radius: 16px;
 
     h1 {
-        font-size: 16px;
-        color: #CECECE;
+        display: flex;
+        align-items: center;
+        height: 65px;
+        padding-left: 16px;
+        font-family: 'Oswald', sans-serif;
+        font-size: 27px;
+        color: #FFF;
+        border-bottom: 1px solid #4D4D4D;
     };
 
     ul {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        padding-top: 22px;
         height: 70%;
         color: #FFF;
         font-weight: 700;
