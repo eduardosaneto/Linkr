@@ -46,6 +46,10 @@ export const Trending = styled.div`
         font-weight: 700;
         font-size: 19px;
         padding: 22px 0 30px 16px;
+    
+        li {
+            margin-bottom: 10px;
+        }
     }
 `;
 
