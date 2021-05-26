@@ -32,8 +32,9 @@ export default function Timeline(){
                     {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
                 </Posts>
                 <Trending >
+                    
                     <h1>trending</h1>
-                    <ul><li># javascript</li></ul>
+                    <ul> <li>#javascript</li> </ul>
                 </Trending>
             </div>
         </Container>
