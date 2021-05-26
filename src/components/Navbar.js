@@ -1,9 +1,7 @@
-import { useState, useContext } from 'react';
-import { Link, useHistory, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { useState, useContext, useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
-import { IoIosArrowUp } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";
 import UserContext from '../contexts/UserContext';
 
@@ -12,10 +10,26 @@ export default function Navbar() {
     const [search, setSearch] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const { user } = useContext(UserContext);
+    const node = useRef();
 
-    function openMenu() {
+    function toggleMenu() {
         !showMenu ? setShowMenu(true) : setShowMenu(false);
     }
+
+    const handleClick = e => {
+        if (node.current.contains(e.target)) {
+          return;
+        }
+        setShowMenu(false);
+      };
+    
+      useEffect(() => {
+        document.addEventListener("mousedown", handleClick);
+    
+        return () => {
+          document.removeEventListener("mousedown", handleClick);
+        };
+      }, []);
 
     return (
         <>
@@ -30,28 +44,24 @@ export default function Navbar() {
                         <IoIosSearch className="search"/>  
                     </button>            
                 </form>
-                <div>
-                    <IoIosArrowDown className="arrow" onClick={openMenu}/>
-            {/* {!showMenu ? 
-                    <IoIosArrowDown className="arrow" onClick={openMenu}/>
-                    : <IoIosArrowUp className="arrow" onClick={openMenu}/>} */}
-                    {/* <img src={user.user.avatar} alt="papai" /> */}
-                    <img src="" alt="papai" onClick={openMenu}/> 
+                <div ref={node}>
+                    <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
+                    <img src="" alt="papai" onClick={e => toggleMenu(!showMenu)}/> 
                 </div>
             </Header>
-            {showMenu ? 
+            {showMenu && 
                 <NavMenu>
                     <Link to='/my-posts'>
-                        <h1>My posts</h1>
+                        <h1 >My posts</h1>
                     </Link>
                     <Link to='/my-posts'>
-                        <h2>My likes</h2>
+                        <h2 >My likes</h2>
                     </Link>
                     <Link to='/'>
-                        <h3>Logout</h3>
+                        <h3 >Logout</h3>
                     </Link>
                 </NavMenu>
-            : <></>}
+            }
         </>
     )
 }
@@ -89,7 +99,6 @@ const Header = styled.div`
     justify-content: space-between;
     align-items: center;
     background: #151515;
-    /* background: ${props => props.direction ? "blue" : "#151515"}; */
     position: fixed;
     top: 0;
     left: 0;
@@ -120,12 +129,12 @@ const Header = styled.div`
     }
 
     button {
-        height: 45px;
+        height: 43px;
         border: none;
         border-radius: 8px;
         padding: 10px;
         position: absolute;
-        top: 0;
+        top: 1px;
         right: 0;
         background: #fff;
     }
@@ -140,7 +149,7 @@ const Header = styled.div`
     }
 
     input:focus, button:focus {
-        border: 1px solid #333;
+        border: 0px solid #333;
         box-shadow: 0 0 0 0;
         outline: 0;
     }
