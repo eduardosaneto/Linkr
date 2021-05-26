@@ -2,12 +2,13 @@ import { useState, useContext, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
-import { IoIosSearch } from "react-icons/io";
+// import { IoIosSearch } from "react-icons/io";
 import UserContext from '../contexts/UserContext';
+import Download from '../image-test/Download.jpg';
 
 export default function Navbar() {
 
-    const [search, setSearch] = useState("");
+    // const [search, setSearch] = useState("");
     const [showMenu, setShowMenu] = useState(false);
     const { user } = useContext(UserContext);
     const node = useRef();
@@ -33,9 +34,11 @@ export default function Navbar() {
 
     return (
         <>
-            <Header direction={showMenu}>
-                <h1>linkr</h1>
-                <form>
+            <Header direction={showMenu} avatar={Download}>
+                <Link to='/timeline'>
+                    <h1>linkr</h1>
+                </Link>
+                {/* <form>
                     <input 
                         type="search" placeholder="Search for people and friends"
                         value={search} onChange={(e) => setSearch(e.target.value)}
@@ -43,22 +46,22 @@ export default function Navbar() {
                     <button type="submit">
                         <IoIosSearch className="search"/>  
                     </button>            
-                </form>
+                </form> */}
                 <div ref={node}>
                     <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
-                    <img src="" alt="papai" onClick={e => toggleMenu(!showMenu)}/> 
+                    <div></div>
                 </div>
             </Header>
             {showMenu && 
                 <NavMenu>
                     <Link to='/my-posts'>
-                        <h1 >My posts</h1>
+                        <h1>My posts</h1>
                     </Link>
                     <Link to='/my-posts'>
-                        <h2 >My likes</h2>
+                        <h2>My likes</h2>
                     </Link>
                     <Link to='/'>
-                        <h3 >Logout</h3>
+                        <h3>Logout</h3>
                     </Link>
                 </NavMenu>
             }
@@ -154,7 +157,7 @@ const Header = styled.div`
         outline: 0;
     }
 
-    div {
+    > div {
         width: 110px;
         height: 53px;
         display: flex;
@@ -170,13 +173,13 @@ const Header = styled.div`
         transition: 0.2s;  	
     }
 
-    img {
+    > div div {
         width: 53px;
         height: 53px;
         margin-left: 12px;
         border-radius: 26.5px;
-        background: red;
-        cursor: pointer;
+        background-image: url("${props => props.avatar}");
+        background-size: cover;
     }
 `;
 
