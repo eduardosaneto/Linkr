@@ -29,7 +29,7 @@ export default function Timeline(){
                 <Posts>
                     { isLoading ? <Load>Loading</Load> : ""}
                     { isError ? <Load>Houve uma falha ao obter os posts, por favor atualize a página</Load> : ""}
-                    {posts.map( post => <Post key={post.id} post={post}/>)}
+                    {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
                 </Posts>
                 <Trending >
                     <h1>trending</h1>

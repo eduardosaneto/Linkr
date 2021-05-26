@@ -2,20 +2,20 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import { BsHeart } from 'react-icons/bs'
 
-export default function Post({post}) {
+export default function Post({post, user}) {
     return (
         <PostContainer>
             <Profile>
-                <Link to={`user/${post.user.id}`}><img src={post.user.avatar}/></Link>
+                <Link to={`user/${user.id}`}><img src={user.avatar}/></Link>
                 <div>
                     <HearIcon/>
                     <p>13 likes</p>
                 </div>
             </Profile>
             <Content>
-                <h2>{post.user.username}</h2>
+                <h2>{user.username}</h2>
                 <p>{post.text}</p>
-                <LinkNews href={post.link}>
+                <LinkNews href={post.link} target={"_blank"}>
                     <div>
                         <h2>{post.linkTitle}</h2>
                         <p>{post.linkDescription}</p>
