@@ -57,12 +57,12 @@ export const Posts = styled.div`
     }
 
     li {
-    display: flex;
-    justify-content: space-between;
-    height: 237px;
-    padding: 18px 18px 20px 21px;
-    background: #171717;
-    border-radius: 16px;
-    margin-bottom: 16px;
+        display: flex;
+        justify-content: space-between;
+        height: 237px;
+        padding: 18px 18px 20px 21px;
+        background: #171717;
+        border-radius: 16px;
+        margin-bottom: 16px;
     }
 `;
