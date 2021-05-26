@@ -2,6 +2,7 @@ import axios from 'axios'
 import styled from 'styled-components'
 import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending } from "../styledComponents/Content";
+import Navbar from './Navbar';
 import Post from './Post';
 
 import UserContext from "../contexts/UserContext";
@@ -35,25 +36,27 @@ export default function Timeline(){
     }
 
     return(
-        <Container>
-            <h1>timeline</h1>
-            <div>
-                <Posts>
-                    { isLoading ? <Load>Loading</Load> : ""}
-                    { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                    { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                    {/*Caixa para publicar post*/}
-                    {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
-                </Posts>
-                <Trending >
-                    <h1>trending</h1>
-                    <ul> 
-                        <li>#javascript</li> 
-                        <li>#javascript</li>
-                    </ul>
-                </Trending>
-            </div>
-        </Container>
+        <>
+            <Navbar />
+            <Container>
+                <h1>timeline</h1>
+                <div>
+                    <Posts>
+                        { isLoading ? <Load>Loading</Load> : ""}
+                        { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
+                        { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
+                        {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
+                    </Posts>
+                    <Trending >
+                        <h1>trending</h1>
+                        <ul> 
+                            <li>#javascript</li> 
+                            <li>#javascript</li>
+                        </ul>
+                    </Trending>
+                </div>
+            </Container>
+        </>
     )
 }
 
