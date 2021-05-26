@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending } from "../styledComponents/Content";
 import Post from './Post';
-import TrendingBar from './TrendingBar';
 
 import UserContext from "../contexts/UserContext";
 
@@ -47,7 +46,11 @@ export default function Timeline(){
                     {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
                 </Posts>
                 <Trending >
-                    <TrendingBar/>
+                    <h1>trending</h1>
+                    <ul> 
+                        <li>#javascript</li> 
+                        <li>#javascript</li>
+                    </ul>
                 </Trending>
             </div>
         </Container>
