@@ -90,8 +90,12 @@ export const Posts = styled.div`
         margin-bottom: 16px;
     }
 
+    @media (max-width: 937px){
+        width: 611px;
+    }
+
     @media (max-width: 611px){
         width: 100%;
-        border-radius: 0;
     }
+
 `;
