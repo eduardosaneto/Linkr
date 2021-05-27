@@ -78,8 +78,9 @@ export default function Post({post, id, postUser, likes}) {
                                 if(i === 0) return name === postUser.username ? <p>Você</p> : <p> {name['user.username']}</p>
                                 if(i === 1) return <p>, {name['user.username']}</p>
                             }
-                        })}<p> e outras {likes.length - 2} pessoas</p></div>}                        // content={likes.map((name, i) => {
-                        interactive={true} placement="bottom"
+                        })}<p>{`${likes.length >= 4 ? `e outras ${likes.length - 2} pessoas` : 
+                        `${likes.length === 3 ? `e mais uma pessoa` : ""}`}`}</p></div>}                        // content={likes.map((name, i) => {
+                        interactive={true} placement="bottom" inlinePositioning={true} arrow={true}
                     >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
                     </Tooltip>
