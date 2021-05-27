@@ -2,16 +2,13 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import axios from "axios";
 import Usercontext from "../contexts/UserContext";
-
 export default function CreatePosts() {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
   const {user} = useContext(Usercontext);
   const image = user.user.avatar;
-
-  console.log(image, user);
-
+  
   function Submit(event) {
     event.preventDefault();
 
@@ -22,34 +19,28 @@ export default function CreatePosts() {
         text,
 	      link
       };
-
       const config = {
         headers: {
           Authorization: `Bearer ${user.token}`
         },
       };
-
       const request = axios.post(
         "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",
         body,
         config
       );
-
       setIsDisabled(true);
-
       request.then((response) => {
          setIsDisabled(false);
          setLink("");
          setText("");
       });
-
       request.catch(() => {
         alert("Houve um erro ao publicar seu link");
         setIsDisabled(false);
       });
     }
   }
-
   return (
     <Post>
       <Photo image={image}></Photo>
@@ -89,7 +80,6 @@ export default function CreatePosts() {
     </Post>
   );
 }
-
 const Post = styled.div`
   width: 611px;
   height: 209px;
@@ -104,7 +94,6 @@ const Post = styled.div`
   color: #707070;
   margin-bottom: 20px;
 `;
-
 const Photo = styled.div`
   width: 50px;
   height: 50px;
@@ -112,7 +101,6 @@ const Photo = styled.div`
   background-size: cover;
   margin:5px 0px 0px 5px ;
   background-image: url(${(props) => props.image});
-
   img {
     width: 50px;
     height: 50px;
@@ -124,13 +112,10 @@ const Form = styled.form`
   flex-direction: column;
   margin-left: 20px;
   margin-top: 5px;
-
   h2 {
     margin-bottom: 12px;
   }
 `;
-
-
 const Styledinput = styled.input`
   width: 502px;
   height: 30px;
@@ -146,7 +131,6 @@ const Styledinput = styled.input`
   margin-bottom: 5px;
   font-weight: 300;
 `;
-
 const StyledinputText = styled.input`
   width: 502px;
   height: 66px;
@@ -164,7 +148,6 @@ const StyledinputText = styled.input`
   display: flex;
   justify-content: start;
 `;
-
 const Button = styled.button`
   position: absolute;
   width: 112px;
@@ -180,4 +163,3 @@ const Button = styled.button`
   border: none;
   font-weight: bold;
 `;
-
