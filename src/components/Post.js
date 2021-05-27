@@ -1,17 +1,62 @@
+import { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import { Link } from 'react-router-dom'
-import { BsHeart} from 'react-icons/bs'
+import {FiHeart} from 'react-icons/fi';
+import {FaHeart} from 'react-icons/fa';
 
-export default function Post({post, user}) {
+import UserContext from "../contexts/UserContext";
+
+export default function Post({post, id, postUser, likes}) {
+
+    const [likeQuantity, setLikeQuantity] = useState(likes.length);
+    const [like, setLike] = useState(0);
+    const { user } = useContext(UserContext);
+
+    useEffect(() => likes.some(like => like.userId === user.user.id) ? setLike(1) : setLike(0),[])
+
+    function likePost(config) {
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
+        request.then(response => {
+            setLike(1);
+            setLikeQuantity(response.data.post.likes.length);
+        });
+        request.catch(error => {
+            alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
+        });
+    }
+
+    function dislikePost(config) {
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/dislike`, {}, config);
+        request.then(response => {
+            setLike(0);
+            setLikeQuantity(response.data.post.likes.length);
+        });
+        request.catch(() => {
+            alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
+        });
+    }
+
+    function toggleLike() {
+        const config = { 
+            headers:{ 
+                Authorization: `Bearer ${user.token}`
+            }
+        };
+        like === 0 ? likePost(config) : dislikePost(config); 
+    }
 
     return (
         <PostContainer>
             <Profile>
-                <Link to={`user/${user.id}`}><img src={user.avatar} alt={`${user.username}' profile`}/></Link>
+                <Link to={`user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
                 <div>
-                    <HeartIcon/>
-                    <p>13 likes</p>
+                    {like === 1 ? 
+                        <HeartIconFill onClick={toggleLike} /> :
+                        <HeartIconEmpty onClick={toggleLike}/>
+                    }
+                    <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
                 </div>
             </Profile>
             <Content>
@@ -122,9 +167,17 @@ const Text = styled.div`
         font-size: 11px;
     }
 `;
-const HeartIcon = styled(BsHeart)`
-    color: #FFF;
+
+const HeartIconEmpty = styled(FiHeart)`
+    font-size: 18px;
+    color: #fff;
 `;
+
+const HeartIconFill = styled(FaHeart)`
+    font-size: 18px;
+    color: #AC0000;
+`;
+
 const Hashtag = styled.span`
     color: #FFF;
     font-weight: 700;
