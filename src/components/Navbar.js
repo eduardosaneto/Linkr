@@ -73,6 +73,12 @@ const Menu = styled.div`
         background-size: cover;
         background-position: center;
     }
+    @media (max-width: 611px){
+        > div{
+            width: 44px;
+            height: 44px;
+        }
+    }
 `;
 
 const Links = styled.div`
@@ -97,6 +103,15 @@ const Links = styled.div`
         line-height: 20px;
         letter-spacing: 2px;
         color: #fff;
+    }
+
+    @media (max-width: 611px){
+        height: 80px;
+        padding: 10px 15px;
+        h1,h2,h3{
+            font-size: 14px;
+            line-height: 18px;
+        }
     }
 `;
 
