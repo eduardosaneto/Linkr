@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { Container, Posts, Trending } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
+import TrendingBar from "./TrendingBar";
 
 import UserContext from "../contexts/UserContext";
 
@@ -57,11 +58,7 @@ export default function Hashtag(){
                         }
                     </Posts>
                     <Trending >
-                        <h1>trending</h1>
-                        <ul> 
-                            <li>#javascript</li> 
-                            <li>#javascript</li>
-                        </ul>
+                        <TrendingBar />
                     </Trending>
                 </div>
             </Container>

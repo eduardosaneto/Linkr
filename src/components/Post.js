@@ -13,35 +13,12 @@ import UserContext from "../contexts/UserContext";
 export default function Post({post, id, postUser, likes}) {
 
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
-    // const [peopleThatLiked, setPeopleThatLiked] = useState("")
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
 
-    // useEffect(() => {
-
-    // const newDataPost = post.likes.map()
-    // setPeopleThatLiked([post.likes.map(name => {
-    //     const username = "ser.username";
-    //     console.log(name.username);
-    //     // return {
-    //     //     id: name.postId,
-    //     //     name: name.user.username
-    //     // }
-    // })]);
-    // // console.log(peopleThatLiked);
-    // }, []);
-
-    // const peoplesName = post.likes.map(data => {
-    //     const 
-        
-    //     data.user.username)};
-    // setPeopleThatLiked(peoplesName);
-
-    // console.log(peopleThatLiked);
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
-        // likes.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);
-        // likedPost.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);    
+
     },[]);
 
     function likePost(config) {
