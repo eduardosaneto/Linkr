@@ -1,5 +1,10 @@
+import Navbar from './Navbar';
+
 export default function Hashtag(){
     return(
-        <div>Hashtag</div>
+        <>
+            <Navbar />
+            <div>Hashtag</div>
+        </>
     )
 }

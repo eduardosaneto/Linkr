@@ -1,5 +1,10 @@
+import Navbar from './Navbar';
+
 export default function Mylikes(){
     return(
-        <div>Mylikes</div>
+        <>
+            <Navbar />
+            <div>Mylikes</div>
+        </>
     )
 }
