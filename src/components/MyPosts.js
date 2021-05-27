@@ -22,12 +22,10 @@ export default function MyPosts(){
 
         request.then((e)=>{
             setPosts(e.data.posts)
-            setRequestLoading(0);
-            console.log("consegui pegar os posts")
+            setRequestLoading(0);     
         })
         request.catch(()=>{
             setErro(1);
-            console.log("Deu problema na hora de pegar os posts")
         })
     
     },[])
