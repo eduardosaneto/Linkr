@@ -1,17 +1,22 @@
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { BsHeart} from 'react-icons/bs'
 
 export default function Post({post, user}) {
-    
+    const history = useHistory()
+    function refreshUserPage(){
+        history.push("/timeline")
+        history.push(`user/${user.id}`)
+    }
+
     return (
         <PostContainer>
             <Profile>
-                <Link to={`user/${user.id}`}><img src={user.avatar} alt={`${user.username}' profile`}/></Link>
+                <img src={user.avatar} alt={`${user.username}' profile`} onClick={refreshUserPage}/>
                 <div>
                     <HeartIcon/>
-                    <p>13 likes</p>
+                    <p>{post.likes.length} likes</p>
                 </div>
             </Profile>
             <Content>
@@ -59,6 +64,7 @@ const Profile = styled.div`
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        cursor: pointer;
     }
     p{
         color: #FFF;
