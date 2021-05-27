@@ -7,8 +7,6 @@ import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
 
-
-
 export default function MyPosts(){
 
     const { user } = useContext(Usercontext);
@@ -16,7 +14,7 @@ export default function MyPosts(){
     const [ requestLoading, setRequestLoading ] = useState(1);
     const [ erro, setErro ] = useState(0);
 
-    const config = { headers:{ Authorizatio: `Bearer ${user.token}`}};
+    const config = { headers:{ Authorization: `Bearer ${user.token}`}};
     useEffect(()=>{
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,config);
 
@@ -40,7 +38,12 @@ export default function MyPosts(){
                     <Posts>
                     {requestLoading
                     ?(erro?<p>Houve uma falha ao obter os posts,<br/>por favor atualize a página.</p>:"Loading...")
-                    :(posts.length?(posts.map( (post) => <Post key={post.id} post={post} user={post.user}/>)):"Nenhum post encontrado")
+                    :(posts.length ? (posts.map( (post) => 
+                        <Post 
+                            key={post.id} id={post.id} post={post} 
+                            postUser={post.user} likes={post.likes}
+                        />)) : 
+                        "Nenhum post encontrado")
                     }
                     </Posts>
                     

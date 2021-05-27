@@ -4,7 +4,7 @@ import GlobalStyle from '../styles/GlobalStyle';
 import Hashtag from './Hashtag';
 import LogIn from './LogIn';
 import Mylikes from './MyLikes';
-import MyPosts from './CreatePosts';
+import MyPosts from './MyPosts';
 import SignUp from './SignUp';
 import Timeline from './Timeline';
 import User from './User';

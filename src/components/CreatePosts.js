@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import axios from "axios";
 import Usercontext from "../contexts/UserContext";
+
 export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");

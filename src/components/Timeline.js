@@ -47,8 +47,13 @@ export default function Timeline(){
                         { isLoading ? <Load>Loading</Load> : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                    <CreatePosts loadingPosts = {loadingPosts}/>
-                    {posts.map( post => <Post key={post.id} post={post} user={post.user}/>)}
+                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        {posts.map( post => 
+                            <Post 
+                                key={post.id} id={post.id} post={post} 
+                                postUser={post.user} likes={post.likes}
+                            />)
+                        }
                     </Posts>
                     <Trending >
                         <TrendingBar />
