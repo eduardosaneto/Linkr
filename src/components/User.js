@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';
 import Post from './Post'
+import NavBar from './Navbar'
 
 export default function User(){
     const { user } = useContext(Usercontext)
@@ -40,6 +41,8 @@ export default function User(){
     }
 
     return(
+        <>
+        <NavBar/>
         <Container>
             <h1>{ userPosts.length === 0 ? "" : username()}</h1>
             <div>
@@ -47,13 +50,14 @@ export default function User(){
                     { isLoading ? <Load>Loading</Load> : ""}
                     { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                     { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                    {userPosts.map(post =><Post key={post.id} post={post} postuser={post.user} />)}
+                    {userPosts.map(post =><Post key={post.id} post={post} postUser={post.user} likes={post.likes}/>)}
                 </Posts>
                 <Trending >
                     <TrendingBar/>
                 </Trending>
             </div>
         </Container>
+        </>
     )
 }
 
