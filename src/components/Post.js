@@ -12,38 +12,25 @@ import UserContext from "../contexts/UserContext";
 
 export default function Post({post, id, postUser, likes}) {
 
-    const [peopleThatLiked, setPeopleThatLiked] = useState("")
+    // const [peopleThatLiked, setPeopleThatLiked] = useState("")
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
-        // likes.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);
-        // likedPost.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);  
     },[]);
 
-    useEffect(() => {
+    // useEffect(() => {
+    // setPeopleThatLiked(post.likes.map((name, i) => {
+    //     console.log(i);
+    //     return {
+    //         id: name.postId,
+    //         name: name["user.username"]
+    //     }
+    // }));
+    // }, []);
 
-    // const newDataPost = post.likes.map()
-    setPeopleThatLiked([post.likes.map(name => {
-        // const username = "ser.username";
-        // console.log(name.username);
-        return {
-            id: name.postId,
-            name: name.user.username
-        }
-    })]);
-    // console.log(peopleThatLiked);
-    }, []);
-
-    // const peoplesName = post.likes.map(data => {
-    //     const 
-        
-    //     data.user.username)};
-    // setPeopleThatLiked(peoplesName);
-
-    // console.log(peopleThatLiked);
 
     function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
@@ -86,7 +73,12 @@ export default function Post({post, id, postUser, likes}) {
                         <HeartIconEmpty onClick={toggleLike}/>
                     }
                     <Tooltip 
-                        content="Cristiano, Marcelo e outras 11 pessoas" 
+                        content={likes.length > 0 && <div>{likes.map((name, i) => {
+                            if(i < 2) {
+                                if(i === 0) return name === postUser.username ? <p>Você</p> : <p> {name['user.username']}</p>
+                                if(i === 1) return <p>, {name['user.username']}</p>
+                            }
+                        })}<p> e outras {likes.length - 2} pessoas</p></div>}                        // content={likes.map((name, i) => {
                         interactive={true} placement="bottom"
                     >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
@@ -107,7 +99,7 @@ export default function Post({post, id, postUser, likes}) {
                     <Text>
                         <h2>{post.linkTitle}</h2>
                         <p>{post.linkDescription}</p>
-                        <div>{post.link}</div>
+                        <div><p>{post.link}</p></div>
                     </Text>
                     <img src={post.linkImage} alt="website" />
                 </LinkSnippet>
@@ -163,7 +155,8 @@ const Content = styled.div`
         font-size: 19px;
     }
     >p{
-        font-size: 17px;
+        font-size: 15px;
+        line-height: 20px;
         color: #B7B7B7;
     }
 `;
@@ -182,10 +175,12 @@ const LinkSnippet = styled.a`
     }
 `;
 const Text = styled.div`
-    margin: 23px 27px 23px 19px;
+    padding: 23px 27px 23px 19px;
+    max-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow-x: hidden;
     
     h2{
         font-size: 16px;
@@ -197,6 +192,10 @@ const Text = styled.div`
         line-height: 15px;
     }
     div {
+        width: 100%;
+    }
+
+    div p {
         color: #CECECE;
         font-size: 11px;
     }
@@ -225,17 +224,29 @@ const Tooltip = styled(Tippy)`
     font-size: 12px !important;
     line-height: 14px !important;
     color: #505050 !important;
-    /* data-placement^=top */
+    
+    div {
+        width: 100%;
+        display: flex;
+
+    }
+
+    p{
+        color: #505050 !important;
+    }
 
     .tippy-arrow {
         color: #ebebeb !important;
     }
-
-    .tippy-box[data-placement^=bottom] {
-        
+/* 
+    .tippy-box {
+        display: flex !important;
+        background-color: blue !important;
+        width: 100% !important;
     }
 
     .tippy-content {
-        /* padding-bottom: 5px !important; */
-    }
+        display: flex !important;
+        width: 100% !important;
+    } */
 `;
