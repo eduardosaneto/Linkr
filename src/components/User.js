@@ -52,7 +52,7 @@ export default function User(){
                         {userPosts.map(post =><Post key={post.id} post={post} postUser={post.user} likes={post.likes}/>)}
                     </Posts>
                     <Trending >
-                        <TrendingBar/>
+                        <TrendingBar key={user.id}/>
                     </Trending>
                 </div>
             </Container>

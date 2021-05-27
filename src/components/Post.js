@@ -12,15 +12,40 @@ import UserContext from "../contexts/UserContext";
 
 export default function Post({post, id, postUser, likes}) {
 
+    const [peopleThatLiked, setPeopleThatLiked] = useState("")
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
+        // likes.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);
+        // likedPost.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);  
     },[]);
 
-     function likePost(config) {
+    useEffect(() => {
+
+    // const newDataPost = post.likes.map()
+    setPeopleThatLiked([post.likes.map(name => {
+        // const username = "ser.username";
+        // console.log(name.username);
+        return {
+            id: name.postId,
+            name: name.user.username
+        }
+    })]);
+    // console.log(peopleThatLiked);
+    }, []);
+
+    // const peoplesName = post.likes.map(data => {
+    //     const 
+        
+    //     data.user.username)};
+    // setPeopleThatLiked(peoplesName);
+
+    // console.log(peopleThatLiked);
+
+    function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
         request.then(response => {
             setLike(1);
@@ -54,7 +79,7 @@ export default function Post({post, id, postUser, likes}) {
     return (
         <PostContainer key={postUser.id}>
             <Profile>
-                <Link to={`/user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
+                <Link to={`user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
                 <div>
                     {like === 1 ? 
                         <HeartIconFill onClick={toggleLike} /> :
@@ -71,12 +96,12 @@ export default function Post({post, id, postUser, likes}) {
             <Content>
                 <h2>{postUser.username}</h2>
                 <p>
-                <ReactHashtag renderHashtag={(hashtagValue) => (
-                    <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
-                       <Hashtag>{hashtagValue}</Hashtag>
-                    </Link>)}>
-                    {post.text} 
-                </ReactHashtag>
+                    <ReactHashtag renderHashtag={(hashtagValue) => (
+                        <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                        <Hashtag>{hashtagValue}</Hashtag>
+                        </Link>)}>
+                        {post.text} 
+                    </ReactHashtag>
                 </p>
                 <LinkSnippet href={post.link} target={"_blank"}>
                     <Text>
@@ -148,8 +173,7 @@ const LinkSnippet = styled.a`
     height: 155px;
     display: flex;
     justify-content: space-between;
-    word-wrap: break-word;
-    overflow: hidden;
+
     img {
         border-top-right-radius: 11px;
         border-bottom-right-radius: 11px;
@@ -170,7 +194,7 @@ const Text = styled.div`
     p{
         color: #9B9595;
         font-size: 11px;
-        line-height: 12px;
+        line-height: 15px;
     }
     div {
         color: #CECECE;
