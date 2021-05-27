@@ -8,7 +8,7 @@ export default function CreatePosts() {
   const [isDisabled, setIsDisabled] = useState(false);
   const {user} = useContext(Usercontext);
   const image = user.user.avatar;
-  console.log(image, user);
+  
   function Submit(event) {
     event.preventDefault();
     if (link.length === 0) {
