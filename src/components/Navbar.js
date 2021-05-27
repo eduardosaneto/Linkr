@@ -137,5 +137,9 @@ const Header = styled.div`
         width: 110px;
         height: 53px;
     }
+
+    @media (max-width: 611px){
+        padding-left: 17px;
+    }
 `;
 

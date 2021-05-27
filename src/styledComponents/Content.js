@@ -23,6 +23,10 @@ export const Container = styled.div`
 
     @media (max-width: 611px){
         width: 100vw;
+
+        > h1{
+            margin-left: 17px;
+        }
     }
 `;
 
