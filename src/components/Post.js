@@ -54,7 +54,7 @@ export default function Post({post, id, postUser, likes}) {
     return (
         <PostContainer key={postUser.id}>
             <Profile>
-                <Link to={`user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
+                <Link to={`/user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
                 <div>
                     {like === 1 ? 
                         <HeartIconFill onClick={toggleLike} /> :
@@ -72,7 +72,7 @@ export default function Post({post, id, postUser, likes}) {
                 <h2>{postUser.username}</h2>
                 <p>
                 <ReactHashtag renderHashtag={(hashtagValue) => (
-                    <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                    <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
                        <Hashtag>{hashtagValue}</Hashtag>
                     </Link>)}>
                     {post.text} 
@@ -148,7 +148,8 @@ const LinkSnippet = styled.a`
     height: 155px;
     display: flex;
     justify-content: space-between;
-
+    word-wrap: break-word;
+    overflow: hidden;
     img {
         border-top-right-radius: 11px;
         border-bottom-right-radius: 11px;
@@ -169,7 +170,7 @@ const Text = styled.div`
     p{
         color: #9B9595;
         font-size: 11px;
-        line-height: 15px;
+        line-height: 12px;
     }
     div {
         color: #CECECE;

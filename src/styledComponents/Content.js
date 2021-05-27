@@ -16,6 +16,14 @@ export const Container = styled.div`
         justify-content: space-between;
         margin-top: 43px;
     }
+
+    @media (max-width: 937px){
+        width: 611px;
+    }
+
+    @media (max-width: 611px){
+        width: 100vw;
+    }
 `;
 
 export const Trending = styled.aside`
@@ -51,6 +59,10 @@ export const Trending = styled.aside`
             margin-bottom: 10px;
         }
     }
+
+    @media (max-width: 937px){
+        display: none;
+    }
 `;
 
 export const Posts = styled.div`
@@ -68,5 +80,9 @@ export const Posts = styled.div`
         background: #171717;
         border-radius: 16px;
         margin-bottom: 16px;
+    }
+
+    @media (max-width: 937px){
+        width: 100%;
     }
 `;
