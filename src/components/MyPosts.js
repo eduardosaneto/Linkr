@@ -7,8 +7,6 @@ import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
 
-
-
 export default function MyPosts(){
 
     const { user } = useContext(Usercontext);
@@ -16,7 +14,7 @@ export default function MyPosts(){
     const [ requestLoading, setRequestLoading ] = useState(1);
     const [ erro, setErro ] = useState(0);
 
-    const config = { headers:{ Authorizatio: `Bearer ${user.token}`}};
+    const config = { headers:{ Authorization: `Bearer ${user.token}`}};
     useEffect(()=>{
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,config);
 
