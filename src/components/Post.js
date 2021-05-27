@@ -5,15 +5,26 @@ import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
 import {FiHeart} from 'react-icons/fi';
 import {FaHeart} from 'react-icons/fa';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 import UserContext from "../contexts/UserContext";
 
 export default function Post({post, id, postUser, likes}) {
 
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
+    // const [peopleThatLiked, setPeopleThatLiked] = useState("")
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
 
+    // const peoplesName = post.likes.map(data => {
+    //     const 
+        
+    //     data.user.username)};
+    // setPeopleThatLiked(peoplesName);
+
+    // console.log(peopleThatLiked);
+    console.log(likes);
     useEffect(() => likes.some(like => like.userId === user.user.id) ? setLike(1) : setLike(0),[])
 
     function likePost(config) {
@@ -56,7 +67,9 @@ export default function Post({post, id, postUser, likes}) {
                         <HeartIconFill onClick={toggleLike} /> :
                         <HeartIconEmpty onClick={toggleLike}/>
                     }
-                    <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
+                    <Tippy content="tooltip">
+                        <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
+                    </Tippy>
                 </div>
             </Profile>
             <Content>
