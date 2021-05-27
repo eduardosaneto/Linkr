@@ -17,8 +17,6 @@ export default function Hashtag(){
     const [isEmpty, setIsEmpty] = useState(false)
     const { hashtag } = useParams();
 
-	console.log(hashtag);
-
     useEffect(() => {loadingPosts()},[])
 
     function loadingPosts() {
