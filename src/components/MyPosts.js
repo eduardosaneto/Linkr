@@ -33,7 +33,7 @@ export default function MyPosts(){
         <>
             <Navbar />
             <Container>
-                <h1>My posts</h1>
+                <h1>my posts</h1>
                 <div>
                     <Posts>
                     {requestLoading

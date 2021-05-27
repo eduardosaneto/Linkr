@@ -95,6 +95,7 @@ const Post = styled.div`
   font-size: 23px;
   color: #707070;
   margin-bottom: 20px;
+  overflow-wrap: normal;
 
   @media (max-width: 611px){
     width: 100vw;
@@ -131,7 +132,7 @@ const Form = styled.form`
   }
   @media (max-width: 611px){
     margin: 0;
-    align-items: flex-end;
+    text-align: center;
     width: 100%;
   }
 `;
@@ -192,8 +193,7 @@ const Button = styled.button`
   font-weight: bold;
   @media (max-width: 611px){
     height: 22px;
-    position: static;
-    right: 0;
- 
+    left: calc(100vw - 127px);
+    top: 130px;
   }
 `;
