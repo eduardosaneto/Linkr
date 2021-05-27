@@ -71,6 +71,7 @@ const Menu = styled.div`
         border-radius: 26.5px;
         background-image: url("${props => props.avatar}");
         background-size: cover;
+        background-position: center;
     }
 `;
 

@@ -36,7 +36,7 @@ export default function Post({post, id, postUser, likes}) {
             setLike(1);
             setLikeQuantity(response.data.post.likes.length);
         });
-        request.catch(error => {
+        request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
         });
     }
@@ -70,9 +70,12 @@ export default function Post({post, id, postUser, likes}) {
                         <HeartIconFill onClick={toggleLike} /> :
                         <HeartIconEmpty onClick={toggleLike}/>
                     }
-                    <Tippy content="tooltip">
+                    <Tooltip 
+                        content="Cristiano, Marcelo e outras 11 pessoas" 
+                        interactive={true} placement="bottom"
+                    >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
-                    </Tippy>
+                    </Tooltip>
                 </div>
             </Profile>
             <Content>
@@ -199,4 +202,25 @@ const HeartIconFill = styled(FaHeart)`
 const Hashtag = styled.span`
     color: #FFF;
     font-weight: 700;
+`;
+
+const Tooltip = styled(Tippy)`
+    background: #ebebeb !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    line-height: 14px !important;
+    color: #505050 !important;
+    /* data-placement^=top */
+
+    .tippy-arrow {
+        color: #ebebeb !important;
+    }
+
+    .tippy-box[data-placement^=bottom] {
+        
+    }
+
+    .tippy-content {
+        /* padding-bottom: 5px !important; */
+    }
 `;
