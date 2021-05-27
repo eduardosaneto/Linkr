@@ -95,6 +95,14 @@ const Post = styled.div`
   font-size: 23px;
   color: #707070;
   margin-bottom: 20px;
+
+  @media (max-width: 611px){
+    width: 100vw;
+    border-radius: 0;
+    font-size: 17px;
+    height: 164px;
+    padding-bottom: 0;
+  }
 `;
 const Photo = styled.div`
   width: 50px;
@@ -108,6 +116,10 @@ const Photo = styled.div`
     height: 50px;
     border-radius: 100px;
   }
+
+  @media (max-width: 611px){
+    display: none;
+  }
 `;
 const Form = styled.form`
   display: flex;
@@ -116,6 +128,11 @@ const Form = styled.form`
   margin-top: 5px;
   h2 {
     margin-bottom: 12px;
+  }
+  @media (max-width: 611px){
+    margin: 0;
+    align-items: flex-end;
+    width: 100%;
   }
 `;
 const Styledinput = styled.input`
@@ -132,6 +149,10 @@ const Styledinput = styled.input`
   outline-color: transparent;
   margin-bottom: 5px;
   font-weight: 300;
+  @media (max-width: 611px){
+    font-size: 13px;
+    width: 100%;
+  }
 `;
 const StyledinputText = styled.input`
   width: 502px;
@@ -149,6 +170,11 @@ const StyledinputText = styled.input`
   font-weight: 300;
   display: flex;
   justify-content: start;
+  @media (max-width: 611px){
+    font-size: 13px;
+    height: 47px;
+    width: 100%;
+  }
 `;
 const Button = styled.button`
   position: absolute;
@@ -164,4 +190,10 @@ const Button = styled.button`
   margin-bottom: 10px;
   border: none;
   font-weight: bold;
+  @media (max-width: 611px){
+    height: 22px;
+    position: static;
+    right: 0;
+ 
+  }
 `;
