@@ -24,8 +24,11 @@ export default function Post({post, id, postUser, likes}) {
     // setPeopleThatLiked(peoplesName);
 
     // console.log(peopleThatLiked);
-    console.log(likes);
-    useEffect(() => likes.some(like => like.userId === user.user.id) ? setLike(1) : setLike(0),[])
+    useEffect(() => {
+        likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
+        // likes.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);
+        // likedPost.some(like => like.id === user.user.id) ? setLike(1) : setLike(0);    
+    },[]);
 
     function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
@@ -59,7 +62,7 @@ export default function Post({post, id, postUser, likes}) {
     }
 
     return (
-        <PostContainer>
+        <PostContainer key={postUser.id}>
             <Profile>
                 <Link to={`user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
                 <div>
@@ -184,11 +187,13 @@ const Text = styled.div`
 const HeartIconEmpty = styled(FiHeart)`
     font-size: 18px;
     color: #fff;
+    cursor: pointer;
 `;
 
 const HeartIconFill = styled(FaHeart)`
     font-size: 18px;
     color: #AC0000;
+    cursor: pointer;
 `;
 
 const Hashtag = styled.span`

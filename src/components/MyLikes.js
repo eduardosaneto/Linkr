@@ -10,7 +10,7 @@ import UserContext from "../contexts/UserContext";
 export default function Mylikes(){
 
     const {user} = useContext(UserContext);
-    const [posts, setPosts] = useState([]);
+    const [likedPosts, setLikedPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
@@ -25,9 +25,9 @@ export default function Mylikes(){
 
         request.then( response => {
             const data = response.data.posts
-            setPosts([...response.data.posts])
+            setLikedPosts([...response.data.posts])
             setIsLoading(false)
-            if(posts === data) {
+            if(likedPosts === data) {
                 setIsEmpty(true)
             } else {
                 setIsEmpty(false)
@@ -45,8 +45,8 @@ export default function Mylikes(){
                     <Posts>
                         { isLoading ? <Load>Loading</Load> : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                        {posts.map( post => 
+                        { isEmpty && !isLoading ? <Load>Ainda não há posts curtidos por você</Load> : ""}
+                        {likedPosts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
