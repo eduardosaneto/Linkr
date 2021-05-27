@@ -18,10 +18,9 @@ export default function Post({post, id, postUser, likes}) {
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
-
     },[]);
 
-    function likePost(config) {
+     function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
         request.then(response => {
             setLike(1);

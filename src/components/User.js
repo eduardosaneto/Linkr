@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, Posts, Trending } from "../styledComponents/Content";
 import styled from 'styled-components'
-
+import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';
 import Post from './Post'
@@ -42,7 +42,7 @@ export default function User(){
 
     return(
         <>
-        <NavBar/>
+        <Navbar />
         <Container>
             <h1>{ userPosts.length === 0 ? "" : username()}</h1>
             <div>

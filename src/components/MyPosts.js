@@ -45,8 +45,7 @@ export default function MyPosts(){
                         />)) : 
                         "Nenhum post encontrado")
                     }
-                    </Posts>
-                    
+                    </Posts>                    
                     <Trending >
                         <TrendingBar />
                     </Trending>
