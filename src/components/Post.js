@@ -102,6 +102,7 @@ const PostContainer = styled.div`
     background: #171717;
     border-radius: 16px;
     margin-bottom: 16px;
+    word-break: break-all;
     @media(max-width: 611px){
         border-radius: 0;
         padding: 9px 18px 15px 15px;
@@ -138,6 +139,9 @@ const Profile = styled.div`
             width: 40px;
             height: 40px; 
         }
+        p{
+            font-size: 9px;
+        }
     }
 `;
 const Content = styled.div`
@@ -159,11 +163,11 @@ const Content = styled.div`
     @media (max-width: 611px){
         width: 82%;
         >h2{
-            font-size: 17px;
+            font-size: 16px;
         }
         >p{
-            font-size: 15px;
-            line-height: 18px;
+            font-size: 14px;
+            line-height: 16px;
         }
     }
 `;
