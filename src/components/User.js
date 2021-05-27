@@ -18,6 +18,10 @@ export default function User(){
 
     useEffect(() => loadingPostsUser(),[])
     
+    function username() {
+        return userPosts[0].user.username +"'s posts"
+    }
+
     function loadingPostsUser() {
         setIsLoading(true)
         setIsError(false)
@@ -37,7 +41,7 @@ export default function User(){
 
     return(
         <Container>
-            <h1>Luiz's posts</h1>
+            <h1>{ userPosts.length === 0 ? "" : username()}</h1>
             <div>
                 <Posts>
                     { isLoading ? <Load>Loading</Load> : ""}

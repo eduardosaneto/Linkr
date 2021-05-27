@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { BsHeart} from 'react-icons/bs'
 
 export default function Post({post, user}) {
-
+    
     return (
         <PostContainer>
             <Profile>
