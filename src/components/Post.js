@@ -1,19 +1,14 @@
 import styled from 'styled-components'
 import ReactHashtag from "react-hashtag";
-import { Link, useHistory } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { BsHeart} from 'react-icons/bs'
 
 export default function Post({post, user}) {
-    const history = useHistory()
-    function refreshUserPage(){
-        history.push("/timeline")
-        history.push(`user/${user.id}`)
-    }
 
     return (
         <PostContainer>
             <Profile>
-                <img src={user.avatar} alt={`${user.username}' profile`} onClick={refreshUserPage}/>
+                <Link to={`/user/${user.id}`}><img src={user.avatar} alt={`${user.username}' profile`}/></Link>
                 <div>
                     <HeartIcon/>
                     <p>{post.likes.length} likes</p>
@@ -23,7 +18,7 @@ export default function Post({post, user}) {
                 <h2>{user.username}</h2>
                 <p>
                 <ReactHashtag renderHashtag={(hashtagValue) => (
-                    <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                    <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
                        <Hashtag>{hashtagValue}</Hashtag>
                     </Link>)}>
                     {post.text} 
@@ -64,7 +59,6 @@ const Profile = styled.div`
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        cursor: pointer;
     }
     p{
         color: #FFF;
@@ -100,12 +94,19 @@ const LinkSnippet = styled.a`
     height: 155px;
     display: flex;
     justify-content: space-between;
-
+    word-wrap: break-word;
+    overflow: hidden;
     img {
         border-top-right-radius: 11px;
         border-bottom-right-radius: 11px;
         height: 100%;
         width: 154px;
+    }
+
+    @media (max-width:611px){
+        img{
+            width: 30.5%;
+        }
     }
 `;
 const Text = styled.div`
@@ -121,7 +122,7 @@ const Text = styled.div`
     p{
         color: #9B9595;
         font-size: 11px;
-        line-height: 15px;
+        line-height: 12px;
     }
     div {
         color: #CECECE;
