@@ -140,6 +140,10 @@ const Header = styled.div`
 
     @media (max-width: 611px){
         padding-left: 17px;
+
+        h1{
+            font-size: 45px;
+        }
     }
 `;
 

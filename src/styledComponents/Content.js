@@ -23,9 +23,13 @@ export const Container = styled.div`
 
     @media (max-width: 611px){
         width: 100vw;
-
+        margin-top: 91px;
         > h1{
             margin-left: 17px;
+            font-size: 33px;
+        }
+        >div{
+            margin-top: 19px;
         }
     }
 `;
