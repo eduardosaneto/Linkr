@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, Posts, Trending } from "../styledComponents/Content";
 import styled from 'styled-components'
-
+import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';
 import Post from './Post'
@@ -40,20 +40,23 @@ export default function User(){
     }
 
     return(
-        <Container>
-            <h1>{ userPosts.length === 0 ? "" : username()}</h1>
-            <div>
-                <Posts>
-                    { isLoading ? <Load>Loading</Load> : ""}
-                    { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                    { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                    {userPosts.map(post =><Post key={post.id} post={post} postuser={post.user} />)}
-                </Posts>
-                <Trending >
-                    <TrendingBar/>
-                </Trending>
-            </div>
-        </Container>
+        <>
+            <Navbar />
+            <Container>
+                <h1>{ userPosts.length === 0 ? "" : username()}</h1>
+                <div>
+                    <Posts>
+                        { isLoading ? <Load>Loading</Load> : ""}
+                        { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
+                        { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
+                        {userPosts.map(post =><Post key={post.id} post={post} postUser={post.user} likes={post.likes}/>)}
+                    </Posts>
+                    <Trending >
+                        <TrendingBar/>
+                    </Trending>
+                </div>
+            </Container>
+        </>
     )
 }
 
