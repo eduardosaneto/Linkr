@@ -13,9 +13,23 @@ import UserContext from "../contexts/UserContext";
 export default function Post({post, id, postUser, likes}) {
 
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
-    // const [peopleThatLiked, setPeopleThatLiked] = useState("")
+    const [peopleThatLiked, setPeopleThatLiked] = useState("")
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
+
+    useEffect(() => {
+
+    const newDataPost = post.likes.map()
+    setPeopleThatLiked([post.likes.map(name => {
+        const username = "ser.username";
+        console.log(name.username);
+        // return {
+        //     id: name.postId,
+        //     name: name.user.username
+        // }
+    })]);
+    // console.log(peopleThatLiked);
+    }, []);
 
     // const peoplesName = post.likes.map(data => {
     //     const 
