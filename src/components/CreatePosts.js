@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useContext, useState } from "react";
 import axios from "axios";
 import Usercontext from "../contexts/UserContext";
-export default function CreatePosts() {
+export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
@@ -11,6 +11,7 @@ export default function CreatePosts() {
   
   function Submit(event) {
     event.preventDefault();
+
     if (link.length === 0) {
       alert("Percebemos que você não preencheu o link corretamente... Tente novamente ;)");
     } else {
@@ -33,6 +34,7 @@ export default function CreatePosts() {
          setIsDisabled(false);
          setLink("");
          setText("");
+         loadingPosts();
       });
       request.catch(() => {
         alert("Houve um erro ao publicar seu link");
