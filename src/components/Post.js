@@ -11,7 +11,7 @@ export default function Post({post, user}) {
                 <Link to={`/user/${user.id}`}><img src={user.avatar} alt={`${user.username}' profile`}/></Link>
                 <div>
                     <HeartIcon/>
-                    <p>{post.likes.length} likes</p>
+                    <p>13 likes</p>
                 </div>
             </Profile>
             <Content>
@@ -101,12 +101,6 @@ const LinkSnippet = styled.a`
         border-bottom-right-radius: 11px;
         height: 100%;
         width: 154px;
-    }
-
-    @media (max-width:611px){
-        img{
-            width: 30.5%;
-        }
     }
 `;
 const Text = styled.div`
