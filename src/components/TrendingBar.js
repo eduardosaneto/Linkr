@@ -20,7 +20,7 @@ export default function TrendingBar() {
         <>
         <h1>trending</h1>
         <ul> 
-            { hashtags.map(hashtag => <Link to={`hashtag/${hashtag.name}`}><li>#{hashtag.name}</li></Link>)}
+            { hashtags.map(hashtag => <Link to={`/hashtag/${hashtag.name}`}><li>#{hashtag.name}</li></Link>)}
         </ul>
         </>
     )

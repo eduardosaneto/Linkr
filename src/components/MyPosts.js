@@ -38,10 +38,14 @@ export default function MyPosts(){
                     <Posts>
                     {requestLoading
                     ?(erro?<p>Houve uma falha ao obter os posts,<br/>por favor atualize a página.</p>:"Loading...")
-                    :(posts.length?(posts.map( (post) => <Post key={post.id} post={post} user={post.user}/>)):"Nenhum post encontrado")
+                    :(posts.length ? (posts.map( (post) => 
+                        <Post 
+                            key={post.id} id={post.id} post={post} 
+                            postUser={post.user} likes={post.likes}
+                        />)) : 
+                        "Nenhum post encontrado")
                     }
-                    </Posts>
-                    
+                    </Posts>                    
                     <Trending >
                         <TrendingBar />
                     </Trending>
