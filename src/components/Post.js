@@ -105,6 +105,7 @@ const PostContainer = styled.div`
     @media(max-width: 611px){
         border-radius: 0;
         padding: 9px 18px 15px 15px;
+        height: 232px;
     }   
 `;
 const Profile = styled.div`
@@ -181,6 +182,7 @@ const LinkSnippet = styled.a`
         width: 154px;
     }
     @media (max-width:611px){
+        height: 115px;
         img{
             width: 33%;
         }
