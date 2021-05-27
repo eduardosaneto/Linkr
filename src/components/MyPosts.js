@@ -15,7 +15,7 @@ export default function MyPosts(){
     const [ requestLoading, setRequestLoading ] = useState(1);
     const [ erro, setErro ] = useState(0);
 
-    const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+    const config = { headers:{ Authorizatio: `Bearer ${user.token}`}};
     useEffect(()=>{
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,config);
 
@@ -40,8 +40,8 @@ export default function MyPosts(){
                 <div>
                     <Posts>
                     {requestLoading
-                    ?(erro?"Não foi possível carregar seus posts,tente novamente!":"Carregando")
-                    :(posts.length?(posts.map( (post) => <Post key={post.id} post={post} user={post.user}/>)):"Você não tem nenhum post ainda!")
+                    ?(erro?<p>Houve uma falha ao obter os posts,<br/>por favor atualize a página.</p>:"Loading...")
+                    :(posts.length?(posts.map( (post) => <Post key={post.id} post={post} user={post.user}/>)):"Nenhum post encontrado")
                     }
                     </Posts>
                     
