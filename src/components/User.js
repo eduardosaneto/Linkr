@@ -47,7 +47,7 @@ export default function User(){
                     { isLoading ? <Load>Loading</Load> : ""}
                     { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                     { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
-                    {userPosts.map(post =><Post key={post.id} post={post} user={post.user} sameUser={true}/>)}
+                    {userPosts.map(post =><Post key={post.id} post={post} postuser={post.user} />)}
                 </Posts>
                 <Trending >
                     <TrendingBar/>
