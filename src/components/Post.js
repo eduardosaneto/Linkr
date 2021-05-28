@@ -12,10 +12,12 @@ import UserContext from "../contexts/UserContext";
 
 export default function Post({post, id, postUser, likes}) {
 
-    // const [peopleThatLiked, setPeopleThatLiked] = useState("")
+    const [peopleThatLiked, setPeopleThatLiked] = useState(likes);
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
+
+    console.log(user.user.username);
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
@@ -31,12 +33,15 @@ export default function Post({post, id, postUser, likes}) {
     // }));
     // }, []);
 
+    console.log(peopleThatLiked);
+
 
     function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
         request.then(response => {
             setLike(1);
             setLikeQuantity(response.data.post.likes.length);
+            setPeopleThatLiked([...peopleThatLiked, {"user.username": user.user.username}]);
         });
         request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
@@ -48,6 +53,8 @@ export default function Post({post, id, postUser, likes}) {
         request.then(response => {
             setLike(0);
             setLikeQuantity(response.data.post.likes.length);
+            const teste = peopleThatLiked.filter(name => name['user.username'] !== user.user.username)
+            setPeopleThatLiked(teste);
         });
         request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
@@ -73,13 +80,21 @@ export default function Post({post, id, postUser, likes}) {
                         <HeartIconEmpty onClick={toggleLike}/>
                     }
                     <Tooltip 
-                        content={likes.length > 0 && <div>{likes.map((name, i) => {
-                            if(i < 2) {
-                                if(i === 0) return name === postUser.username ? <p>Você</p> : <p> {name['user.username']}</p>
-                                if(i === 1) return <p>, {name['user.username']}</p>
-                            }
-                        })}<p>{`${likes.length >= 4 ? `e outras ${likes.length - 2} pessoas` : 
-                        `${likes.length === 3 ? `e mais uma pessoa` : ""}`}`}</p></div>}                        // content={likes.map((name, i) => {
+                        content={peopleThatLiked.length > 0 ? 
+                            <span>
+                                {peopleThatLiked.map((name, i) => {
+                                if(i < 2) {
+                                    if(i === 0) return like === 1 ? <p>Você </p> : <p>{name['user.username']} </p>
+                                    if(i === 1) return <p>, {name['user.username']}</p>
+                                }
+                                })}
+                                <p>{`${peopleThatLiked.length >= 4 ? `e outras ${peopleThatLiked.length - 2} pessoas` : 
+                                    `${peopleThatLiked.length === 3 ? `e mais uma pessoa` : 
+                                    `${peopleThatLiked.length === 2 ? `curtiram isso` : 
+                                    `${peopleThatLiked.length === 1 ? `curtiu` : ""}`}`}`}`}
+                                </p>
+                            </span> 
+                            : ""}                        
                         interactive={true} placement="bottom" inlinePositioning={true} arrow={true}
                     >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
@@ -88,14 +103,16 @@ export default function Post({post, id, postUser, likes}) {
             </Profile>
             <Content>
                 <h2>{postUser.username}</h2>
-                <p>
-                    <ReactHashtag renderHashtag={(hashtagValue) => (
-                        <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
-                        <Hashtag>{hashtagValue}</Hashtag>
-                        </Link>)}>
-                        {post.text} 
-                    </ReactHashtag>
-                </p>
+                <div>
+                    <p>
+                        <ReactHashtag renderHashtag={(hashtagValue) => (
+                            <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                            <Hashtag>{hashtagValue}</Hashtag>
+                            </Link>)}>
+                            {post.text} 
+                        </ReactHashtag>
+                    </p>          
+                </div>
                 <LinkSnippet href={post.link} target={"_blank"}>
                     <Text>
                         <h2>{post.linkTitle}</h2>
@@ -155,7 +172,15 @@ const Content = styled.div`
         color: #FFF;
         font-size: 19px;
     }
-    >p{
+    > div {
+        width: 100%;
+        max-width: 502px;
+        max-height: 52px;
+        display: flex; 
+        flex-wrap: wrap;
+        overflow-x: hidden;
+    }
+    > div p{
         font-size: 15px;
         line-height: 20px;
         color: #B7B7B7;
@@ -181,7 +206,7 @@ const Text = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow-x: hidden;
+    overflow-y: hidden;
     
     h2{
         font-size: 16px;
@@ -192,11 +217,10 @@ const Text = styled.div`
         font-size: 11px;
         line-height: 15px;
     }
-    div {
+    > div {
         width: 100%;
     }
-
-    div p {
+    > div p {
         color: #CECECE;
         font-size: 11px;
     }
@@ -225,12 +249,13 @@ const Tooltip = styled(Tippy)`
     font-size: 12px !important;
     line-height: 14px !important;
     color: #505050 !important;
+    display: flex !important;
     
-    div {
+    /* div {
         width: 100%;
         display: flex;
 
-    }
+    } */
 
     p{
         color: #505050 !important;
