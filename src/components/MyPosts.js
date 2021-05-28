@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import Usercontext from "../contexts/UserContext";
-import { Container, Posts, Trending } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";

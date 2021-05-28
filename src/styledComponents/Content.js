@@ -97,5 +97,11 @@ export const Posts = styled.div`
     @media (max-width: 611px){
         width: 100%;
     }
-
+`;
+export const Load = styled.div`
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    color: #FFF;
+    font-size: 30px;
 `;

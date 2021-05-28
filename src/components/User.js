@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Container, Posts, Trending } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import styled from 'styled-components'
 import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
@@ -60,11 +60,3 @@ export default function User(){
         </>
     )
 }
-
-const Load = styled.div`
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    color: #FFF;
-    font-size: 30px;
-`
