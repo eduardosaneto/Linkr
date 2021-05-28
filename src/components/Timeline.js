@@ -9,7 +9,7 @@ import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
 
 export default function Timeline(){
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -18,12 +18,15 @@ export default function Timeline(){
     useEffect(() => {loadingPosts()},[])
 
     function loadingPosts() {
+        const localstorage = JSON.parse(localStorage.user);
+        const token = user?user.token:localstorage.token;
         setIsLoading(true)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+        const config = { headers:{ Authorization: `Bearer ${token}`}};
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
 
         request.then( response => {
+            setUser(localStorage.user);
             const data = response.data.posts
             setPosts([...response.data.posts])
             setIsLoading(false)

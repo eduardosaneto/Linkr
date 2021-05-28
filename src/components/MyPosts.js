@@ -9,16 +9,20 @@ import TrendingBar from "./TrendingBar";
 
 export default function MyPosts(){
 
-    const { user } = useContext(Usercontext);
+    const {user, setUser} = useContext(Usercontext);
     const [ posts, setPosts ] = useState([]);
     const [ requestLoading, setRequestLoading ] = useState(1);
     const [ erro, setErro ] = useState(0);
 
-    const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+    
     useEffect(()=>{
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,config);
+        const localstorage = JSON.parse(localStorage.user);
+        const token = user?user.token:localstorage.token;
+        const config = { headers:{ Authorization: `Bearer ${token}`}};
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user.id}/posts`,config);
 
         request.then((e)=>{
+            setUser(localStorage.user);
             setPosts(e.data.posts)
             setRequestLoading(0);     
         })

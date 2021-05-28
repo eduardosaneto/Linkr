@@ -10,7 +10,7 @@ import TrendingBar from "./TrendingBar";
 import UserContext from "../contexts/UserContext";
 
 export default function Hashtag(){
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const [hashtagPosts, setHashtagPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -20,12 +20,15 @@ export default function Hashtag(){
     useEffect(() => {loadingHashtag()},[hashtag])
 
     function loadingHashtag() {
+        const localstorage = JSON.parse(localStorage.user);
+        const token = user?user.token:localstorage.token;
         setIsLoading(true)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+        const config = { headers:{ Authorization: `Bearer ${token}`}};
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`, config)
 
         request.then( response => {
+            setUser(localStorage.user);
             const data = response.data.posts
             setHashtagPosts([...response.data.posts])
             setIsLoading(false)

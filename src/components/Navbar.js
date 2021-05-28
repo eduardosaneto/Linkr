@@ -9,11 +9,16 @@ export default function Navbar() {
 
     const { user } = useContext(Usercontext);
     const [showMenu, setShowMenu] = useState(0);
+    const localstorage = JSON.parse(localStorage.user);
+    const token = user?user.token:localstorage.token;
+    const image = localstorage.user.avatar;
 
     function toggleMenu() {
         showMenu === 0 ? setShowMenu(1) : setShowMenu(0);
     }
-    
+    function deleteLocalStorage(){
+        localStorage.removeItem('user');
+    }
     return (
         <>
             <Header >
@@ -24,7 +29,7 @@ export default function Navbar() {
             </Header>
             <ClickAwayListener onClickAway={() => setShowMenu(0)}>
                 <NavMenu >
-                    <Menu direction={showMenu} avatar={user.user.avatar}>
+                    <Menu direction={showMenu} avatar={image}>
                         <IoIosArrowDown className="arrow" onClick={toggleMenu}/>
                         <div onClick={toggleMenu}></div>
                     </Menu>
@@ -36,7 +41,7 @@ export default function Navbar() {
                         <Link to='/my-likes'>
                             <h2>My likes</h2>
                         </Link>
-                        <Link to='/'>
+                        <Link to='/' onClick={deleteLocalStorage}>
                             <h3>Logout</h3>
                         </Link>
                     </Links>

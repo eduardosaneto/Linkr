@@ -10,7 +10,7 @@ import UserContext from "../contexts/UserContext";
 
 export default function Mylikes(){
 
-    const {user} = useContext(UserContext);
+    const {user, setUser} = useContext(UserContext);
     const [likedPosts, setLikedPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -19,12 +19,15 @@ export default function Mylikes(){
     useEffect(() => {loadingPosts()},[])
 
     function loadingPosts() {
+        const localstorage = JSON.parse(localStorage.user);
+        const token = user?user.token:localstorage.token;
         setIsLoading(true)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer ${user.token}`}};
+        const config = { headers:{ Authorization: `Bearer ${token}`}};
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked', config)
 
         request.then( response => {
+            setUser(localStorage.user);
             const data = response.data.posts
             setLikedPosts([...response.data.posts])
             setIsLoading(false)

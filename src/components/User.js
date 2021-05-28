@@ -10,7 +10,7 @@ import Post from './Post'
 import NavBar from './Navbar'
 
 export default function User(){
-    const { user } = useContext(Usercontext)
+    const {user, setUser} = useContext(Usercontext);
     const {id} = useParams()
     const [userPosts, setUserPosts] = useState([])
     const [isLoading, setIsLoading] = useState(false)
@@ -24,12 +24,15 @@ export default function User(){
     }
 
     function loadingPostsUser() {
+        const localstorage = JSON.parse(localStorage.user);
+        const token = user?user.token:localstorage.token;
         setIsLoading(true)
         setIsError(false)
-        const config = { headers: { Authorization: `Bearer ${user.token}`}}
+        const config = { headers: { Authorization: `Bearer ${token}`}}
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}/posts`, config)
 
         request.then( response => {
+            setUser(localStorage.user);
             const data = response.data.posts
             setUserPosts([...response.data.posts])
             setIsLoading(false)
