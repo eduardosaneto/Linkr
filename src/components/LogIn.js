@@ -28,6 +28,7 @@ export default function LogIn(){
             history.push("/timeline");
         });
         request.catch((e) => {
+            setDisabled(false);
             if (e.response.status === 403) {
                 alert("Usuário de email/senha incorretos");
                 return;
@@ -80,7 +81,9 @@ const Container = styled.div`
     width:100%;
     height: 100%;
     display: flex;
-
+    @media (max-width: 611px){
+        flex-direction: column;
+    }
 `
 const InputContainer = styled.div`
     width:36%;
@@ -88,6 +91,11 @@ const InputContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 611px){
+        width: 100vw;
+        height: auto;
+    }
 `
 const LogoContainer = styled.div`
     width: 64%;
@@ -111,6 +119,23 @@ const LogoContainer = styled.div`
         font-size: 46px;
     }
 
+    @media (max-width: 611px){
+        width: 100vw;
+        height: 175px;
+        text-align: center;
+
+        div{
+            margin: 0
+        }
+
+        h1{
+            font-size: 76px;
+        }
+
+        p{
+            font-size: 23px;
+        }
+    }
 `
 
 
@@ -160,4 +185,21 @@ const Inputs = styled.div`
         margin-top: 14px;
     }
 
+    @media (max-width: 611px){
+        margin-top: 40px;
+        width: 90%;
+        input{
+            font-size: 17px;
+            height: 55px;
+        }
+
+        button{
+            font-size: 22px;
+            height: 55px;
+        }
+
+        p{
+            font-size: 17px;
+        }
+    }
 `

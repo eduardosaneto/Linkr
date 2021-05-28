@@ -5,6 +5,10 @@ const GlobalStyle = createGlobalStyle `
         background: #333;
         font-family: 'Lato', sans-serif;
     }
+    
+    *::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export default GlobalStyle;
