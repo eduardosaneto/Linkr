@@ -17,7 +17,6 @@ export default function Mylikes(){
     const [isEmpty, setIsEmpty] = useState(false)
 
     useEffect(() => {loadingPosts()},[])
-
     function loadingPosts() {
         const localstorage = JSON.parse(localStorage.user);
         const token = localstorage.token;

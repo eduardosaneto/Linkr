@@ -28,7 +28,7 @@ export default function Post({post, id, postUser, likes}) {
         request.then(response => {
             setLike(1);
             setLikeQuantity(response.data.post.likes.length);
-            setPeopleThatLiked([...peopleThatLiked, {"user.username": user.user.username}]);
+            setPeopleThatLiked([...peopleThatLiked, {"user.username": localstorage.user.username}]);
         });
         request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
