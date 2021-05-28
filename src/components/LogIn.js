@@ -25,6 +25,8 @@ export default function LogIn(){
         );
         request.then((e) => {
             setUser(e.data);
+            const userSerial = JSON.stringify(e.data);
+            localStorage.setItem("user",userSerial);
             history.push("/timeline");
         });
         request.catch((e) => {
