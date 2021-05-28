@@ -125,7 +125,6 @@ const PostContainer = styled.div`
     background: #171717;
     border-radius: 16px;
     margin-bottom: 16px;
-    word-break: break-all;
     @media(max-width: 611px){
         border-radius: 0;
         padding: 9px 18px 15px 15px;
@@ -226,12 +225,12 @@ const LinkSnippet = styled.a`
 `;
 const Text = styled.div`
     padding: 10px;
+    height: 100%;
     max-width: 350px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow-y: scroll;
-    
     > h2{        
         font-size: 16px;
         color: #CECECE;
