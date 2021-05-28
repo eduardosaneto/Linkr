@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useContext, useState } from "react";
+import { useContext, useState} from "react";
 import axios from "axios";
 import Usercontext from "../contexts/UserContext";
+
 
 export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
@@ -42,7 +43,7 @@ export default function CreatePosts({loadingPosts}) {
         setIsDisabled(false);
       });
     }
-  }
+  } 
   return (
     <Post>
       <Photo image={image}></Photo>
@@ -57,13 +58,16 @@ export default function CreatePosts({loadingPosts}) {
             isDisabled={isDisabled}
             required></Styledinput>
           <StyledinputText
-            type='text'
+            type='text' 
             disabled={isDisabled? true : false}
             onChange={(e) => setText(e.target.value)}
             value={text}
             placeholder='O que você tem a dizer sobre isso?'
             isDisabled={isDisabled}
-            required></StyledinputText>
+            required
+            maxlength="185">
+              
+            </StyledinputText>
           <Button 
           isDisabled={isDisabled}
           onClick={

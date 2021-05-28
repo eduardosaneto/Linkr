@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
+import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
@@ -14,6 +15,7 @@ export default function Timeline(){
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
+    const location = useLocation();
 
     useEffect(() => {loadingPosts()},[])
 
@@ -52,6 +54,9 @@ export default function Timeline(){
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
+                                reloadingPosts={loadingPosts}
+                                location={location}
+
                             />)
                         }
                     </Posts>
