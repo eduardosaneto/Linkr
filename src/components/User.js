@@ -6,8 +6,7 @@ import styled from 'styled-components'
 import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';
-import Post from './Post'
-import NavBar from './Navbar'
+import Post from './Post';
 
 export default function User(){
     const { user } = useContext(Usercontext)

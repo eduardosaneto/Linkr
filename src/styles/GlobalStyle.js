@@ -7,8 +7,8 @@ const GlobalStyle = createGlobalStyle `
     }
     
     *::-webkit-scrollbar {
-    display: none;
-}
+        display: none;
+    }
 `;
 
 export default GlobalStyle;

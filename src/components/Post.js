@@ -16,9 +16,6 @@ export default function Post({post, id, postUser, likes}) {
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
-    const space = " " + " e";
-
-    console.log(user.user.username);
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
@@ -34,20 +31,20 @@ export default function Post({post, id, postUser, likes}) {
         request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
         });
-    }
+    };
 
     function dislikePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/dislike`, {}, config);
         request.then(response => {
             setLike(0);
             setLikeQuantity(response.data.post.likes.length);
-            const teste = peopleThatLiked.filter(name => name['user.username'] !== user.user.username)
+            const teste = peopleThatLiked.filter(name => name['user.username'] !== user.user.username);
             setPeopleThatLiked(teste);
         });
         request.catch(() => {
             alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
         });
-    }
+    };
 
     function toggleLike() {
         const config = { 
@@ -56,12 +53,14 @@ export default function Post({post, id, postUser, likes}) {
             }
         };
         like === 0 ? likePost(config) : dislikePost(config); 
-    }
+    }; 
 
     return (
         <PostContainer key={postUser.id}>
             <Profile>
-                <Link to={`user/${postUser.id}`}><img src={postUser.avatar} alt={`${postUser.username}' profile`}/></Link>
+                <Link to={`user/${postUser.id}`}>
+                    <img src={postUser.avatar} alt={`${postUser.username}' profile`}/>
+                </Link>
                 <div>
                     {like === 1 ? 
                         <HeartIconFill onClick={toggleLike} /> :
@@ -73,17 +72,16 @@ export default function Post({post, id, postUser, likes}) {
                                 {peopleThatLiked.map((name, i) => {
                                 if(i < 2) {
                                     if(i === 0) return <p>{like === 1 ? "Você" : name['user.username']}</p>
-                                    // if(i === 1) return <p>, {like === 1 ? name['user.username'] !== user.user.username : name['user.username']} </p>
-                                    if(i === 1) return <p>, {name['user.username']} </p>
+                                    if(i === 1) return <p>{peopleThatLiked.length === 2 ? `\u00A0 e ` : ","} {name['user.username']} </p>
                                 }
                                 })}
-                                <p> {'\u00A0'}{`${peopleThatLiked.length >= 4 ? `e outras ${peopleThatLiked.length - 2} pessoas` : 
-                                    `${peopleThatLiked.length === 3 ? `e mais uma pessoa` : 
-                                    `${peopleThatLiked.length === 2 ? `curtiram isso` : 
-                                    `${peopleThatLiked.length === 1 ? `curtiu` : ""}`}`}`}`}
+                                <p> {'\u00A0'}{`${peopleThatLiked.length >= 4 ? `e outras ${peopleThatLiked.length - 2} pessoas curtiram este post` : 
+                                    `${peopleThatLiked.length === 3 ? `e mais uma pessoa curtiram este post` : 
+                                    `${peopleThatLiked.length === 2 ? `curtiram este post` : 
+                                    `${peopleThatLiked.length === 1 ? `curtiu este post` : ""}`}`}`}`}
                                 </p>
                             </span> 
-                            : ""}                        
+                            : "Nenhuma curtida até o momento"}                        
                         interactive={true} placement="bottom" arrow={true}
                     >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
