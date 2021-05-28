@@ -70,7 +70,7 @@ export default function Post({post, id, postUser, likes}) {
             </Profile>
             <Content>
                 <h2>{postUser.username}</h2>
-                <p>
+                <p >
                 <ReactHashtag renderHashtag={(hashtagValue) => (
                     <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
                        <Hashtag>{hashtagValue}</Hashtag>

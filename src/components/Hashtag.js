@@ -17,9 +17,9 @@ export default function Hashtag(){
     const [isEmpty, setIsEmpty] = useState(false)
     const { hashtag } = useParams();
 
-    useEffect(() => {loadingPosts()},[])
+    useEffect(() => {loadingHashtag()},[hashtag])
 
-    function loadingPosts() {
+    function loadingHashtag() {
         setIsLoading(true)
         setIsError(false)
         const config = { headers:{ Authorization: `Bearer ${user.token}`}};
@@ -42,13 +42,13 @@ export default function Hashtag(){
         <>
             <Navbar />
             <Container>
-                <h1>#hashtag</h1>
+                <h1>#{hashtag}</h1>
                 <div>
                     <Posts>
                         { isLoading ? <Load>Loading</Load> : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { isEmpty && !isLoading ? <Load>Não há posts relacionados a nenhuma hashtag até o momento</Load> : ""}
-                        {hashtagPosts.map( post => 
+                        { isLoading ? "" : hashtagPosts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
