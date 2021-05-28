@@ -22,20 +22,7 @@ export default function Post({post, id, postUser, likes}) {
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
     },[]);
-
-    // useEffect(() => {
-    // setPeopleThatLiked(post.likes.map((name, i) => {
-    //     console.log(i);
-    //     return {
-    //         id: name.postId,
-    //         name: name["user.username"]
-    //     }
-    // }));
-    // }, []);
-
-    console.log(peopleThatLiked);
-
-
+    
     function likePost(config) {
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
         request.then(response => {
@@ -95,7 +82,7 @@ export default function Post({post, id, postUser, likes}) {
                                 </p>
                             </span> 
                             : ""}                        
-                        interactive={true} placement="bottom" inlinePositioning={true} arrow={true}
+                        interactive={true} placement="bottom" arrow={true}
                     >
                         <p>{likeQuantity} {likeQuantity === 1 ? "like": "likes"}</p>
                     </Tooltip>
@@ -301,11 +288,11 @@ const Tooltip = styled(Tippy)`
     color: #505050 !important;
     display: flex !important;
     
-    /* div {
+    span{
         width: 100%;
         display: flex;
 
-    } */
+    }
 
     p{
         color: #505050 !important;
@@ -314,15 +301,4 @@ const Tooltip = styled(Tippy)`
     .tippy-arrow {
         color: #ebebeb !important;
     }
-/* 
-    .tippy-box {
-        display: flex !important;
-        background-color: blue !important;
-        width: 100% !important;
-    }
-
-    .tippy-content {
-        display: flex !important;
-        width: 100% !important;
-    } */
 `;
