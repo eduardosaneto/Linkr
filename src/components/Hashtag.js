@@ -17,13 +17,13 @@ export default function Hashtag(){
     const [isEmpty, setIsEmpty] = useState(false)
     const { hashtag } = useParams();
 
-    useEffect(() => {loadingPostsHashtags(hashtag)},[])
+    useEffect(() => {loadingHashtag()},[hashtag])
 
-    function loadingPostsHashtags(hashtagName) {
+    function loadingHashtag() {
         setIsLoading(true)
         setIsError(false)
         const config = { headers:{ Authorization: `Bearer ${user.token}`}};
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtagName}/posts`, config)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`, config)
 
         request.then( response => {
             const data = response.data.posts
@@ -42,7 +42,7 @@ export default function Hashtag(){
         <>
             <Navbar />
             <Container>
-                <h1>#hashtag</h1>
+                <h1>#{hashtag}</h1>
                 <div>
                     <Posts>
                         { isLoading ? <Load>Loading</Load> : ""}
@@ -51,12 +51,12 @@ export default function Hashtag(){
                         { isLoading ? "" : hashtagPosts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
-                                postUser={post.user} likes={post.likes} loadingHashtag={loadingPostsHashtags}
+                                postUser={post.user} likes={post.likes}
                             />)
                         }
                     </Posts>
                     <Trending >
-                        <TrendingBar loadingHashtag={loadingPostsHashtags}/>
+                        <TrendingBar />
                     </Trending>
                 </div>
             </Container>
