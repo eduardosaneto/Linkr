@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import styled from 'styled-components'
@@ -7,14 +7,27 @@ import {FiHeart} from 'react-icons/fi';
 import {FaHeart} from 'react-icons/fa';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
+import {FaPencilAlt} from 'react-icons/fa';
+import {FaTrash} from 'react-icons/fa';
+import { confirmAlert } from 'react-confirm-alert';
+import '../styles/react-confirm-alert.css';
+
 
 import UserContext from "../contexts/UserContext";
 
-export default function Post({post, id, postUser, likes}) {
+export default function Post({post, id, postUser, likes, reloadingPosts}) {
 
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
+    const [controler, setControler] = useState(false);
+    const [editText, setEditText]= useState(post.text);
+    const inputRefText = useRef();
+
+    console.log(user.user, post)
+    console.log(editText);
+    console.log("user.user.id", user.user.id);
+    console.log("id",  post.user.id)
 
     useEffect(() => {
         likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
@@ -50,6 +63,92 @@ export default function Post({post, id, postUser, likes}) {
         };
         like === 0 ? likePost(config) : dislikePost(config); 
     }
+    function ShowEdit() {
+        if(controler){
+        setControler(false)
+        return
+       }else{
+        setControler(true)
+       }
+      };
+
+      useEffect(()=>{
+        if(controler){
+          inputRefText.current.focus()
+        }
+        setEditText(post.text);
+      },[controler]);
+      
+      function Edit(event){
+        event.preventDefault();
+        const body = {
+          text: editText
+        };
+        const config = {
+            headers: { Authorization: `Bearer ${user.token}` },
+          };
+          const request= axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,body,config)
+          request.then((response)=>{
+          console.log("sucess");
+          setControler(false);
+          //Renderizar novamente - loadingPosts();
+        }
+          )
+          request.catch(()=>{alert('Não foi possível salvar as alterações')
+          })
+
+      }
+
+    //   function moveToTrash() {
+    //       if(window.confirm("Tem certeza que deseja deletar este hábito?")){
+    //         const config = {
+    //             headers: { Authorization: `Bearer ${user.token}` },
+    //           };
+    //         const request= axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`, config)
+    //       request.then(()=>{
+    //         alert("sucess");
+    //         reloadingPosts();
+    //     }
+    //       )
+    //       request.catch(()=>{alert('erro ao deletar')
+    //       })
+    //       }
+    //   }
+
+       function deletePost() {
+        const config = {
+                         headers: { Authorization: `Bearer ${user.token}` },
+                   };
+                     const request= axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`, config)
+                  request.then(()=>{
+                    alert("sucess");
+                    reloadingPosts();
+                }
+                  )
+                  request.catch(()=>{alert('Não foi possível excluir o post')
+                  }) 
+       }
+
+       function moveToTrash() {
+
+         confirmAlert(
+             {
+             message: 'Tem certeza que deseja excluir essa publicação?',
+             buttons: [
+                 {
+                   label: 'Sim, excluir',
+                   onClick: () => deletePost(),
+                   className: 'yes'
+                 },
+                 {
+                   label: 'Não, voltar',
+                 }
+               ],
+               closeOnClickOutside: false,
+           })
+         };
+ 
+
 
     return (
         <PostContainer key={postUser.id}>
@@ -69,18 +168,35 @@ export default function Post({post, id, postUser, likes}) {
                 </div>
             </Profile>
             <Content>
-                <h2>{postUser.username}</h2>
+                <div class="boxName"><h2>{postUser.username}</h2><div class="icons">
+                {post.user.id === user.user.id ? <FaPencilAlt onClick={ShowEdit} className="pencil-icon"/> : ""}
+                {post.user.id === user.user.id ? <FaTrashAlt id={id} className="trash-icon" onClick={moveToTrash} /> : ""} </div></div>
+
                 <p>
                 <ReactHashtag renderHashtag={(hashtagValue) => (
-                    <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
+                <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
                        <Hashtag>{hashtagValue}</Hashtag>
-                    </Link>)}>
-                    {post.text} 
+                </Link>)}>
+         
+         
+          {controler?
+          
+          [<form onSubmit={Edit}>
+            <input 
+            type="text" 
+            required 
+            value={editText} 
+            onChange={(e) => setEditText(e.target.value)} 
+            ref={inputRefText} />
+          </form>]
+          
+        
+        : post.text }
                 </ReactHashtag>
                 </p>
                 <LinkSnippet href={post.link} target={"_blank"}>
                     <Text>
-                        <h2>{post.linkTitle}</h2>
+                        <div><h2>{post.linkTitle}</h2>   </div>
                         <p>{post.linkDescription}</p>
                         <div>{post.link}</div>
                     </Text>
@@ -149,7 +265,21 @@ const Content = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
+    position: relative;
+   
+
+    .boxName {
+        display: flex;
+        justify-content: space-between;
+        width: 502px;
+    }
+    .pencil-icon  {
+      color: #FFFFFF;
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+      margin-left: 15px;
+    }
     >h2{
         color: #FFF;
         font-size: 19px;
@@ -158,6 +288,22 @@ const Content = styled.div`
         font-size: 17px;
         color: #B7B7B7;
     }
+
+    div{
+        color:white;
+        display: flex;
+    }
+
+    input{
+    width: 100%;
+    border-radius: 7px;
+    font-size: 14px;
+    padding:4px 9px;
+    outline: 1px solid black;
+    overflow-y: auto;
+    overflow-wrap: break-word;
+    color: #4C4C4C;
+   }
 
     @media (max-width: 611px){
         width: 82%;
@@ -196,6 +342,8 @@ const Text = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    
     
     h2{
         font-size: 16px;
@@ -228,6 +376,13 @@ const Text = styled.div`
     }
 `;
 
+const FaTrashAlt = styled(FaTrash)`
+    color: #FFFFFF;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+`;
 const HeartIconEmpty = styled(FiHeart)`
     font-size: 18px;
     color: #fff;

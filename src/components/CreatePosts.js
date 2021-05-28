@@ -1,7 +1,8 @@
 import styled from "styled-components";
-import { useContext, useState, useRef} from "react";
+import { useContext, useState} from "react";
 import axios from "axios";
 import Usercontext from "../contexts/UserContext";
+
 
 export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
@@ -9,8 +10,6 @@ export default function CreatePosts({loadingPosts}) {
   const [isDisabled, setIsDisabled] = useState(false);
   const {user} = useContext(Usercontext);
   const image = user.user.avatar;
-  let inputRefLink = useRef();
-  let inputRefText = useRef();
   
   function Submit(event) {
     event.preventDefault();
@@ -44,12 +43,7 @@ export default function CreatePosts({loadingPosts}) {
         setIsDisabled(false);
       });
     }
-  }
-
-  function Edit() {
-    inputRefLink.current.focus();
-  
-  }
+  } 
   return (
     <Post>
       <Photo image={image}></Photo>
@@ -57,23 +51,23 @@ export default function CreatePosts({loadingPosts}) {
           <h2>O que você tem pra favoritar hoje?</h2>
           <Styledinput
             type='link'
-            ref= {inputRefLink}
             disabled={isDisabled? true : false}
             onChange={(e) => setLink(e.target.value)}
             value={link}
             placeholder='http://...'
             isDisabled={isDisabled}
-            required
-            onClick={Edit}></Styledinput>
+            required></Styledinput>
           <StyledinputText
-            type='text'
-            ref= {inputRefText}
+            type='text' 
             disabled={isDisabled? true : false}
             onChange={(e) => setText(e.target.value)}
             value={text}
             placeholder='O que você tem a dizer sobre isso?'
             isDisabled={isDisabled}
-            required></StyledinputText>
+            required
+            maxlength="185">
+              
+            </StyledinputText>
           <Button 
           isDisabled={isDisabled}
           onClick={

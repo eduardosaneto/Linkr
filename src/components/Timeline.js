@@ -52,6 +52,8 @@ export default function Timeline(){
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
+                                reloadingPosts={loadingPosts}
+
                             />)
                         }
                     </Posts>
