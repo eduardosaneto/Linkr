@@ -89,7 +89,9 @@ export default function Post({post, id, postUser, likes}) {
                 </div>
             </Profile>
             <Content>
-                <h2>{postUser.username}</h2>
+                <Link to={`user/${postUser.id}`}>
+                    <h2>{postUser.username}</h2>
+                </Link>
                 <div>
                     <p>
                         <ReactHashtag renderHashtag={(hashtagValue) => (
@@ -172,7 +174,7 @@ const Content = styled.div`
     flex-direction: column;
     justify-content: space-between;
     
-    >h2{
+    h2{
         color: #FFF;
         font-size: 19px;
     }
