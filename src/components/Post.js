@@ -10,7 +10,7 @@ import 'tippy.js/dist/tippy.css';
 
 import UserContext from "../contexts/UserContext";
 
-export default function Post({post, id, postUser, likes}) {
+export default function Post({post, id, postUser, likes, loadingHashtag}) {
 
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
@@ -70,10 +70,10 @@ export default function Post({post, id, postUser, likes}) {
             </Profile>
             <Content>
                 <h2>{postUser.username}</h2>
-                <p>
+                <p >
                 <ReactHashtag renderHashtag={(hashtagValue) => (
                     <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
-                       <Hashtag>{hashtagValue}</Hashtag>
+                       <Hashtag onClick={() => loadingHashtag(hashtagValue.replace("#",""))}>{hashtagValue}</Hashtag>
                     </Link>)}>
                     {post.text} 
                 </ReactHashtag>
