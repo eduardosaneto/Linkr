@@ -127,7 +127,6 @@ function toggleLike() {
     );
     request.then(() => {
       setUser(localStorage.user);
-      alert("sucess");
       if (location.pathname === "/timeline") {
         reloadingPosts();
       } else if (location.pathname === "/my-posts") {
