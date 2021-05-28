@@ -7,23 +7,26 @@ import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
 
+
 export default function MyPosts() {
-  const { user } = useContext(Usercontext);
-  const [posts, setPosts] = useState([]);
-  const [requestLoading, setRequestLoading] = useState(1);
-  const [erro, setErro] = useState(0);
-  const location = useLocation();
+    const {user, setUser} = useContext(Usercontext);
+    const [ posts, setPosts ] = useState([]);
+    const [ requestLoading, setRequestLoading ] = useState(1);
+    const [ erro, setErro ] = useState(0);
+    const localstorage = JSON.parse(localStorage.user);
+    console.log(localstorage.user['id'])
+    const location = useLocation();
 
   useEffect(loadMyPosts, []);
 
   function loadMyPosts() {
-    const config = { headers: { Authorization: `Bearer ${user.token}` } };
-    const request = axios.get(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${user.user.id}/posts`,
-      config
-    );
+    const token = localstorage.token;
+    const config = { headers:{ Authorization: `Bearer ${token}`}};
+    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user['id']}/posts`,config);
+
 
     request.then((e) => {
+    setUser(localStorage.user);
       setPosts(e.data.posts);
       setRequestLoading(0);
     });
