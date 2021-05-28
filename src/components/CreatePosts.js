@@ -8,8 +8,10 @@ export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  const {user} = useContext(Usercontext);
-  const image = user.user.avatar;
+  const {user, setUser} = useContext(Usercontext);
+  const localstorage = JSON.parse(localStorage.user);
+  const token = localstorage.token;
+  const image = localstorage.user.avatar;
   
   function Submit(event) {
     event.preventDefault();
@@ -23,7 +25,7 @@ export default function CreatePosts({loadingPosts}) {
       };
       const config = {
         headers: {
-          Authorization: `Bearer ${user.token}`
+          Authorization: `Bearer ${token}`
         },
       };
       const request = axios.post(
@@ -33,6 +35,7 @@ export default function CreatePosts({loadingPosts}) {
       );
       setIsDisabled(true);
       request.then((response) => {
+        setUser(localStorage.user);
          setIsDisabled(false);
          setLink("");
          setText("");

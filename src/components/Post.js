@@ -27,22 +27,25 @@ export default function Post({
   const [peopleThatLiked, setPeopleThatLiked] = useState(likes);
   const [likeQuantity, setLikeQuantity] = useState(likes.length);
   const [like, setLike] = useState(0);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const [controler, setControler] = useState(false);
   const [editText, setEditText] = useState(post.text);
   const inputRefText = useRef();
   let history = useHistory();
+  const localstorage = JSON.parse(localStorage.user);
+  const token = localstorage.token;
 
   useEffect(() => {
-    likes.some(like => like.userId === user.user.id || like.id === user.user.id) ? setLike(1) : setLike(0);
+    likes.some(like => like.userId === localstorage.user.id || like.id === localstorage.user.id) ? setLike(1) : setLike(0);
 },[]);
 
 function likePost(config) {
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/like`, {}, config);
     request.then(response => {
+      setUser(localStorage.user);
         setLike(1);
         setLikeQuantity(response.data.post.likes.length);
-        setPeopleThatLiked([...peopleThatLiked, {"user.username": user.user.username}]);
+        setPeopleThatLiked([...peopleThatLiked, {"user.username": localstorage.user.username}]);
     });
     request.catch(() => {
         alert("Há uma instabilidade no servidor, tente novamente em alguns minutos");
@@ -52,9 +55,10 @@ function likePost(config) {
 function dislikePost(config) {
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/dislike`, {}, config);
     request.then(response => {
+      setUser(localStorage.user);
         setLike(0);
         setLikeQuantity(response.data.post.likes.length);
-        const teste = peopleThatLiked.filter(name => name['user.username'] !== user.user.username);
+        const teste = peopleThatLiked.filter(name => name['user.username'] !== localstorage.user.username);
         setPeopleThatLiked(teste);
     });
     request.catch(() => {
@@ -65,7 +69,7 @@ function dislikePost(config) {
 function toggleLike() {
     const config = { 
         headers:{ 
-            Authorization: `Bearer ${user.token}`
+            Authorization: `Bearer ${token}`
         }
     };
     like === 0 ? likePost(config) : dislikePost(config); 
@@ -95,7 +99,7 @@ function toggleLike() {
       text: editText,
     };
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.put(
       `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,
@@ -103,6 +107,7 @@ function toggleLike() {
       config
     );
     request.then((response) => {
+      setUser(localStorage.user);
       setControler(false);
       reloadingPosts();
 
@@ -114,14 +119,14 @@ function toggleLike() {
 
   function deletePost() {
     const config = {
-      headers: { Authorization: `Bearer ${user.token}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.delete(
       `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
       config
     );
     request.then(() => {
-      alert("sucess");
+      setUser(localStorage.user);
       if (location.pathname === "/timeline") {
         reloadingPosts();
       } else if (location.pathname === "/my-posts") {
@@ -189,12 +194,12 @@ function toggleLike() {
                     <h2>{postUser.username}</h2>
          </Link>
           <div class='icons'>
-            {post.user.id === user.user.id ? (
+            {post.user.id === localstorage.user.id ? (
               <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
             ) : (
               ""
             )}
-            {post.user.id === user.user.id ? (
+            {post.user.id === localstorage.user.id ? (
               <FaTrashAlt
                 id={id}
                 className='trash-icon'
