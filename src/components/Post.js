@@ -103,10 +103,8 @@ function toggleLike() {
       config
     );
     request.then((response) => {
-      console.log("sucess");
       setControler(false);
-
-      //Renderizar novamente - loadingPosts();
+      loadingPosts();
 
     });
     request.catch(() => {
