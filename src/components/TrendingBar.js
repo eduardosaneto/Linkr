@@ -4,16 +4,21 @@ import { Link } from 'react-router-dom'
 import Usercontext from '../contexts/UserContext'
 
 export default function TrendingBar() {
-    const { user } = useContext(Usercontext)
+    const { user, setUser } = useContext(Usercontext)
     const [hashtags, setHashtags] = useState([])
+    const localstorage = JSON.parse(localStorage.user);
+    const token = localstorage.token;
 
     useEffect(() => trendingTopics(),[])
 
     function trendingTopics() {
-        const config = {headers: {Authorization: `Bearer ${user.token}`}}
+        const config = {headers: {Authorization: `Bearer ${token}`}}
         const request = axios.get("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending", config)
 
-        request.then( response => {setHashtags(response.data.hashtags)})
+        request.then( response => {
+            setHashtags(response.data.hashtags);
+            setUser(localStorage.user);
+        })
     }
 
     return (

@@ -14,6 +14,10 @@ export default function LogIn(){
 
     let history = useHistory();
 
+    if(localStorage.length!==0){
+        history.push("/timeline");
+    }
+
     function SendInfo(e) {
         setDisabled(true);
         e.preventDefault();
@@ -25,6 +29,8 @@ export default function LogIn(){
         );
         request.then((e) => {
             setUser(e.data);
+            const userSerial = JSON.stringify(e.data);
+            localStorage.setItem("user",userSerial);
             history.push("/timeline");
         });
         request.catch((e) => {
