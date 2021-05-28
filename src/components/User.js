@@ -7,6 +7,7 @@ import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';
 import Post from './Post'
+import NavBar from './Navbar'
 
 export default function User(){
     const { user } = useContext(Usercontext)
@@ -52,7 +53,7 @@ export default function User(){
                         {userPosts.map(post =><Post key={post.id} post={post} postUser={post.user} likes={post.likes}/>)}
                     </Posts>
                     <Trending >
-                        <TrendingBar key={user.id}/>
+                        <TrendingBar/>
                     </Trending>
                 </div>
             </Container>

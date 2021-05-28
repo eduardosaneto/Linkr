@@ -135,7 +135,13 @@ const PostContainer = styled.div`
     padding: 18px 18px 20px 21px;
     background: #171717;
     border-radius: 16px;
-    margin-bottom: 16px;   
+    margin-bottom: 16px;
+    word-break: break-all;
+    @media(max-width: 611px){
+        border-radius: 0;
+        padding: 9px 18px 15px 15px;
+        height: 232px;
+    }   
 `;
 const Profile = styled.div`
     display: flex;
@@ -159,6 +165,17 @@ const Profile = styled.div`
         align-items:center;
         justify-content: space-between;
         height: 35px;
+    }
+
+    @media (max-width: 611px){
+        height: 97px;
+        img{
+            width: 40px;
+            height: 40px; 
+        }
+        p{
+            font-size: 9px;
+        }
     }
 `;
 const Content = styled.div`
@@ -185,6 +202,17 @@ const Content = styled.div`
         line-height: 20px;
         color: #B7B7B7;
     }
+
+    @media (max-width: 611px){
+        width: 82%;
+        >h2{
+            font-size: 16px;
+        }
+        >p{
+            font-size: 14px;
+            line-height: 16px;
+        }
+    }
 `;
 const LinkSnippet = styled.a`
     border-radius: 11px;
@@ -198,6 +226,12 @@ const LinkSnippet = styled.a`
         border-bottom-right-radius: 11px;
         height: 100%;
         width: 154px;
+    }
+    @media (max-width:611px){
+        height: 115px;
+        img{
+            width: 33%;
+        }
     }
 `;
 const Text = styled.div`
@@ -223,6 +257,22 @@ const Text = styled.div`
     > div p {
         color: #CECECE;
         font-size: 11px;
+    }
+    @media (max-width: 611px){
+        margin: 7px 7px 7px 11px;
+        width:67%;
+        h2{
+            font-size: 11px;
+            line-height: 13px;
+        }
+        p{
+            font-size: 9px;
+            line-height: 9px;
+        }
+        div{
+            font-size: 9px;
+            line-height: 9px;
+        }
     }
 `;
 
