@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios'
 import styled from 'styled-components'
-import { Container, Posts, Trending } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
 import TrendingBar from "./TrendingBar";
@@ -65,11 +65,3 @@ export default function Mylikes(){
         </>
     )
 }
-
-const Load = styled.div`
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    color: #FFF;
-    font-size: 30px;
-`
