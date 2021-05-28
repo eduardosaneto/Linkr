@@ -41,7 +41,7 @@ export default function Mylikes(){
         <>
             <Navbar />
             <Container>
-                <h1>my Likes</h1>
+                <h1>my likes</h1>
                 <div>
                     <Posts>
                         { isLoading ? <Load>Loading</Load> : ""}

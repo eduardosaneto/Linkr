@@ -28,6 +28,7 @@ export default function LogIn(){
             history.push("/timeline");
         });
         request.catch((e) => {
+            setDisabled(false);
             if (e.response.status === 403) {
                 alert("Usuário de email/senha incorretos");
                 return;
