@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Usercontext from "../contexts/UserContext";
-import { Container, Posts, Trending } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
@@ -32,44 +32,31 @@ export default function MyPosts() {
     });
   }
 
-  return (
-    <>
-      <Navbar />
-      <Container>
-        <h1>my posts</h1>
-        <div>
-          <Posts>
-            {requestLoading ? (
-              erro ? (
-                <p>
-                  Houve uma falha ao obter os posts,
-                  <br />
-                  por favor atualize a página.
-                </p>
-              ) : (
-                "Loading..."
-              )
-            ) : posts.length ? (
-              posts.map((post) => (
-                <Post
-                  key={post.id}
-                  id={post.id}
-                  post={post}
-                  postUser={post.user}
-                  likes={post.likes}
-                  loadMyPosts={loadMyPosts}
-                  location={location}
-                />
-              ))
-            ) : (
-              "Nenhum post encontrado"
-            )}
-          </Posts>
-          <Trending>
-            <TrendingBar />
-          </Trending>
-        </div>
-      </Container>
-    </>
-  );
+    return(
+        <>
+            <Navbar />
+            <Container>
+                <h1>my posts</h1>
+                <div>
+                    <Posts>
+                    {requestLoading
+                    ?(erro?<Load>Houve uma falha ao obter os posts,<br/>por favor atualize a página.</Load>:<Load>Loading</Load>)
+                    :(posts.length ? (posts.map( (post) => 
+                        <Post 
+                            key={post.id} id={post.id} post={post} 
+                            postUser={post.user} likes={post.likes}
+                            loadMyPosts={loadMyPosts}
+                            location={location}
+                        />)) : 
+                        <Load>Nenhum post encontrado</Load>)
+                    }
+                    </Posts>                    
+                    <Trending >
+                        <TrendingBar />
+                    </Trending>
+                    
+                </div>  
+            </Container>
+        </>
+    )
 }
