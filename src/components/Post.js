@@ -104,7 +104,7 @@ function toggleLike() {
     );
     request.then((response) => {
       setControler(false);
-      loadingPosts();
+      reloadingPosts();
 
     });
     request.catch(() => {
@@ -117,11 +117,10 @@ function toggleLike() {
       headers: { Authorization: `Bearer ${user.token}` },
     };
     const request = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.user.id}`,
       config
     );
     request.then(() => {
-      alert("sucess");
       if (location.pathname === "/timeline") {
         reloadingPosts();
       } else if (location.pathname === "/my-posts") {
