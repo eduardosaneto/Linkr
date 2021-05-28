@@ -20,7 +20,7 @@ export default function Mylikes(){
 
     function loadingPosts() {
         const localstorage = JSON.parse(localStorage.user);
-        const token = user?user.token:localstorage.token;
+        const token = localstorage.token;
         setIsLoading(true)
         setIsError(false)
         const config = { headers:{ Authorization: `Bearer ${token}`}};

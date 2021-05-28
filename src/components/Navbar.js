@@ -10,7 +10,7 @@ export default function Navbar() {
     const { user } = useContext(Usercontext);
     const [showMenu, setShowMenu] = useState(0);
     const localstorage = JSON.parse(localStorage.user);
-    const token = user?user.token:localstorage.token;
+    const token = localstorage.token;
     const image = localstorage.user.avatar;
 
     function toggleMenu() {

@@ -9,7 +9,7 @@ export default function CreatePosts({loadingPosts}) {
   const [isDisabled, setIsDisabled] = useState(false);
   const {user, setUser} = useContext(Usercontext);
   const localstorage = JSON.parse(localStorage.user);
-  const token = user?user.token:localstorage.token;
+  const token = localstorage.token;
   const image = localstorage.user.avatar;
   
   function Submit(event) {

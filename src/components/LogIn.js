@@ -14,6 +14,10 @@ export default function LogIn(){
 
     let history = useHistory();
 
+    if(localStorage.length!==0){
+        history.push("/timeline");
+    }
+
     function SendInfo(e) {
         setDisabled(true);
         e.preventDefault();

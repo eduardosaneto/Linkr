@@ -16,7 +16,7 @@ export default function Post({post, id, postUser, likes}) {
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
     const localstorage = JSON.parse(localStorage.user);
-    const token = user?user.token:localstorage.token;
+    const token = localstorage.token;
 
     useEffect(() => {
         likes.some(like => like.userId === localstorage.user.id || like.id === localstorage.user.id) ? setLike(1) : setLike(0);

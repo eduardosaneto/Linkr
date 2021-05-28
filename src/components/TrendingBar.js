@@ -7,7 +7,7 @@ export default function TrendingBar() {
     const { user, setUser } = useContext(Usercontext)
     const [hashtags, setHashtags] = useState([])
     const localstorage = JSON.parse(localStorage.user);
-    const token = user?user.token:localstorage.token;
+    const token = localstorage.token;
 
     useEffect(() => trendingTopics(),[])
 

@@ -13,13 +13,13 @@ export default function MyPosts(){
     const [ posts, setPosts ] = useState([]);
     const [ requestLoading, setRequestLoading ] = useState(1);
     const [ erro, setErro ] = useState(0);
-
-    
+    const localstorage = JSON.parse(localStorage.user);
+    console.log(localstorage.user['id'])
     useEffect(()=>{
-        const localstorage = JSON.parse(localStorage.user);
-        const token = user?user.token:localstorage.token;
+        
+        const token = localstorage.token;
         const config = { headers:{ Authorization: `Bearer ${token}`}};
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user.id}/posts`,config);
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user['id']}/posts`,config);
 
         request.then((e)=>{
             setUser(localStorage.user);
