@@ -104,4 +104,8 @@ export const Load = styled.div`
     text-align: center;
     color: #FFF;
     font-size: 30px;
+
+    @media (max-width: 611px){
+        font-size: 25px;
+    }
 `;
