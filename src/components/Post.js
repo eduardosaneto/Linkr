@@ -58,7 +58,7 @@ export default function Post({post, id, postUser, likes}) {
     return (
         <PostContainer key={postUser.id}>
             <Profile>
-                <Link to={`user/${postUser.id}`}>
+                <Link to={`/user/${postUser.id}`}>
                     <img src={postUser.avatar} alt={`${postUser.username}' profile`}/>
                 </Link>
                 <div>
@@ -89,13 +89,13 @@ export default function Post({post, id, postUser, likes}) {
                 </div>
             </Profile>
             <Content>
-                <Link to={`user/${postUser.id}`}>
+                <Link to={`/user/${postUser.id}`}>
                     <h2>{postUser.username}</h2>
                 </Link>
                 <div>
                     <p>
                         <ReactHashtag renderHashtag={(hashtagValue) => (
-                            <Link to={`hashtag/${hashtagValue}`.replace("#","")}>
+                            <Link to={`/hashtag/${hashtagValue}`.replace("#","")}>
                             <Hashtag>{hashtagValue}</Hashtag>
                             </Link>)}>
                             {post.text} 
@@ -170,10 +170,10 @@ const Profile = styled.div`
 const Content = styled.div`
     width: 503px;
     height: 100%;
+    padding-top: 5px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    
     h2{
         color: #FFF;
         font-size: 19px;
@@ -191,7 +191,6 @@ const Content = styled.div`
         line-height: 20px;
         color: #B7B7B7;
     }
-
     @media (max-width: 611px){
         width: 82%;
         >h2{
@@ -215,6 +214,8 @@ const LinkSnippet = styled.a`
         border-bottom-right-radius: 11px;
         height: 100%;
         width: 154px;
+        object-fit: cover;
+        background-position: center;
     }
     @media (max-width:611px){
         height: 115px;
@@ -224,21 +225,23 @@ const LinkSnippet = styled.a`
     }
 `;
 const Text = styled.div`
-    padding: 23px 27px 23px 19px;
+    padding: 10px;
     max-width: 350px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    overflow-y: hidden;
+    justify-content: center;
+    overflow-y: scroll;
     
-    h2{
+    > h2{        
         font-size: 16px;
         color: #CECECE;
+        margin-bottom: 10px;
     }
-    p{
+    > p{
         color: #9B9595;
         font-size: 11px;
         line-height: 15px;
+        margin-bottom: 15px;
     }
     > div {
         width: 100%;
@@ -248,9 +251,9 @@ const Text = styled.div`
         font-size: 11px;
     }
     @media (max-width: 611px){
-        margin: 7px 7px 7px 11px;
         width:67%;
         h2{
+            margin-top: 5px;
             font-size: 11px;
             line-height: 13px;
         }
