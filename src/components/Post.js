@@ -16,6 +16,7 @@ export default function Post({post, id, postUser, likes}) {
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
     const [like, setLike] = useState(0);
     const { user } = useContext(UserContext);
+    const space = " " + " e";
 
     console.log(user.user.username);
 
@@ -71,11 +72,12 @@ export default function Post({post, id, postUser, likes}) {
                             <span>
                                 {peopleThatLiked.map((name, i) => {
                                 if(i < 2) {
-                                    if(i === 0) return like === 1 ? <p>Você </p> : <p>{name['user.username']} </p>
-                                    if(i === 1) return <p>, {name['user.username']}</p>
+                                    if(i === 0) return <p>{like === 1 ? "Você" : name['user.username']}</p>
+                                    // if(i === 1) return <p>, {like === 1 ? name['user.username'] !== user.user.username : name['user.username']} </p>
+                                    if(i === 1) return <p>, {name['user.username']} </p>
                                 }
                                 })}
-                                <p>{`${peopleThatLiked.length >= 4 ? `e outras ${peopleThatLiked.length - 2} pessoas` : 
+                                <p> {'\u00A0'}{`${peopleThatLiked.length >= 4 ? `e outras ${peopleThatLiked.length - 2} pessoas` : 
                                     `${peopleThatLiked.length === 3 ? `e mais uma pessoa` : 
                                     `${peopleThatLiked.length === 2 ? `curtiram isso` : 
                                     `${peopleThatLiked.length === 1 ? `curtiu` : ""}`}`}`}`}
