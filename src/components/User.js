@@ -2,7 +2,6 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
-import styled from 'styled-components'
 import Navbar from './Navbar';
 import Usercontext from '../contexts/UserContext'
 import TrendingBar from './TrendingBar';

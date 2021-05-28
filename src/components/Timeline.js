@@ -1,5 +1,4 @@
 import axios from 'axios'
-import styled from 'styled-components'
 import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
