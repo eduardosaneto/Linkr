@@ -1,7 +1,7 @@
 import axios from 'axios'
 import styled from 'styled-components'
 import { useState, useContext, useEffect } from 'react';
-import { Container, Posts, Trending } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
 import UserContext from "../contexts/UserContext";
@@ -44,7 +44,7 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        { isLoading ? "" : <CreatePosts loadingPosts = {loadingPosts}/>}
                         { isLoading ? <Load>Loading</Load> : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
@@ -63,11 +63,3 @@ export default function Timeline(){
         </>
     )
 }
-
-const Load = styled.div`
-    display: flex;
-    justify-content: center;
-    text-align: center;
-    color: #FFF;
-    font-size: 30px;
-`
