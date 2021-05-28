@@ -199,5 +199,6 @@ const Button = styled.button`
     height: 22px;
     left: calc(100vw - 127px);
     top: 130px;
+    font-size: 13px;
   }
 `;
