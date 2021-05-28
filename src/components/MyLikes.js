@@ -21,8 +21,8 @@ export default function Mylikes(){
     function loadingPosts() {
         const localstorage = JSON.parse(localStorage.user);
         const token = localstorage.token;
-        setIsLoading(true)
-        setIsError(false)
+        setIsLoading(true);
+        setIsError(false);
         const config = { headers:{ Authorization: `Bearer ${token}`}};
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked', config)
 
