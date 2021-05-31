@@ -28,7 +28,6 @@ export default function Timeline(){
 
         request.then( response => {
             const followingUsers = response.data.users
-            console.log(followingUsers)
             if(followingUsers.length !== 0){
                 loadingPosts()
                 return
@@ -38,13 +37,13 @@ export default function Timeline(){
             setIsLoading(false)
         })}
 
-        function loadingPosts() {
+    function loadingPosts() {
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
             setUser(localStorage.user);
-            console.log("teste",response.data)
             const data = response.data.posts
+            console.log("Posts:", data)
             setPosts([...response.data.posts])
             setIsLoading(false)
             if(posts === data) {
@@ -67,7 +66,7 @@ export default function Timeline(){
                         { isLoading ? "" : <CreatePosts loadingPosts = {loadingPosts}/>}
                         { isLoading ? <Load>Loading</Load> : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isEmpty && !isLoading ? <Load>Nenhum post encontrado</Load> : ""}
+                        { isEmpty && !isLoading ? <Load>Nenhuma publicação encontrada</Load> : ""}
                         {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
