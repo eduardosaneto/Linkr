@@ -15,19 +15,35 @@ export default function Timeline(){
     const [isError, setIsError] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
     const location = useLocation();
+    const localstorage = JSON.parse(localStorage.user);
+    const token = localstorage.token;
+    const config = { headers:{ Authorization: `Bearer ${token}`}};
 
-    useEffect(() => {loadingPosts()},[])
+    useEffect(() => {checkingFollowingUsers()},[])
 
-    function loadingPosts() {
-        const localstorage = JSON.parse(localStorage.user);
-        const token = localstorage.token;
+    function checkingFollowingUsers() {
         setIsLoading(true)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer ${token}`}};
-        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts', config)
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
+
+        request.then( response => {
+            const followingUsers = response.data.users
+            console.log(followingUsers)
+            if(followingUsers.length !== 0){
+                loadingPosts()
+                return
+            }
+            //Call message "You don't follow anyone"
+            alert("Você não segue ninguém ainda, procure por perfis na busca")
+            setIsLoading(false)
+        })}
+
+        function loadingPosts() {
+        const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
             setUser(localStorage.user);
+            console.log("teste",response.data)
             const data = response.data.posts
             setPosts([...response.data.posts])
             setIsLoading(false)
