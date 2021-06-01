@@ -33,7 +33,6 @@ export default function User() {
 
 
     function username() {
-        //return userPosts[0].user.username +"'s posts";
         return userInfo.username + "'s posts";
     }
 
