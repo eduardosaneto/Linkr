@@ -32,7 +32,6 @@ body.react-confirm-alert-body-element {
 }
 
 .react-confirm-alert-body {
-  font-family: Arial, Helvetica, sans-serif;
   width: 597px;
   height: 262px;
   padding: 30px;
@@ -44,14 +43,14 @@ body.react-confirm-alert-body-element {
   border-radius: 50px;
   box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
   color: #666;
-  font-family: Lato;
+  font-family: 'Lato', sans-serif;
   text-align: center;
   font-style: normal;
   font-weight: bold;
   font-size: 34px;
   line-height: 41px;
   color: #ffffff;
-}
+  }
 
 .react-confirm-alert-svg {
   position: absolute;
@@ -85,8 +84,7 @@ body.react-confirm-alert-body-element {
   border: none;
   display: inline-block;
   padding: 6px 18px;
-  color: #fff;
-  
+  color: #fff;  
   border-radius: 5px;
   cursor: pointer;
   width: 134px;
@@ -136,5 +134,39 @@ body.react-confirm-alert-body-element {
   }
   to {
     opacity: 1;
+  }
+}
+
+@media (max-width: 611px) {
+  .react-confirm-alert-body {
+    margin: 0 auto;
+    width: 70%;
+    height: 131px;
+    padding: 30px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 10px 38px rgba(0, 0, 0, 0.13);
+    font-size: 17px;
+    line-height: 20px;
+  }
+  .react-confirm-alert-button-group > button {
+    outline: none;
+    background: #1877f2;
+    border: none;
+    display: inline-block;
+    padding: 3px 9px;
+    color: #fff;  
+    border-radius: 2.5px;
+    width: 85px;
+    height: 23px;
+    font-size: 11px;
+    line-height: 11px;
+  }  
+  .react-confirm-alert-button-group {
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
