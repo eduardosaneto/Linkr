@@ -2,13 +2,16 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Usercontext from '../contexts/UserContext'
+import Usercontext from '../contexts/UserContext';
+import ReactHashtag from "react-hashtag";
+import {FaHashtag} from 'react-icons/fa';
 
 export default function TrendingBar() {
-    const { user, setUser } = useContext(Usercontext)
-    const [hashtags, setHashtags] = useState([])
+    const { user, setUser } = useContext(Usercontext);
+    const [hashtags, setHashtags] = useState([]);
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
+    const [searchhashtags, setSearchHashtags] = useState('');
 
     useEffect(() => trendingTopics(),[])
 
@@ -27,8 +30,35 @@ export default function TrendingBar() {
         <h1>trending</h1>
         <ul> 
             { hashtags.map(hashtag => <Link to={`/hashtag/${hashtag.name}`}><li >#{hashtag.name}</li></Link>)}
-        </ul> 
+        </ul>
+           <div>
+            
+             <input placeholder="type a hashtag">
+             
+             </input><FaHashtagAlt
+                className='hashtag-icon'
+              />
+      
+            
+           </div>
+             
         </>
     )
 }
 
+const Hashtag = styled.span`
+  color: #fff;
+  font-size: 19px !important;
+line-height: 23px;
+`;
+
+const FaHashtagAlt = styled(FaHashtag)`
+  color: #ffffff;
+  font-size: 19px;
+line-height: 23px;
+  cursor: pointer;
+  margin-left: 10px;
+  position:absolute;
+  top:8px;
+  left:17px;
+`;

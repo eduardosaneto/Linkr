@@ -53,6 +53,24 @@ export const Trending = styled.aside`
         border-bottom: 1px solid #4D4D4D;
     };
 
+    div {
+        display:flex;
+        justify-content: center;
+        position: relative;
+        height:35px;
+    }
+
+    input {
+        width: 269px;
+height: 35px;
+background: #252525;
+border-radius: 8px;
+padding-left: 40px;
+  border: none;
+  outline-color: transparent;
+    }
+
+
     ul {
         display: flex;
         flex-direction: column;

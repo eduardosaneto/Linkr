@@ -8,13 +8,12 @@ import { FaHeart } from "react-icons/fa";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { FaTrash } from "react-icons/fa";
-import {FaPencilAlt} from 'react-icons/fa';
+import { FaPencilAlt } from "react-icons/fa";
 
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 
 import UserContext from "../contexts/UserContext";
-
 
 export default function Post({
   post,
@@ -32,13 +31,12 @@ export default function Post({
   const localstorage = JSON.parse(localStorage.user);
   const token = localstorage.token;
   const [controler, setControler] = useState(false);
-  const [editText, setEditText]= useState(post.text);
+  const [editText, setEditText] = useState(post.text);
   const inputRefText = useRef(null);
   const [isDisabled, setIsDisabled] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
-
-  console.log(controler);
-  console.log(editText);
+ 
 
   useEffect(() => {
     likes.some(
@@ -141,48 +139,55 @@ export default function Post({
   }
 
   function ShowEdit() {
-    if(controler){
-    setControler(false)
-    return
-   }else{
-    setControler(true)
-   }
-  };
+    if (controler) {
+      setControler(false);
+      return;
+    } else {
+      setControler(true);
+    }
+  }
 
-  useEffect(()=>{
-    if(controler){
-      inputRefText.current.focus()
-   }
-    setEditText(post.text);
-  },[controler]);
-  
-  function Edit(event){
+  useEffect(() => {
+    if (controler) {
+      inputRefText.current.focus();
+      setIsEdit(false);
+    }
+    else {setEditText(post.text);
+           }
+  }, [controler]);
 
+  function Edit(event) {
     event.preventDefault();
-
+    console.log("oi")
     const body = {
-      text: editText
+      text: editText,
     };
     const config = {
-        headers: { Authorization: `Bearer ${token}` },
-      };
-      const request= axios.put(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,body,config)
-      
-      
-      request.then((response)=>{
-      console.log("sucess", response.data);
-      //loadMyPosts();
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const request = axios.put(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,
+      body,
+      config
+    );
+   
+    request.then((response) => {
+      setIsEdit(true);
+      console.log("sucess", response.data, isEdit);
       setControler(false);
       
-      
-    }
-      )
-      request.catch(()=>{
-       // setIsDisabled(false);
-    
-        alert('Não foi possível salvar as alterações')
-      })
+    });
 
+    request.catch(() => {
+      // setIsDisabled(false);
+
+      alert("Não foi possível salvar as alterações");
+    });
+  }
+
+
+  function keydowm(e){
+    e.keyCode === 27 && setControler(false);
   }
   return (
     <PostContainer key={postUser.id}>
@@ -258,9 +263,11 @@ export default function Post({
             <h2>{postUser.username}</h2>
           </Link>
           <div class='icons'>
-          {post.user.id === localstorage.user.id  ? 
-          <FaPencilAlt onClick={ShowEdit} className="pencil-icon"/> : ""}
-            
+            {post.user.id === localstorage.user.id ? (
+              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+            ) : (
+              ""
+            )}
             {post.user.id === localstorage.user.id ? (
               <FaTrashAlt
                 id={id}
@@ -269,36 +276,35 @@ export default function Post({
               />
             ) : (
               ""
-            )}
-            
-            {" "}
+            )}{" "}
           </div>
         </div>
 
-      
-        {controler ?
+        {controler ? (
           <form onSubmit={Edit}>
-            <input 
-            type="text" 
-            required 
-            value={editText} 
-            onChange={(e) => setEditText(e.target.value)} 
-            ref={inputRefText}
-            onKeyDown={(e) => e.keyCode == 27? setControler(false):''}
-          //  isDisabled={isDisabled}
-             />
+            <input
+              type='text'
+              required
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              ref={inputRefText}
+              onKeyDown={(e) => keydowm(e)}
+              //  isDisabled={isDisabled}
+            />
           </form>
-        :  <p>
-              <ReactHashtag
-                renderHashtag={(hashtagValue) => (
-                  <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
-                    <Hashtag>{hashtagValue}</Hashtag>
-                  </Link>
-                )}>
-                {post.text} 
+        ) : (
+          <p>
+            <ReactHashtag
+              renderHashtag={(hashtagValue) => (
+                <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                  <Hashtag>{hashtagValue}</Hashtag>
+                </Link>
+              )}>
+              {isEdit ? editText : post.text}
+              {/* variavel com estado */}
             </ReactHashtag>
-           </p>
-      }
+          </p>
+        )}
 
         <LinkSnippet href={post.link} target={"_blank"}>
           <Text>
@@ -390,20 +396,21 @@ const Content = styled.div`
     }
   }
 
-  .pencil-icon  {
-      color: #FFFFFF;
-      width: 14px;
-      height: 14px;
-      cursor: pointer;
-      margin-left: 15px;
-    }
+  .pencil-icon {
+    color: #ffffff;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
 
   > h2 {
     color: #fff;
     font-size: 19px;
   }
   > p {
-    font-size: 17px;
+    font-size: 19px;
+    line-height: 23px;
     color: #b7b7b7;
     max-height: 70px;
   }
@@ -550,7 +557,8 @@ const HeartIconFill = styled(FaHeart)`
 
 const Hashtag = styled.span`
   color: #fff;
-  font-weight: 700;
+  font-size: 19px;
+  line-height: 23px;
 `;
 
 const Tooltip = styled(Tippy)`
