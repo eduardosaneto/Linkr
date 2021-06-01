@@ -1,13 +1,17 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
+// import { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
-import Usercontext from '../contexts/UserContext';
+// import { IoIosSearch } from "react-icons/io";
+// import Usercontext from '../contexts/UserContext';
 import ClickAwayListener from 'react-click-away-listener';
+import SearchBox from './SearchBox';
 
 export default function Navbar() {
 
-    const { user } = useContext(Usercontext);
+    // const { user } = useContext(Usercontext);
+    const [search, setSearch] = useState("");
     const [showMenu, setShowMenu] = useState(0);
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -25,6 +29,16 @@ export default function Navbar() {
                 <Link to='/timeline'>
                     <h1>linkr</h1>
                 </Link>
+                <SearchBox />
+                {/* <Form>
+                    <input 
+                        type="search" placeholder="Search for people and friends"
+                        value={search} onChange={(e) => setSearch(e.target.value)}
+                    />
+                    <button type="submit">
+                    <IoIosSearch className="search"/>  
+                    </button>            
+                </Form> */}
                 <div></div>
             </Header>
             <ClickAwayListener onClickAway={() => setShowMenu(0)}>
@@ -51,6 +65,44 @@ export default function Navbar() {
         </>
     )
 }
+
+// const Form = styled.form`    
+//     position: relative;
+//     input {
+//         width: 563px;
+//         height: 45px;
+//         padding: 12px 0px 10px 17px;
+//         border: none;
+//         border-radius: 8px;
+//         background: #FFFFFF;
+//         font-size: 19px;
+//         line-height: 23px;
+//         color: #666;
+//         cursor: pointer;
+//     }
+//     button {
+//         height: 43px;
+//         border: none;
+//         border-radius: 8px;
+//         padding: 10px;
+//         position: absolute;
+//         top: 1px;
+//         right: 0;
+//         background: #fff;
+//     }
+//     .search {
+//         font-size: 26px;
+//         color: #C6C6C6
+//     }
+//     input::placeholder {
+//         color: #C6C6C6;
+//     }
+//     input:focus, button:focus {
+//         border: 0px solid #333;
+//         box-shadow: 0 0 0 0;
+//         outline: 0;
+//     }
+// `;
 
 const Menu = styled.div`
     width: 100%;
@@ -166,4 +218,3 @@ const Header = styled.div`
         }
     }
 `;
-
