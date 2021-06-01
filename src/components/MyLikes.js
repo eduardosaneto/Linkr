@@ -5,6 +5,7 @@ import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
 import TrendingBar from "./TrendingBar";
+import useInterval from 'react-useinterval';
 
 import UserContext from "../contexts/UserContext";
 
@@ -38,6 +39,8 @@ export default function Mylikes(){
         })
         request.catch( () => {setIsError(true); setIsLoading(false)})
     }
+
+    useInterval(loadingPosts, 15000);
 
     return(
         <>

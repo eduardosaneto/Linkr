@@ -518,6 +518,12 @@ const Text = styled.div`
     color: #cecece;
     font-size: 11px;
   }
+  @-moz-document url-prefix() { 
+    overflow:hidden;
+    p,h2{
+      word-break: break-word !important;
+    }
+  }
   @media (max-width: 611px) {
     width: 67%;
     h2 {
