@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
+import useInterval from 'react-useinterval';
 
 export default function Timeline(){
     const {user, setUser} = useContext(UserContext);
@@ -17,7 +18,10 @@ export default function Timeline(){
     const [isEmpty, setIsEmpty] = useState(false)
     const location = useLocation();
 
-    useEffect(() => {loadingPosts()},[])
+    useEffect(() => {
+        loadingPosts()
+        console.log('rodei useEffect');
+    },[])
 
     function loadingPosts() {
         const localstorage = JSON.parse(localStorage.user);
@@ -39,8 +43,10 @@ export default function Timeline(){
             }
         })
 
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false)});
     }
+    
+    useInterval(loadingPosts, 15000);
 
     return(
         <>
