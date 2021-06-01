@@ -104,6 +104,7 @@ const InputContainer = styled.div`
     @media (max-width: 611px){
         width: 100vw;
         height: auto;
+        padding-bottom: 40px;
     }
 `
 const LogoContainer = styled.div`
@@ -130,7 +131,7 @@ const LogoContainer = styled.div`
 
     @media (max-width: 611px){
         width: 100vw;
-        height: 175px;
+        height: 155px;
         text-align: center;
 
         div{
@@ -199,12 +200,12 @@ const Inputs = styled.div`
         width: 90%;
         input{
             font-size: 17px;
-            height: 55px;
+            height: 50px;
         }
 
         button{
             font-size: 22px;
-            height: 55px;
+            height: 50px;
         }
 
         p{
