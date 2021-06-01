@@ -75,7 +75,7 @@ export const Trending = styled.aside`
 
 export const Posts = styled.div`
     width: 65.2%;
-
+    position:relative;
     ul {
         width: 100%;
     }

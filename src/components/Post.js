@@ -132,6 +132,7 @@ export default function Post({
   }
 
   return (
+    <>
     <PostContainer key={postUser.id}>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
@@ -243,6 +244,8 @@ export default function Post({
         </LinkSnippet>
       </Content>
     </PostContainer>
+    <Comments id={id} />
+    </>
   );
 }
 
@@ -255,7 +258,7 @@ const PostContainer = styled.div`
   padding: 18px 18px 20px 21px;
   background: #171717;
   border-radius: 16px;
-  margin-bottom: 16px;
+  z-index:1;
   @media (max-width: 611px) {
     border-radius: 0;
     padding: 9px 18px 15px 15px;
