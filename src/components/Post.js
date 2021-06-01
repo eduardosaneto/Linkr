@@ -158,7 +158,6 @@ export default function Post({
 
   function Edit(event) {
     event.preventDefault();
-    console.log("oi")
     const body = {
       text: editText,
     };
@@ -172,14 +171,13 @@ export default function Post({
     );
    
     request.then((response) => {
-      setIsEdit(true);
-      console.log("sucess", response.data, isEdit);
       setControler(false);
+      setIsEdit(true);
+      setEditText(response.data.post.tex
       
     });
 
     request.catch(() => {
-      // setIsDisabled(false);
 
       alert("Não foi possível salvar as alterações");
     });
@@ -289,7 +287,6 @@ export default function Post({
               onChange={(e) => setEditText(e.target.value)}
               ref={inputRefText}
               onKeyDown={(e) => keydowm(e)}
-              //  isDisabled={isDisabled}
             />
           </form>
         ) : (
