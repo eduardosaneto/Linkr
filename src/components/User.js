@@ -62,7 +62,6 @@ export default function User() {
         request.then((e) => {
             const idList = e.data.users.map((e) => e.id);
             setFollowList(idList);
-            console.log(idList);
         });
     }
 
@@ -77,8 +76,6 @@ export default function User() {
     }
 
     function FollowUnfollow() {
-        console.log(followList);
-        console.log(followList.includes(userInfo.id));
         const follow = followList.includes(userInfo.id) ? "unfollow" : "follow";
         const request = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${userInfo.id}/${follow}`,
@@ -86,11 +83,10 @@ export default function User() {
             config
         );
         request.then(() => {
-            console.log("consegui follow/unfollow");
             FollowList();
         });
         request.catch(() => {
-            console.log("n consegui follow/unfollow");
+            alert("Não foi possível executar a operação");
         });
     }
 
@@ -114,21 +110,25 @@ export default function User() {
                                 )}
                                 <h1>{userInfo ? username() : ""}</h1>
                             </Title>
-                            <Button
-                                follow={
-                                    userInfo
+                            {userInfo.id === user.id ? (
+                                ""
+                            ) : (
+                                <Button
+                                    follow={
+                                        userInfo
+                                            ? followList.includes(userInfo.id)
+                                            : false
+                                    }
+                                    onClick={FollowUnfollow}
+                                >
+                                    {" "}
+                                    {userInfo
                                         ? followList.includes(userInfo.id)
-                                        : false
-                                }
-                                onClick={FollowUnfollow}
-                            >
-                                {" "}
-                                {userInfo
-                                    ? followList.includes(userInfo.id)
-                                        ? "Unfollow"
-                                        : "Follow"
-                                    : "Follow"}{" "}
-                            </Button>
+                                            ? "Unfollow"
+                                            : "Follow"
+                                        : "Follow"}{" "}
+                                </Button>
+                            )}
                         </>
                     )}
                 </TitleContainer>
