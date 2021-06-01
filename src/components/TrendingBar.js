@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
 import Usercontext from '../contexts/UserContext'
 
 export default function TrendingBar() {
@@ -26,7 +27,8 @@ export default function TrendingBar() {
         <h1>trending</h1>
         <ul> 
             { hashtags.map(hashtag => <Link to={`/hashtag/${hashtag.name}`}><li >#{hashtag.name}</li></Link>)}
-        </ul>
+        </ul> 
         </>
     )
 }
+
