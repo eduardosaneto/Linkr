@@ -200,7 +200,7 @@ export default function Post({
         </div>
         <div>
           <CommentIcon/>
-          <p>3 comments</p>
+          <p>{post.commentCount} comments</p>
         </div>
       </Profile>
       <Content>
