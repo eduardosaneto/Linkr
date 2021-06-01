@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Usercontext from "../contexts/UserContext";
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import useInterval from 'react-useinterval';
 import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
@@ -34,6 +35,8 @@ export default function MyPosts() {
       setErro(1);
     });
   }
+
+  useInterval(loadMyPosts, 15000);
 
   return (
     <>
