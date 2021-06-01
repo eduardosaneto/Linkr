@@ -29,7 +29,7 @@ export default function Comments({id}) {
                 </ProfilePicture>
                 <div className="comment">
                     <div className="username">João Avatares</div>
-                    <div className="text">Adorei esse post, ajuda muito a usar Material UI com React!</div>
+                    <p>Adorei esse post, ajuda muito a usar Material UI com React!</p>
                 </div>
             </CommentBox>
             <InputBox>
@@ -62,7 +62,7 @@ const CommentsContainer = styled.div`
         font-weight: 700;
     }
 
-    .text{
+    p{
         color: #ACACAC;
         padding-top: 5px;
         min-width: 16px;
