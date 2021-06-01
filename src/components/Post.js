@@ -10,6 +10,8 @@ import "tippy.js/dist/tippy.css";
 import { FaTrash } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
+import Comments from './Comments';
+import { AiOutlineComment } from 'react-icons/ai';
 
 import UserContext from "../contexts/UserContext";
 
@@ -196,6 +198,10 @@ export default function Post({
             </p>
           </Tooltip>
         </div>
+        <div>
+          <CommentIcon/>
+          <p>3 comments</p>
+        </div>
       </Profile>
       <Content>
         <div class='boxName'>
@@ -262,8 +268,8 @@ const Profile = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 104px;
-
+  height: 65%;
+  
   img {
     border-radius: 50%;
     width: 50px;
@@ -282,7 +288,7 @@ const Profile = styled.div`
   }
 
   @media (max-width: 611px) {
-    height: 97px;
+
     img {
       width: 40px;
       height: 40px;
@@ -468,6 +474,11 @@ const Hashtag = styled.span`
   color: #fff;
   font-weight: 700;
 `;
+
+const CommentIcon = styled(AiOutlineComment)`
+  font-size: 18px;
+  color: #fff;
+`
 
 const Tooltip = styled(Tippy)`
   background: #ebebeb !important;
