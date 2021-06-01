@@ -19,8 +19,7 @@ export default function Timeline(){
     const location = useLocation();
 
     useEffect(() => {
-        loadingPosts()
-        console.log('rodei useEffect');
+        loadingPosts();
     },[])
 
     function loadingPosts() {
