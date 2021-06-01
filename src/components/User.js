@@ -2,11 +2,13 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+
 import styled from "styled-components";
 import Navbar from "./Navbar";
 import Usercontext from "../contexts/UserContext";
 import TrendingBar from "./TrendingBar";
 import Post from "./Post";
+import useInterval from 'react-useinterval';
 
 export default function User() {
     const { user, setUser } = useContext(Usercontext);
@@ -28,6 +30,7 @@ export default function User() {
         loadingPostsUser();
         FollowList();
     }, []);
+
 
     function username() {
         //return userPosts[0].user.username +"'s posts";
@@ -66,6 +69,7 @@ export default function User() {
         });
     }
 
+
     function loadingUser() {
         const request = axios.get(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${id}`,
@@ -93,8 +97,11 @@ export default function User() {
             setDisabled(false);
         });
     }
+
+    useInterval(loadingPostsUser, 15000);
     
     return (
+
         <>
             <Navbar />
             <Container>
@@ -194,4 +201,8 @@ const Button = styled.button`
     color: ${(props) => (props.follow ? "#1877F2" : "#FFF")};
     font-size: 14px;
     font-weight: 700;
+
+    &:hover{
+        cursor:pointer;
+    }
 `;
