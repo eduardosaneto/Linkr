@@ -173,7 +173,7 @@ export default function Post({
     request.then((response) => {
       setControler(false);
       setIsEdit(true);
-      setEditText(response.data.post.tex
+      setEditText(response.data.post.text)
       
     });
 
@@ -298,7 +298,7 @@ export default function Post({
                 </Link>
               )}>
               {isEdit ? editText : post.text}
-              {/* variavel com estado */}
+              
             </ReactHashtag>
           </p>
         )}
