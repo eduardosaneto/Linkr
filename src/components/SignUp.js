@@ -24,6 +24,7 @@ export default function SignUp() {
             history.push("/");
         });
         request.catch((e) => {
+            setDisabled(false);
             if (e.response.status === 403) {
                 alert("O email inserido já está cadastrado!");
                 return;
