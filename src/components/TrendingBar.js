@@ -1,6 +1,6 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState,  } from "react";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Usercontext from "../contexts/UserContext";
 import ReactHashtag from "react-hashtag";
@@ -11,13 +11,16 @@ export default function TrendingBar() {
   const [hashtags, setHashtags] = useState([]);
   const localstorage = JSON.parse(localStorage.user);
   const token = localstorage.token;
-  const [searchhashtags, setSearchHashtags] = useState("");
-  
-  console.log(SearchHashtags);
+  const [searchHashtags, setSearchHashtags] = useState("");
+  let history = useHistory();
 
-  useEffect(() => trendingTopics(), []);
+  
+
+  useEffect(() => trendingTopics(), [searchHashtags]);
 
   function trendingTopics() {
+    const params ={};
+
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const request = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending",
@@ -30,23 +33,33 @@ export default function TrendingBar() {
     });
   }
 
+ function RedirectToHashtag(event){
+  event.preventDefault();
+  const newHashtags = hashtags.map((hashtag) => (hashtag.name))
+  if(newHashtags.includes(searchHashtags)) {
+    history.push(`/hashtag/${searchHashtags}`)
+  }
+ }
+ 
   return (
     <>
       <h1>trending</h1>
       <ul>
-        {hashtags.map((hashtag) => (
+        {hashtags.lenght === 0 ? "" : hashtags.map((hashtag) => (
           <Link to={`/hashtag/${hashtag.name}`}>
             <li>#{hashtag.name}</li>
           </Link>
         ))}
       </ul>
       <div>
-        <input
+        <form onSubmit = {hashtags.lenght !== 0 ? RedirectToHashtag : ""}>
+        <input 
+          
           type='text'
-          value={searchhashtags}
+          value={searchHashtags}
           placeholder='type a hashtag'
           onChange={(e) => setSearchHashtags(e.target.value)}
-         />
+         /></form>
         <FaHashtagAlt className='hashtag-icon' />
       </div>
     </>
