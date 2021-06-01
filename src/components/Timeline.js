@@ -8,6 +8,7 @@ import UserContext from "../contexts/UserContext";
 import loading from '../img/loading.svg'
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
+import useInterval from 'react-useinterval';
 
 export default function Timeline(){
     const {user, setUser} = useContext(UserContext);
@@ -16,6 +17,7 @@ export default function Timeline(){
     const [isError, setIsError] = useState(false)
     const [isEmpty, setIsEmpty] = useState(false)
     const [isFollowing, setIsFollowing] = useState(true)
+    const [followingUsers,setFollowingUsers] = useState([]);
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -29,8 +31,9 @@ export default function Timeline(){
 
         request.then( response => {
             setUser(localStorage.user);
-            const followingUsers = response.data.users
-            if(followingUsers.length !== 0){
+            const following = response.data.users;
+            setFollowingUsers(following);
+            if(following.length !== 0){
                 loadingPosts()
                 return
             }
@@ -56,8 +59,11 @@ export default function Timeline(){
             }
         })
 
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false)});
     }
+
+    
+    useInterval(checkFollowingUsers, 15000);
 
     return(
         <>
