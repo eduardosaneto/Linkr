@@ -5,6 +5,7 @@ import Navbar from './Navbar';
 import Post from './Post';
 import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
+import loading from '../img/loading.svg'
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
 
@@ -65,7 +66,7 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        { isLoading ? <Load>Loading</Load>  : <CreatePosts loadingPosts = {loadingPosts}/>}
+                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : <CreatePosts loadingPosts = {loadingPosts}/>}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { isFollowing ? "" :<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>}
                         { isEmpty ? <Load>Nenhuma publicação encontrada</Load> : ""}
