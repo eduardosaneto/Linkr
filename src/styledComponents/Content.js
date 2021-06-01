@@ -102,9 +102,16 @@ export const Load = styled.div`
     display: flex;
     justify-content: center;
     text-align: center;
-    color: #FFF;
-    font-size: 30px;
+    color: #6D6D6D;
+    font-size: 36px;
+    padding-top: 100px;
 
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
     @media (max-width: 611px){
         font-size: 25px;
     }
