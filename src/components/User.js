@@ -17,6 +17,7 @@ export default function User() {
     const [isEmpty, setIsEmpty] = useState(false);
     const [followList, setFollowList] = useState([]);
     const [userInfo, setUserInfo] = useState(undefined);
+    const [disabled, setDisabled] = useState(false);
 
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -76,6 +77,7 @@ export default function User() {
     }
 
     function FollowUnfollow() {
+        setDisabled(true);
         const follow = followList.includes(userInfo.id) ? "unfollow" : "follow";
         const request = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${userInfo.id}/${follow}`,
@@ -84,12 +86,14 @@ export default function User() {
         );
         request.then(() => {
             FollowList();
+            setDisabled(false);
         });
         request.catch(() => {
             alert("Não foi possível executar a operação");
+            setDisabled(false);
         });
     }
-
+    
     return (
         <>
             <Navbar />
@@ -110,7 +114,7 @@ export default function User() {
                                 )}
                                 <h1>{userInfo ? username() : ""}</h1>
                             </Title>
-                            {userInfo.id === user.id ? (
+                            {userInfo.id === localstorage.user.id ? (
                                 ""
                             ) : (
                                 <Button
@@ -120,6 +124,7 @@ export default function User() {
                                             : false
                                     }
                                     onClick={FollowUnfollow}
+                                    disabled={disabled}
                                 >
                                     {" "}
                                     {userInfo
