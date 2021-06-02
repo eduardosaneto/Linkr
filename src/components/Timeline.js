@@ -14,16 +14,16 @@ import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
 
 export default function Timeline(){
     const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
-    const [posts, setPosts] = useState(undefined);
+    const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [afterLoading, setAfterLoading] = useState(null)
-    const [hasmMoreItems, setHasMoreItems] = useState(true)
+    const [hasMoreItems, setHasMoreItems] = useState(true)
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
-
+    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
     useEffect(() => {checkFollowingUsers()},[])
 
     function checkFollowingUsers() {
@@ -56,15 +56,16 @@ export default function Timeline(){
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
             } 
-            if(page >= 10){
+            if(page > 10){
                 setHasMoreItems(false)
             }
+            
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
 
-    useInterval(checkFollowingUsers,100000);
+    useInterval(checkFollowingUsers,15000);
 
     return(
         <>
@@ -72,20 +73,22 @@ export default function Timeline(){
             <Container>
                 <h1>timeline</h1>
                 <div>
+                    
                     <Posts>
                         <CreatePosts loadingPosts = {loadingPosts}/>
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        {posts.map( post => 
-                            <Post 
-                                key={post.id} id={post.id} post={post} 
-                                postUser={post.user} likes={post.likes}
-                                reloadingPosts={loadingPosts}
-                                location={location}
-
-                                />)
-                            }
+                        <InfiniteScroll pageStart={0} hasMore={hasMoreItems} loader={loadingMore}>
+                            {posts.map( post => 
+                                <Post 
+                                    key={post.id} id={post.id} post={post} 
+                                    postUser={post.user} likes={post.likes}
+                                    reloadingPosts={loadingPosts}
+                                    location={location}
+                                />
+                            )}
+                        </InfiniteScroll>
                     </Posts>
                     <Trending >
                         <TrendingBar />
