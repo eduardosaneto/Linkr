@@ -59,7 +59,7 @@ export default function Timeline(){
             if(data.length === 0) {
                 setIsEmpty(true)
             }
-            if(page >= 6){
+            if(page >= 10){
                 setHasMoreItems(false)
             }
         })
@@ -81,7 +81,7 @@ export default function Timeline(){
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { isFollowing ? "" :<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>}
                         { isEmpty ? <Load>Nenhuma publicação encontrada</Load> : ""}
-                        <InfiniteScroll pageStart={0} hasMore={hasMoreItems} loadMore={loadingPosts} loader={<div>LOAD MORE POSTS...</div>}>
+                        <InfiniteScroll pageStart={0} hasMore={hasMoreItems} loadMore={loadingPosts} loader={<Load><div><img src={loading}/>Load more posts...</div> </Load>}>
                         {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
