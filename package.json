@@ -5,6 +5,8 @@
   "dependencies": {
     "@tippyjs/react": "^4.2.5",
     "axios": "^0.21.1",
+    "key-code": "0.0.1",
+    "keycode": "^2.2.0",
     "react": "^17.0.2",
     "react-click-away-listener": "^2.0.3",
     "react-confirm-alert": "^2.7.0",
