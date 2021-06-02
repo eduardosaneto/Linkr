@@ -101,7 +101,7 @@ const CommentsContainer = styled.div`
     font-size: 14px;
     padding: 30px 0;
     margin-bottom: 16px;
-    margin-top: -30px;
+    margin-top: -46px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
 

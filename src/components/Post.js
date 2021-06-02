@@ -37,7 +37,7 @@ export default function Post({
   const inputRefText = useRef(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
- 
+  const [showComments, setShowComments] = useState(false)
 
   useEffect(() => {
     likes.some(
@@ -200,7 +200,9 @@ export default function Post({
     srcYoutube = "https://www.youtube.com/embed/"+getId(post.link)+"?mute=1"
   }
  
-
+  function toggleComments() {
+    setShowComments(!showComments)
+  }
 
   return (
     <>
@@ -271,7 +273,7 @@ export default function Post({
           </Tooltip>
         </div>
         <div>
-          <CommentIcon/>
+          <CommentIcon onClick={toggleComments}/>
           <p>{post.commentCount} comments</p>
         </div>
       </Profile>
@@ -340,7 +342,7 @@ export default function Post({
          }  
       </Content>
     </PostContainer>
-    <Comments id={id} postUser={post.user} />
+    {showComments ? <Comments id={id} postUser={post.user} /> : null}
     </>
   );
 }
@@ -370,6 +372,7 @@ const PostContainer = styled.div`
   font-weight: 400;
   padding: 18px 18px 20px 21px;
   background: #171717;
+  margin-bottom: 16px;
   border-radius: 16px;
   position: relative;
   z-index:0;
