@@ -63,7 +63,7 @@ export default function MyPosts() {
                   post={post}
                   postUser={post.user}
                   likes={post.likes}
-                  loadMyPosts={loadMyPosts}
+                  loadMyPosts={loadMyPosts()}
                   location={location}
                 />
               ))

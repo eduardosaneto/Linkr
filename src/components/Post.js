@@ -8,6 +8,8 @@ import { FaHeart } from "react-icons/fa";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { FaTrash } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
+
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 
@@ -28,6 +30,13 @@ export default function Post({
   const { user, setUser } = useContext(UserContext);
   const localstorage = JSON.parse(localStorage.user);
   const token = localstorage.token;
+  const [controler, setControler] = useState(false);
+  const [editText, setEditText] = useState(post.text);
+  const inputRefText = useRef(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+ 
 
   useEffect(() => {
     likes.some(
@@ -96,7 +105,7 @@ export default function Post({
       headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.user.id}`,
       config
     );
     request.then(() => {
@@ -128,6 +137,69 @@ export default function Post({
       closeOnClickOutside: false,
     });
   }
+
+
+  function ShowEdit() {
+    if (controler) {
+      setControler(false);
+      return;
+    } else {
+      setControler(true);
+    }
+  }
+
+  useEffect(() => {
+    if (controler) {
+      inputRefText.current.focus();
+      setIsEdit(false);
+    }
+    else {setEditText(post.text);
+           }
+  }, [controler]);
+
+  function Edit(event) {
+    event.preventDefault();
+    const body = {
+      text: editText,
+    };
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const request = axios.put(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,
+      body,
+      config
+    );
+   
+    request.then((response) => {
+      setIsEdit(true);
+      setControler(false);
+    });
+
+    request.catch(() => {
+      alert("Não foi possível salvar as alterações");
+    });
+  }
+
+
+  function keydowm(e){
+    e.keyCode === 27 && setControler(false);
+  }
+
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return (match && match[2].length === 11)
+      ? match[2]
+      : null;
+  }
+  let srcYoutube;
+  if(post.link){
+    srcYoutube = "https://www.youtube.com/embed/"+getId(post.link)+"?mute=1"
+  }
+ 
+
 
   return (
     <PostContainer key={postUser.id}>
@@ -204,6 +276,11 @@ export default function Post({
           </Link>
           <div class='icons'>
             {post.user.id === localstorage.user.id ? (
+              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+            ) : (
+              ""
+            )}
+            {post.user.id === localstorage.user.id ? (
               <FaTrashAlt
                 id={id}
                 className='trash-icon'
@@ -214,36 +291,73 @@ export default function Post({
             )}{" "}
           </div>
         </div>
+        {controler ? (
+          <form onSubmit={Edit}>
+            <input
+              type='text'
+              required
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              ref={inputRefText}
+              onKeyDown={(e) => keydowm(e)}
+            />
+          </form>
+        ) : (
+          <p>
+            <ReactHashtag
+              renderHashtag={(hashtagValue) => (
+                <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                  <Hashtag>{hashtagValue}</Hashtag>
+                </Link>
+              )}>
+              {isEdit ? editText : post.text}
+              {/* variavel com estado */}
+            </ReactHashtag>
+          </p>
+        )}
 
-        <p>
-          <ReactHashtag
-            renderHashtag={(hashtagValue) => (
-              <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
-                <Hashtag>{hashtagValue}</Hashtag>
-              </Link>
-            )}>
-            {post.text}
-          </ReactHashtag>
-        </p>
-        <LinkSnippet href={post.link} target={"_blank"}>
-          <Text>
-            <h2>{post.linkTitle}</h2>
-            <p>{post.linkDescription}</p>
-            <div>
-              <p>{post.link}</p>
-            </div>
-          </Text>
-          <img src={post.linkImage} alt='website' />
-        </LinkSnippet>
+        {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
+        ? <YoutubePlayer>
+            <iframe width="502" height="281" src={srcYoutube}></iframe>
+            <p>{post.link}</p>
+          </YoutubePlayer>
+        : <LinkSnippet href={post.link} target={"_blank"}>
+            <Text>
+              <h2>{post.linkTitle}</h2>
+              <p>{post.linkDescription}</p>
+              <div>
+                <p>{post.link}</p>
+              </div>
+            </Text>
+            <img src={post.linkImage} alt='website' />
+          </LinkSnippet>
+         }  
       </Content>
     </PostContainer>
   );
 }
 
+const YoutubePlayer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  iframe{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 611px) {
+      width: 100%;
+      iframe{
+        width:100%;
+        height:100%;
+      }
+    }
+`
+
 const PostContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 276px;
+  //height: 276px;
   width: 100%;
   font-weight: 400;
   padding: 18px 18px 20px 21px;
@@ -310,9 +424,18 @@ const Content = styled.div`
     display: flex;
     justify-content: space-between;
     width: 502px;
+
     @media (max-width: 611px) {
       width: 100%;
     }
+  }
+
+  .pencil-icon {
+    color: #ffffff;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-left: 15px;
   }
 
   > h2 {
@@ -320,9 +443,12 @@ const Content = styled.div`
     font-size: 19px;
   }
   > p {
-    font-size: 17px;
+    font-size: 19px;
+    line-height: 23px;
     color: #b7b7b7;
     max-height: 70px;
+    margin-top: 19px;
+    margin-bottom: 14px;
   }
 
   div {
@@ -332,6 +458,7 @@ const Content = styled.div`
 
   input {
     width: 100%;
+    height: 60px;
     border-radius: 7px;
     font-size: 14px;
     padding: 4px 9px;
@@ -472,7 +599,8 @@ const HeartIconFill = styled(FaHeart)`
 
 const Hashtag = styled.span`
   color: #fff;
-  font-weight: 700;
+  font-size: 19px;
+  line-height: 23px;
 `;
 
 const Tooltip = styled(Tippy)`
