@@ -37,7 +37,6 @@ export default function Post({
   const inputRefText = useRef(null);
   const [isDisabled, setIsDisabled] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
-
  
 
   useEffect(() => {
@@ -341,7 +340,7 @@ export default function Post({
          }  
       </Content>
     </PostContainer>
-    <Comments id={id} />
+    <Comments id={id} userAvatar={postUser.avatar} />
     </>
   );
 }
@@ -386,7 +385,7 @@ const Profile = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 65%;
-  
+
   img {
     border-radius: 50%;
     width: 50px;

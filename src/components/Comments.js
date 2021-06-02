@@ -4,9 +4,10 @@ import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
 
-export default function Comments({id}) {
+export default function Comments({id, userAvatar}) {
     const {user, setUser} = useContext(UserContext);
     const [comments, setComments] = useState([])
+    const [text, setText] = useState("")
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
@@ -16,28 +17,42 @@ export default function Comments({id}) {
     useEffect( () => loadingComments(),[])
 
     function loadingComments() {
-        const request = axios.get(`'https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
 
-        request.then( response  => console.log("comments",response))
+        request.then( response  => {setComments(response.data)})
     }
 
+    function sendComment(e){
+        e.preventDefault();
+        //qual o body?
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comment`, config)
+
+        request.then( response => {
+
+        })
+    }
     return(
         <CommentsContainer>
-            <CommentBox>
-                <ProfilePicture>
-                    <img src="https://www.hobbydb.com/processed_uploads/subject_photo/subject_photo/image/40945/1530487605-16013-4442/maxresdefault_20_1__large.jpg"/>
-                </ProfilePicture>
-                <div className="comment">
-                    <div className="username">João Avatares</div>
-                    <p>Adorei esse post, ajuda muito a usar Material UI com React!</p>
-                </div>
-            </CommentBox>
+            { comments.map( comment => {
+                <CommentBox key={comment.id}>
+                    <ProfilePicture>
+                        <img src={comment.user.avatar}/>
+                    </ProfilePicture>
+                    <div className="comment">
+                        <div className="username">{comment.user.username}</div>
+                        <p>{comment.text}</p>
+                    </div>
+                </CommentBox>})}
             <InputBox>
                 <ProfilePicture>
-                    <img src="https://www.hobbydb.com/processed_uploads/subject_photo/subject_photo/image/40945/1530487605-16013-4442/maxresdefault_20_1__large.jpg"/>
+                    <img src={userAvatar}/>
                 </ProfilePicture>
-                <form onSubmit={(e) => {e.preventDefault(); alert("tá pegando")}}>
-                    <input placeholder="write a comment..." />
+                <form onSubmit={sendComment}>
+                    <input 
+                        placeholder="write a comment..." 
+                        onChange={(e) => setText(e.target.value)} 
+                        value={text}
+                    />
                     <button type="submit">
                         <PlaneIcon />
                     </button>   
