@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
+import ReactHashtag from "react-hashtag";
 import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
@@ -68,7 +69,14 @@ export default function Comments({id, postUser}) {
                         </Link> 
                             <Span who={comment.who}><DotIcon/>{comment.who}</Span>
                         </div>
-                        <p>{comment.text}</p>
+                        <p>
+                            <ReactHashtag renderHashtag={(hashtagValue) => (
+                                <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                                <Hashtag>{hashtagValue}</Hashtag>
+                                </Link>)}>
+                                    {comment.text}
+                            </ReactHashtag>
+                        </p>
                     </div>
             </CommentBox>})}
             <InputBox>
@@ -79,6 +87,7 @@ export default function Comments({id, postUser}) {
                     <input 
                         placeholder="write a comment..." 
                         onChange={(e) => setText(e.target.value)} 
+                        required
                         value={text}
                     />
                     <button type="submit">
@@ -172,9 +181,11 @@ const PlaneIcon = styled(IoPaperPlaneOutline)`
 const DotIcon = styled(GoPrimitiveDot)`
     padding: 4px 4px 0 4px;
 `
-
 const Span = styled.span`
     font-weight: 400;
     color: #565656;
     display: ${props => props.who ? 'inline' : 'none'}
+`
+const Hashtag = styled.span`
+    color: #FFF;
 `
