@@ -15,14 +15,9 @@ export default function Comments({id, postUser}) {
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
-    // array de quem sigo
-    // array total
 
     useEffect( () => loadingComments(),[])
    
-    
-    
-
     function loadingComments() {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
 
@@ -101,13 +96,14 @@ export default function Comments({id, postUser}) {
 
 const CommentsContainer = styled.div`
     height: auto;
-    width: 611px;
+    width: 610px;
     background: #1E1E1E;
     font-size: 14px;
-    padding: 20px 0;
+    padding: 30px 0;
     margin-bottom: 16px;
     margin-top: -30px;
-    border-radius: 16px;
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
 
     .username{
         color: #FFF;
