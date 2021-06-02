@@ -121,7 +121,7 @@ export const Load = styled.div`
   text-align: center;
   color: #6d6d6d;
   font-size: 36px;
-  padding-top: 100px;
+  padding-top: 35px;
 
   div {
     display: flex;
