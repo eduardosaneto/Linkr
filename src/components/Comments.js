@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
@@ -56,11 +57,16 @@ export default function Comments({id, postUser}) {
             {comments.map(comment => {
                return <CommentBox key={comment.id}>
                     <ProfilePicture>
+                    <Link to={`/user/${comment.user.id}`}>
                         <img src={comment.user.avatar}/>
+                    </Link>
                     </ProfilePicture>
                     <div className="comment">
                         <div className="username">
-                            {comment.user.username} <Span who={comment.who}><DotIcon/>{comment.who}</Span>
+                        <Link to={`/user/${comment.user.id}`}>
+                            {comment.user.username}
+                        </Link> 
+                            <Span who={comment.who}><DotIcon/>{comment.who}</Span>
                         </div>
                         <p>{comment.text}</p>
                     </div>
