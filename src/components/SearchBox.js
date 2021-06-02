@@ -1,87 +1,118 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
 import axios from 'axios';
 import { IoIosSearch } from "react-icons/io";
 import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
-import Download from '../img/Download.jpg';
 
 export default function SearchBox() {
 
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const [search, setSearch] = useState("");
+    const [suggestions, setSuggestions] = useState([]);
+    const [followedSuggestions, setFollowedSuggestions] = useState([]);
+    // const [following, setFollowing] = useState(false);
 
-    function searchUser(e) {        
-        setSearch(e);
+    suggestions.sort(function(x, y) {
+        let a = x.followed.length[0];
+        let b = y.followed.length[0];
+        return a < b ? 1 : a === b ? 0 : -1;
+    });
+    console.log(suggestions);
+
+    useEffect( () => {
         const config = {
             headers: {
-                Authorization: `Bearer ${token}`,                  
-            },
-            params: {
-                username: {search}
+                Authorization: `Bearer ${token}`,        
                 },
             };
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search`, config);
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows?username=${search}`, config);
         request.then(response => {
-            alert("deu bom");
-            console.log(response.data);
+            setFollowedSuggestions(response.data.users);
         });
         request.catch(error => {
-            alert("deu ruim");
             console.log(error);
         });
-    }
+    },[]);
+
+    function searchUser(e) {    
+
+        setSearch(e.target.value);
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,        
+                },
+            };
+        const req = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${search}`, config);
+        req.then(response => {
+            const sug = response.data.users.map(name => {
+                return (
+                    {
+                        id: name.id, 
+                        username: name.username, 
+                        avatar: name.avatar,
+                        followed: followedSuggestions.map(name2 => name.username === name2.username ? true : "")
+                    }
+                );
+            });            
+            console.log(sug);
+            setSuggestions(sug);
+            console.log(suggestions);
+        });
+        req.catch(error => {
+            console.log(error);
+        });
+    };
+
+    const teste = suggestions.map(name => {
+        return console.log(name.followed.length);
+    })
+
+    console.log(teste);
 
     return (
         <Form>
             <Suggestions>
                 <li>
                     <DebounceInput 
-                    type="search" placeholder="Search for people and friends" className="search-box"
-                    minLength={3} debounceTimeout={300}
-                    value={search} onChange={(e) => searchUser(e.target.value)}
-                />
+                        type="text" name="username" placeholder="Search for people and friends" 
+                        className="search-box" value={search} onChange={searchUser}
+                        minLength={3} debounceTimeout={300}
+                    />
                 <button type="submit">
                 <IoIosSearch className="search"/>  
                 </button> 
                 </li>
-                {/* <li>
-                    <span></span>
-                    <h2>Enter</h2>
-                    <h3>• following</h3>
-                </li>
-                <li>
-                    <span></span>
-                    <h2>Enter</h2>
-                </li> */}
+                {suggestions.length > 0 ? suggestions.map(name => (
+                    <Link to={`/user/${name.id}`}>
+                        <Li key={name.id} avatar={name.avatar}>
+                            <span></span>
+                            <h2>{name.username}</h2>
+                            <h3>{name.followed.length !== 0 ? "• following" : "\u00A0"}</h3>                            
+                        </Li>
+                    </Link>
+                )) : <></>}
             </Suggestions> 
         </Form>
     );
 }
 
-const Suggestions = styled.ul`
+const Li = styled.li`
     width: 100%;
-    border-radius: 8px;
-    background: #E7E7E7;
-    li{
-        width: 100%;
-        height: 40px;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-bottom: 16px;
-    }
-    li:first-child {
-        margin-bottom: 0px;
-    }
-    li:nth-child(2) {
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 16px !important;
+    :first-child {
         margin-top: 16px;
     }
     span {
         width: 40px;
         height: 40px;
         border-radius: 304px;
-        background: url(${Download});
+        background: url("${props => props.avatar}");;
         background-size: cover;
         background-position: center;
         margin-right: 12px;
@@ -100,7 +131,21 @@ const Suggestions = styled.ul`
     }
 `;
 
-const Form = styled.div`    
+const Suggestions = styled.ul`
+    width: 100%;
+    border-radius: 8px;
+    background: #E7E7E7;
+    li {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        margin-bottom: 0px;
+    }
+`;
+
+const Form = styled.form`    
     width: 563px;
     height: auto;
     display: flex;
