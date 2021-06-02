@@ -112,7 +112,7 @@ const CommentsContainer = styled.div`
 
     p{
         color: #ACACAC;
-        padding-top: 5px;
+        padding-top: 10px;
         min-width: 16px;
     }
 
@@ -134,6 +134,7 @@ const ProfilePicture = styled.div`
 const InputBox = styled.div`
     display: flex;
     margin: 20px;
+    margin-bottom: 0px;
 
     form{
         display: flex;
