@@ -59,10 +59,9 @@ export default function Timeline(){
             if(data.length === 0) {
                 setIsEmpty(true)
             }
-            if(data.length <= 10){
+            if(page >= 6){
                 setHasMoreItems(false)
             }
-
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
