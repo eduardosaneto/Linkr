@@ -4,7 +4,7 @@ import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
 
-export default function Comments({id, userAvatar}) {
+export default function Comments({id}) {
     const {user, setUser} = useContext(UserContext);
     const [comments, setComments] = useState([])
     const [text, setText] = useState("")
@@ -19,22 +19,24 @@ export default function Comments({id, userAvatar}) {
     function loadingComments() {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
 
-        request.then( response  => {setComments(response.data)})
+        request.then( response  => setComments(response.data.comments))
     }
 
     function sendComment(e){
         e.preventDefault();
-        //qual o body?
-        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comment`, config)
+        const body = {text};
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comment`, body, config)
 
         request.then( response => {
-
+            console.log("enviou comentario",response.data)
+            setText("")
+            loadingComments()
         })
     }
     return(
         <CommentsContainer>
-            { comments.map( comment => {
-                <CommentBox key={comment.id}>
+            {comments.map(comment => {
+               return <CommentBox key={comment.id}>
                     <ProfilePicture>
                         <img src={comment.user.avatar}/>
                     </ProfilePicture>
@@ -42,10 +44,10 @@ export default function Comments({id, userAvatar}) {
                         <div className="username">{comment.user.username}</div>
                         <p>{comment.text}</p>
                     </div>
-                </CommentBox>})}
+            </CommentBox>})}
             <InputBox>
                 <ProfilePicture>
-                    <img src={userAvatar}/>
+                    <img src={localstorage.user.avatar}/>
                 </ProfilePicture>
                 <form onSubmit={sendComment}>
                     <input 
