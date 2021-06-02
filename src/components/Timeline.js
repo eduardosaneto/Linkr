@@ -13,13 +13,12 @@ import useInterval from 'react-useinterval';
 import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
 
 export default function Timeline(){
-    const {user, setUser} = useContext(UserContext);
-    const [posts, setPosts] = useState([]);
+    const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
+    const [posts, setPosts] = useState(undefined);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(false)
-    const [isFollowing, setIsFollowing] = useState(true)
-    const [hasMoreItems, setHasMoreItems] = useState(false)
+    const [afterLoading, setAfterLoading] = useState(null)
+    const [hasmMoreItems, setHasMoreItems] = useState(true)
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -28,37 +27,35 @@ export default function Timeline(){
     useEffect(() => {checkFollowingUsers()},[])
 
     function checkFollowingUsers() {
+        setPosts([])
+        setAfterLoading(null)
+        setIsError(false)
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
 
         request.then( response => {
+            setFollowingUsers(response.data.users);
             setUser(localStorage.user);
-            const following = response.data.users;
-            if(following.length !== 0){
-                loadingPosts()
-                return
-            }
-            setIsLoading(false)
-            setIsFollowing(false)
+            loadingPosts()
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)})
     }
 
     function loadingPosts(page) {
-        setIsEmpty(false)
+        setPosts([])
+        setAfterLoading(null)
         setIsError(false)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
-            const data = response.data.posts
-            setPosts([...response.data.posts])
+            setPosts(response.data.posts)
             setIsLoading(false)
-            setIsFollowing(true)
-            setHasMoreItems(true)
-            if(data.length === 0) {
-                setIsEmpty(true)
-            }
+            if(posts.length === 0 && followingUsers.length !== 0){
+                setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+            } else if (posts.length === 0 && followingUsers.length === 0) {
+                setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
+            } 
             if(page >= 10){
                 setHasMoreItems(false)
             }
@@ -67,8 +64,7 @@ export default function Timeline(){
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
 
-    
-    useInterval(checkFollowingUsers, 15000);
+    useInterval(checkFollowingUsers,100000);
 
     return(
         <>
@@ -77,11 +73,10 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : <CreatePosts loadingPosts = {loadingPosts}/>}
+                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isFollowing ? "" :<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>}
-                        { isEmpty ? <Load>Nenhuma publicação encontrada</Load> : ""}
-                        <InfiniteScroll pageStart={0} hasMore={hasMoreItems} loadMore={loadingPosts} loader={<Load><div><img src={loading}/>Load more posts...</div> </Load>}>
+                        { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
                         {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
@@ -91,7 +86,6 @@ export default function Timeline(){
 
                                 />)
                             }
-                        </InfiniteScroll>
                     </Posts>
                     <Trending >
                         <TrendingBar />
