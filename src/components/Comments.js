@@ -120,6 +120,11 @@ const CommentsContainer = styled.div`
         min-width: 16px;
     }
 
+    @media (max-width: 611px){
+        border-radius:0;
+        width: 100vw;
+    }
+
 `
 const ProfilePicture = styled.div`
     margin-right: 18px;
