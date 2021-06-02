@@ -137,7 +137,6 @@ export default function Post({
       closeOnClickOutside: false,
     });
   }
-
   function ShowEdit() {
     if (controler) {
       setControler(false);
@@ -315,6 +314,7 @@ export default function Post({
             </ReactHashtag>
           </p>
         )}
+
         {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
         ? (<YoutubePlayer>
             <iframe width="502" height="281" src={srcYoutube}></iframe>
