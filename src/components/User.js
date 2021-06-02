@@ -198,9 +198,10 @@ const Title = styled.div`
     }
 
     @media (max-width: 611px){
-        width: 90%;
+        width: 80%;
+
         img {
-            display: none;
+           display: none;
         }
     }
 `;
@@ -219,7 +220,7 @@ const Button = styled.button`
     }
 
     @media (max-width: 611px) {
-        width: 10%;
+        width: 20%;
         height: 112px;
         writing-mode: vertical-rl;
         text-orientation: upright;
