@@ -11,7 +11,6 @@ import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
 import useInterval from 'react-useinterval';
 import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
-
 export default function Timeline(){
     const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
     const [posts, setPosts] = useState([]);
@@ -24,6 +23,7 @@ export default function Timeline(){
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
     const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
+
     useEffect(() => {checkFollowingUsers()},[])
 
     function checkFollowingUsers() {
@@ -42,7 +42,7 @@ export default function Timeline(){
         request.catch( () => {setIsError(true); setIsLoading(false)})
     }
 
-    function loadingPosts(page) {
+    function loadingPosts() {
         setPosts([])
         setAfterLoading(null)
         setIsError(false)
@@ -56,17 +56,13 @@ export default function Timeline(){
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
             } 
-            if(page > 10){
-                setHasMoreItems(false)
-            }
-            
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
 
-    useInterval(checkFollowingUsers,15000);
-
+    useInterval(checkFollowingUsers,100000);
+ 
     return(
         <>
             <Navbar />
