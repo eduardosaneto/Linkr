@@ -8,6 +8,8 @@ import { FaHeart } from "react-icons/fa";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { FaTrash } from "react-icons/fa";
+import { FaPencilAlt } from "react-icons/fa";
+
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 
@@ -28,6 +30,13 @@ export default function Post({
   const { user, setUser } = useContext(UserContext);
   const localstorage = JSON.parse(localStorage.user);
   const token = localstorage.token;
+  const [controler, setControler] = useState(false);
+  const [editText, setEditText] = useState(post.text);
+  const inputRefText = useRef(null);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
+
+ 
 
   useEffect(() => {
     likes.some(
@@ -96,7 +105,7 @@ export default function Post({
       headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.user.id}`,
       config
     );
     request.then(() => {
@@ -129,6 +138,54 @@ export default function Post({
     });
   }
 
+
+  function ShowEdit() {
+    if (controler) {
+      setControler(false);
+      return;
+    } else {
+      setControler(true);
+    }
+  }
+
+  useEffect(() => {
+    if (controler) {
+      inputRefText.current.focus();
+      setIsEdit(false);
+    }
+    else {setEditText(post.text);
+           }
+  }, [controler]);
+
+  function Edit(event) {
+    event.preventDefault();
+    const body = {
+      text: editText,
+    };
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const request = axios.put(
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}`,
+      body,
+      config
+    );
+   
+    request.then((response) => {
+      setIsEdit(true);
+      setControler(false);
+    });
+
+    request.catch(() => {
+      alert("Não foi possível salvar as alterações");
+    });
+  }
+
+
+  function keydowm(e){
+    e.keyCode === 27 && setControler(false);
+  }
+
   function getId(url) {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
@@ -142,6 +199,7 @@ export default function Post({
     srcYoutube = "https://www.youtube.com/embed/"+getId(post.link)+"?mute=1"
   }
  
+
 
   return (
     <PostContainer key={postUser.id}>
@@ -218,6 +276,11 @@ export default function Post({
           </Link>
           <div class='icons'>
             {post.user.id === localstorage.user.id ? (
+              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+            ) : (
+              ""
+            )}
+            {post.user.id === localstorage.user.id ? (
               <FaTrashAlt
                 id={id}
                 className='trash-icon'
@@ -228,17 +291,31 @@ export default function Post({
             )}{" "}
           </div>
         </div>
+        {controler ? (
+          <form onSubmit={Edit}>
+            <input
+              type='text'
+              required
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              ref={inputRefText}
+              onKeyDown={(e) => keydowm(e)}
+            />
+          </form>
+        ) : (
+          <p>
+            <ReactHashtag
+              renderHashtag={(hashtagValue) => (
+                <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                  <Hashtag>{hashtagValue}</Hashtag>
+                </Link>
+              )}>
+              {isEdit ? editText : post.text}
+              {/* variavel com estado */}
+            </ReactHashtag>
+          </p>
+        )}
 
-        <p>
-          <ReactHashtag
-            renderHashtag={(hashtagValue) => (
-              <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
-                <Hashtag>{hashtagValue}</Hashtag>
-              </Link>
-            )}>
-            {post.text}
-          </ReactHashtag>
-        </p>
         {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
         ? <YoutubePlayer>
             <iframe width="502" height="281" src={srcYoutube}></iframe>
@@ -353,12 +430,21 @@ const Content = styled.div`
     }
   }
 
+  .pencil-icon {
+    color: #ffffff;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    margin-left: 15px;
+  }
+
   > h2 {
     color: #fff;
     font-size: 19px;
   }
   > p {
-    font-size: 17px;
+    font-size: 19px;
+    line-height: 23px;
     color: #b7b7b7;
     max-height: 70px;
     margin-top: 19px;
@@ -372,6 +458,7 @@ const Content = styled.div`
 
   input {
     width: 100%;
+    height: 60px;
     border-radius: 7px;
     font-size: 14px;
     padding: 4px 9px;
@@ -512,7 +599,8 @@ const HeartIconFill = styled(FaHeart)`
 
 const Hashtag = styled.span`
   color: #fff;
-  font-weight: 700;
+  font-size: 19px;
+  line-height: 23px;
 `;
 
 const Tooltip = styled(Tippy)`
