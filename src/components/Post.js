@@ -388,7 +388,7 @@ const Profile = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  height: 65%;
+  height: 150px;
 
   img {
     border-radius: 50%;
@@ -404,17 +404,20 @@ const Profile = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 35px;
+    height: 32px;
   }
 
   @media (max-width: 611px) {
-
+    height: 130px;
     img {
       width: 40px;
       height: 40px;
     }
     p {
       font-size: 9px;
+    }
+    >div{
+      height:28px;
     }
   }
 `;
