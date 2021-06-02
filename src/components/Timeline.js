@@ -15,7 +15,7 @@ export default function Timeline(){
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [afterLoading, setAfterLoading] = useState("")
+    const [afterLoading, setAfterLoading] = useState(null)
     const [followingUsers,setFollowingUsers] = useState([]);
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
@@ -26,14 +26,14 @@ export default function Timeline(){
 
     function checkFollowingUsers() {
         setPosts([])
-        setAfterLoading("")
+        setAfterLoading(null)
         setIsError(false)
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
 
         request.then( response => {
-            setUser(localStorage.user);
             setFollowingUsers(response.data.users);
+            setUser(localStorage.user);
             loadingPosts()
         })
 
@@ -41,12 +41,13 @@ export default function Timeline(){
     }
 
     function loadingPosts() {
+        setPosts([])
+        setAfterLoading(null)
         setIsError(false)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
-            const data = response.data.posts
-            setPosts([...response.data.posts])
+            setPosts(response.data.posts)
             setIsLoading(false)
             if(posts.length === 0 && followingUsers.length !== 0){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
@@ -71,7 +72,7 @@ export default function Timeline(){
                         <CreatePosts loadingPosts = {loadingPosts}/>
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { (posts.length === 0 && afterLoading === "") || posts.length !== 0 ? "" : afterLoading}
+                        { (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
                         {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
