@@ -132,7 +132,7 @@ export const Load = styled.div`
     color: #6D6D6D;
     font-size: 30px;
     padding-top: 30px;
-
+  }
     img{
         height: 100px;
         width: 100px;
@@ -146,5 +146,5 @@ export const Load = styled.div`
     }
     @media (max-width: 611px){
         font-size: 25px;
-    }
+}
 `;
