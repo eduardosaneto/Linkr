@@ -621,6 +621,7 @@ const Hashtag = styled.span`
 const CommentIcon = styled(AiOutlineComment)`
   font-size: 18px;
   color: #fff;
+  cursor: pointer;
 `
 
 const Tooltip = styled(Tippy)`

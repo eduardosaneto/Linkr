@@ -10,7 +10,7 @@ import { GoPrimitiveDot } from 'react-icons/go'
 export default function Comments({id, postUser}) {
     const {followingUsers} = useContext(UserContext);
     const [comments, setComments] = useState([])
-    const [newComments, setNewComments] = useState([])
+    const [showInput, setShowInput] = useState(false)
     const [text, setText] = useState("")
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -35,6 +35,7 @@ export default function Comments({id, postUser}) {
                 }
             })
             setComments(data)
+            setShowInput(true)
         })
     }
 
@@ -49,7 +50,8 @@ export default function Comments({id, postUser}) {
         })
     }
     return(
-        <CommentsContainer>
+        <>
+        { showInput ? <CommentsContainer>
             {comments.map(comment => {
                return <CommentBox key={comment.id}>
                     <ProfilePicture>
@@ -89,8 +91,9 @@ export default function Comments({id, postUser}) {
                         <PlaneIcon />
                     </button>   
                 </form>    
-            </InputBox>
-        </CommentsContainer>
+            </InputBox> 
+        </CommentsContainer> : null}
+        </>
     )
 }
 
@@ -134,8 +137,7 @@ const ProfilePicture = styled.div`
 const InputBox = styled.div`
     display: flex;
     margin: 20px;
-    margin-bottom: 0px;
-
+    margin-bottom: 0px; 
     form{
         display: flex;
         width: 100%;
