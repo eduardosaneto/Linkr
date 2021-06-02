@@ -3,10 +3,12 @@ import { useState, useContext, useEffect } from 'react';
 import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
+import { GoPrimitiveDot } from 'react-icons/go'
 
-export default function Comments({id}) {
-    const {user, setUser} = useContext(UserContext);
+export default function Comments({id, postUser}) {
+    const {followingUsers} = useContext(UserContext);
     const [comments, setComments] = useState([])
+    const [newComments, setNewComments] = useState([])
     const [text, setText] = useState("")
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -15,11 +17,28 @@ export default function Comments({id}) {
     // array total
 
     useEffect( () => loadingComments(),[])
+   
+    
+    
 
     function loadingComments() {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
 
-        request.then( response  => setComments(response.data.comments))
+        request.then( response  => {
+            const data = response.data.comments
+            data.map( comment => {
+                followingUsers.forEach( follow => {
+                    if(comment.user.id === follow.id){
+                        comment.who = "following"
+                        return
+                    }
+                })
+                if(comment.user.id === postUser.id){
+                    comment.who = "post's author"
+                }
+            })
+            setComments(data)
+        })
     }
 
     function sendComment(e){
@@ -27,8 +46,7 @@ export default function Comments({id}) {
         const body = {text};
         const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comment`, body, config)
 
-        request.then( response => {
-            console.log("enviou comentario",response.data)
+        request.then( () => {
             setText("")
             loadingComments()
         })
@@ -41,7 +59,9 @@ export default function Comments({id}) {
                         <img src={comment.user.avatar}/>
                     </ProfilePicture>
                     <div className="comment">
-                        <div className="username">{comment.user.username}</div>
+                        <div className="username">
+                            {comment.user.username} <Span who={comment.who}><DotIcon/>{comment.who}</Span>
+                        </div>
                         <p>{comment.text}</p>
                     </div>
             </CommentBox>})}
@@ -142,4 +162,13 @@ const CommentBox = styled.div`
 const PlaneIcon = styled(IoPaperPlaneOutline)`
     color: #FFF;
     font-size: 16px;
+`
+const DotIcon = styled(GoPrimitiveDot)`
+    padding: 4px 4px 0 4px;
+`
+
+const Span = styled.span`
+    font-weight: 400;
+    color: #565656;
+    display: ${props => props.who ? 'inline' : 'none'}
 `

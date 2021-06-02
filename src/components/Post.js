@@ -340,7 +340,7 @@ export default function Post({
          }  
       </Content>
     </PostContainer>
-    <Comments id={id} userAvatar={postUser.avatar} />
+    <Comments id={id} postUser={post.user} />
     </>
   );
 }
