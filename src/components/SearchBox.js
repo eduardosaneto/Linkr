@@ -52,7 +52,7 @@ export default function SearchBox() {
                         id: name.id, 
                         username: name.username, 
                         avatar: name.avatar,
-                        followed: followedSuggestions.map(name2 => name.username === name2.username ? true : "")
+                        // followed: followedSuggestions.map(name2 => name.username === name2.username ? true : )
                     }
                 );
             });            
