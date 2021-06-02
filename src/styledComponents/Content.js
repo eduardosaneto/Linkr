@@ -103,8 +103,13 @@ export const Load = styled.div`
     justify-content: center;
     text-align: center;
     color: #6D6D6D;
-    font-size: 36px;
-    padding-top: 100px;
+    font-size: 30px;
+    padding-top: 30px;
+
+    img{
+        height: 100px;
+        width: 100px;
+    }
 
     div {
         display: flex;

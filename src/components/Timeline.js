@@ -15,8 +15,7 @@ export default function Timeline(){
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(false)
-    const [isFollowing, setIsFollowing] = useState(true)
+    const [afterLoading, setAfterLoading] = useState("")
     const [followingUsers,setFollowingUsers] = useState([]);
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
@@ -26,26 +25,22 @@ export default function Timeline(){
     useEffect(() => {checkFollowingUsers()},[])
 
     function checkFollowingUsers() {
+        setPosts([])
+        setAfterLoading("")
+        setIsError(false)
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
 
         request.then( response => {
             setUser(localStorage.user);
-            const following = response.data.users;
-            setFollowingUsers(following);
-            if(following.length !== 0){
-                loadingPosts()
-                return
-            }
-            setIsLoading(false)
-            setIsFollowing(false)
+            setFollowingUsers(response.data.users);
+            loadingPosts()
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)})
     }
 
     function loadingPosts() {
-        setIsEmpty(false)
         setIsError(false)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
@@ -53,10 +48,11 @@ export default function Timeline(){
             const data = response.data.posts
             setPosts([...response.data.posts])
             setIsLoading(false)
-            setIsFollowing(true)
-            if(data.length === 0) {
-                setIsEmpty(true)
-            }
+            if(posts.length === 0 && followingUsers.length !== 0){
+                setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+            } else if (posts.length === 0 && followingUsers.length === 0) {
+                setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
+            } 
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
@@ -72,10 +68,10 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : <CreatePosts loadingPosts = {loadingPosts}/>}
+                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isFollowing ? "" :<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>}
-                        { isEmpty ? <Load>Nenhuma publicação encontrada</Load> : ""}
+                        { (posts.length === 0 && afterLoading === "") || posts.length !== 0 ? "" : afterLoading}
                         {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
