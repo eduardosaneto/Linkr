@@ -138,6 +138,7 @@ export default function Post({
     });
   }
 
+
   function ShowEdit() {
     if (controler) {
       setControler(false);
@@ -187,6 +188,22 @@ export default function Post({
   function keydowm(e){
     e.keyCode === 27 && setControler(false);
   }
+
+  function getId(url) {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+
+    return (match && match[2].length === 11)
+      ? match[2]
+      : null;
+  }
+  let srcYoutube;
+  if(post.link){
+    srcYoutube = "https://www.youtube.com/embed/"+getId(post.link)+"?mute=1"
+  }
+ 
+
+
   return (
     <PostContainer key={postUser.id}>
       <Profile>
@@ -277,7 +294,6 @@ export default function Post({
             )}{" "}
           </div>
         </div>
-
         {controler ? (
           <form onSubmit={Edit}>
             <input
@@ -303,25 +319,48 @@ export default function Post({
           </p>
         )}
 
-        <LinkSnippet href={post.link} target={"_blank"}>
-          <Text>
-            <h2>{post.linkTitle}</h2>
-            <p>{post.linkDescription}</p>
-            <div>
-              <p>{post.link}</p>
-            </div>
-          </Text>
-          <img src={post.linkImage} alt='website' />
-        </LinkSnippet>
+        {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
+        ? <YoutubePlayer>
+            <iframe width="502" height="281" src={srcYoutube}></iframe>
+            <p>{post.link}</p>
+          </YoutubePlayer>
+        : <LinkSnippet href={post.link} target={"_blank"}>
+            <Text>
+              <h2>{post.linkTitle}</h2>
+              <p>{post.linkDescription}</p>
+              <div>
+                <p>{post.link}</p>
+              </div>
+            </Text>
+            <img src={post.linkImage} alt='website' />
+          </LinkSnippet>
+         }  
       </Content>
     </PostContainer>
   );
 }
 
+const YoutubePlayer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  iframe{
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  @media (max-width: 611px) {
+      width: 100%;
+      iframe{
+        width:100%;
+        height:100%;
+      }
+    }
+`
+
 const PostContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 276px;
+  //height: 276px;
   width: 100%;
   font-weight: 400;
   padding: 18px 18px 20px 21px;
@@ -388,6 +427,7 @@ const Content = styled.div`
     display: flex;
     justify-content: space-between;
     width: 502px;
+
     @media (max-width: 611px) {
       width: 100%;
     }
@@ -410,6 +450,8 @@ const Content = styled.div`
     line-height: 23px;
     color: #b7b7b7;
     max-height: 70px;
+    margin-top: 19px;
+    margin-bottom: 14px;
   }
 
   div {
