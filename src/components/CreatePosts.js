@@ -9,8 +9,9 @@ export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
   const [isDisabled, setIsDisabled] = useState(false);
-  const [enabledLocation, setEnabledLocation] = useState(false);
+  const [enableLocation, setEnableLocation] = useState(false);
   const {user, setUser} = useContext(Usercontext);
+  const [location, setLocation] = useState("");
   const localstorage = JSON.parse(localStorage.user);
   const token = localstorage.token;
   const image = localstorage.user.avatar;
@@ -24,28 +25,22 @@ export default function CreatePosts({loadingPosts}) {
       const body = {
         text,
 	      link,
-        // geolocation: {
-        //   latitude: latitude,
-        //   longitude: longitude
-        // }
+        location
       };
       const config = {
         headers: {
           Authorization: `Bearer ${token}`
         },
       };
-      const request = axios.post(
-        "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts",
-        body,
-        config
-      );
       setIsDisabled(true);
+      const request = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts", body, config);
       request.then((response) => {
         setUser(localStorage.user);
-         setIsDisabled(false);
-         setLink("");
-         setText("");
-         loadingPosts();
+        setIsDisabled(false);
+        setLink("");
+        setText("");
+        loadingPosts();
+        console.log(response.data);
       });
       request.catch(() => {
         alert("Houve um erro ao publicar seu link");
@@ -53,9 +48,44 @@ export default function CreatePosts({loadingPosts}) {
       });
     }
   };
-  function activateLocation() {
-    enabledLocation === false ? setEnabledLocation(true) : setEnabledLocation(false);
+
+  function showLocation(position) {
+    if(enableLocation === false) {
+      setEnableLocation(true);
+      const geoposition = {
+        geolocation: {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude
+        }
+      }
+      // let latitude = position.coords.latitude;
+      // let longitude = position.coords.longitude;
+      setLocation(geoposition);
+    } else {
+      setEnableLocation(false);
+    }
   }; 
+
+  function errorHandler(err) {
+      if(err.code === 1) {
+        alert("Erro: Acesso bloqueado à sua localização!");
+        setEnableLocation(false);
+      } else if( err.code === 2) {
+        alert("Erro: Posição geográfica não disponível");
+        setEnableLocation(false);
+      }
+  };
+
+  function getLocation() {
+    if(navigator.geolocation) {        
+        let options = {timeout:60000};
+        navigator.geolocation.getCurrentPosition(showLocation, errorHandler, options);
+    } else {
+        alert("Desculpe, o dispositivo não pode obter sua localização");
+        setEnableLocation(false);
+    }
+  };
+
   return (
     <Post>
       <Photo image={image}></Photo>
@@ -79,9 +109,9 @@ export default function CreatePosts({loadingPosts}) {
             required
             maxlength="185">              
             </StyledinputText>
-            <Localization color={enabledLocation} onClick={activateLocation}>
+            <Localization color={enableLocation} onClick={getLocation}>
               <BiMap className="map-icon"/>
-              <p>{enabledLocation ? "Localização ativada" : "Localização desativada"}</p>
+              <p>{enableLocation ? "Localização ativada" : "Localização desativada"}</p>
             </Localization>
             <Button 
             isDisabled={isDisabled}
@@ -107,6 +137,7 @@ const Localization = styled.div`
   height: 31px;
   display: flex;
   align-items: center;
+  cursor: pointer;
   color: ${props => props.color ? "#238700" : "#949494"};
   .map-icon {
     font-size: 15px;
