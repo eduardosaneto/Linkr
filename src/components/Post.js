@@ -392,7 +392,6 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   height: 150px;
 
   img {
@@ -409,7 +408,7 @@ const Profile = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 32px;
+    margin-top : 18px;
   }
 
   @media (max-width: 611px) {
@@ -606,13 +605,13 @@ const FaTrashAlt = styled(FaTrash)`
   margin-left: 10px;
 `;
 const HeartIconEmpty = styled(FiHeart)`
-  font-size: 18px;
+  font-size: 21px;
   color: #fff;
   cursor: pointer;
 `;
 
 const HeartIconFill = styled(FaHeart)`
-  font-size: 18px;
+  font-size: 21px;
   color: #ac0000;
   cursor: pointer;
 `;
@@ -624,12 +623,12 @@ const Hashtag = styled.span`
 `;
 
 const CommentIcon = styled(AiOutlineComment)`
-  font-size: 18px;
+  font-size: 22px;
   color: #fff;
   cursor: pointer;
 `
 const RespostIcon = styled(BiRepost)`
-  font-size: 18px;
+  font-size: 23px;
   color: #fff;
   cursor: pointer;
 `
