@@ -4,7 +4,6 @@ import axios from "axios";
 import Usercontext from "../contexts/UserContext";
 import { BiMap } from "react-icons/bi";
 
-
 export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
   const [text, setText] = useState("");
@@ -25,7 +24,7 @@ export default function CreatePosts({loadingPosts}) {
       const body = {
         text,
 	      link,
-        location
+        geolocation: location
       };
       const config = {
         headers: {
@@ -40,7 +39,6 @@ export default function CreatePosts({loadingPosts}) {
         setLink("");
         setText("");
         loadingPosts();
-        console.log(response.data);
       });
       request.catch(() => {
         alert("Houve um erro ao publicar seu link");
@@ -52,15 +50,11 @@ export default function CreatePosts({loadingPosts}) {
   function showLocation(position) {
     if(enableLocation === false) {
       setEnableLocation(true);
-      const geoposition = {
-        geolocation: {
+      const geolocation= {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude
-        }
-      }
-      // let latitude = position.coords.latitude;
-      // let longitude = position.coords.longitude;
-      setLocation(geoposition);
+        }      
+      setLocation(geolocation);
     } else {
       setEnableLocation(false);
     }
