@@ -14,6 +14,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
 import { AiOutlineComment } from 'react-icons/ai';
+import { BiRepost } from 'react-icons/bi'
 
 import UserContext from "../contexts/UserContext";
 
@@ -275,6 +276,10 @@ export default function Post({
         <div>
           <CommentIcon onClick={toggleComments}/>
           <p>{post.commentCount} comments</p>
+        </div>
+        <div>
+          <RespostIcon />
+          <p></p>
         </div>
       </Profile>
       <Content>
@@ -619,6 +624,11 @@ const Hashtag = styled.span`
 `;
 
 const CommentIcon = styled(AiOutlineComment)`
+  font-size: 18px;
+  color: #fff;
+  cursor: pointer;
+`
+const RespostIcon = styled(BiRepost)`
   font-size: 18px;
   color: #fff;
   cursor: pointer;
