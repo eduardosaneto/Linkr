@@ -11,12 +11,11 @@ import CreatePosts from './CreatePosts';
 import useInterval from 'react-useinterval';
 
 export default function Timeline(){
-    const {user, setUser} = useContext(UserContext);
+    const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [afterLoading, setAfterLoading] = useState(null)
-    const [followingUsers,setFollowingUsers] = useState([]);
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -54,13 +53,13 @@ export default function Timeline(){
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
             } 
+            console.log(response.data);
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
 
-    
-    useInterval(checkFollowingUsers, 15000);
+    useInterval(checkFollowingUsers,100000);
 
     return(
         <>
