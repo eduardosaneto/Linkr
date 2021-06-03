@@ -13,12 +13,8 @@ export default function SearchBox() {
     const [suggestions, setSuggestions] = useState([]);
     const [followedSuggestions, setFollowedSuggestions] = useState([]);
 
-    // suggestions.sort(function(x, y) {
-    //     let a = x.followed.length[0];
-    //     let b = y.followed.length[0];
-    //     return a < b ? 1 : a === b ? 0 : -1;
-    // });
-    // console.log(suggestions);
+
+    console.log(suggestions);
 
     useEffect( () => {
         const config = {
@@ -56,7 +52,15 @@ export default function SearchBox() {
                 );
             });            
             console.log(sug);
-            setSuggestions(sug);
+            const teste = sug.sort(function(x, y) {
+                let a = x.followed.length;
+                console.log(a);
+                let b = y.followed.length;
+                console.log(b);
+                return b > a ? 1 : b === a ? 0 : -1;
+            });
+            console.log(teste);
+            setSuggestions(teste);
             console.log(suggestions);
         });
         req.catch(error => {
