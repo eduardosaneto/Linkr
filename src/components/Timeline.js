@@ -18,12 +18,14 @@ export default function Timeline() {
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [modal, setModal] = useState(true);
     const [afterLoading, setAfterLoading] = useState(null);
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers: { Authorization: `Bearer ${token}` } };
+
+    const [modal, setModal] = useState(false);
+    const [link, setLink ] = useState("");
 
     useEffect(() => {
         checkFollowingUsers();
@@ -86,6 +88,15 @@ export default function Timeline() {
         setModal(false);
     }
 
+    function OpenModal(e){
+        setLink(e);
+        setModal(true);
+    }
+
+    function OpenInNewTab(){
+        window.open(link)
+    }
+
     useInterval(checkFollowingUsers, 100000);
 
     return (
@@ -126,6 +137,7 @@ export default function Timeline() {
                                 likes={post.likes}
                                 reloadingPosts={loadingPosts}
                                 location={location}
+                                OpenModal={OpenModal}
                             />
                         ))}
                     </Posts>
@@ -136,9 +148,12 @@ export default function Timeline() {
             </Container>
             {modal
             ?<ContainerModal>
-                <button onClick={CloseModal}>X</button>
+                <div>
+                    <button className="OpenInNewTab" onClick={OpenInNewTab}>Open in new tab</button>
+                    <button className="CloseModal"onClick={CloseModal}>X</button>
+                </div>
                 <Modal>
-                    <iframe src="https://odia.ig.com.br/"></iframe>
+                    <iframe src={link}></iframe>
                 </Modal>
             </ContainerModal>
             :""
@@ -155,13 +170,39 @@ const ContainerModal = styled.div`
     height: 83%;
     background-color: rgba(51, 51, 51, 0.9);
     border-radius: 20px;
+
+    div{
+        display: flex;
+        justify-content:space-between;
+        align-items: center;
+        padding: 0px 40px;
+
+        button{
+            margin-top: 10px;
+            border:none;
+            color: #fff;
+            font-family: 'Lato', sans-serif;
+        }
+    }
+    .OpenInNewTab{
+        background-color:#1877F2;
+        font-size:14px;
+        width:138px;
+        height:31px;
+        border-radius:5px;
+    }
+    .CloseModal{
+        background: none;
+        font-size: 23px;
+        font-weight: bold;
+    }
 `
 
 const Modal = styled.div`
     width: 90%;
     height: 80%;
-    margin: 60px auto 0 auto;
-    background-color: whitesmoke;
+    margin: 30px auto 0 auto;
+    background-color: #fff;
 
     iframe{
         width:100%;

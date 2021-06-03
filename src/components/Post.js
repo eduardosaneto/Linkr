@@ -25,6 +25,7 @@ export default function Post({
   reloadingPosts,
   loadMyPosts,
   location,
+  OpenModal
 }) {
   const [peopleThatLiked, setPeopleThatLiked] = useState(likes);
   const [likeQuantity, setLikeQuantity] = useState(likes.length);
@@ -47,6 +48,7 @@ export default function Post({
       ? setLike(1)
       : setLike(0);
   }, []);
+
 
   function likePost(config) {
     const request = axios.post(
@@ -329,7 +331,7 @@ export default function Post({
             <iframe width="502" height="281" src={srcYoutube}></iframe>
             <p>{post.link}</p>
           </YoutubePlayer>
-        : <LinkSnippet href={post.link} target={"_blank"}>
+        : <LinkSnippet href={post.link} target={"_blank"} onClick={()=>OpenModal(post.link)}>
             <Text>
               <h2>{post.linkTitle}</h2>
               <p>{post.linkDescription}</p>
