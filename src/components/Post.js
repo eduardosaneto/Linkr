@@ -80,10 +80,10 @@ export default function Post({
       setUser(localStorage.user);
       setLike(0);
       setLikeQuantity(response.data.post.likes.length);
-      const teste = peopleThatLiked.filter(
+      const storePeopleThatLiked = peopleThatLiked.filter(
         (name) => name["user.username"] !== localstorage.user.username
       );
-      setPeopleThatLiked(teste);
+      setPeopleThatLiked(storePeopleThatLiked);
     });
     request.catch(() => {
       alert(
