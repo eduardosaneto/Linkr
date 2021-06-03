@@ -61,23 +61,24 @@ export default function Timeline(){
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
+    
     useInterval(updatePosts,15000);
 
     function updatePosts(){
-        setIsError(true)
+        setIsError(false)
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${posts[0].id}`,config)
         
         request.then( response => {
             if(response.data.posts != undefined){
                 setPosts([...response.data.posts, ...posts]);
-            }
+            } 
         })
         
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
     }
 
     function fetchPosts(){
-        setIsError(true)
+        setIsError(false)
         if(posts.length > 200){
             setHasMorePosts(false)
             return
@@ -88,12 +89,12 @@ export default function Timeline(){
             request.then( response => {
                 if(response.data.posts.length < 10){
                     setHasMorePosts(false)
-                }
+                } 
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
                 console.log(posts)
             })
 
-            request.catch( () => {setIsError(true); setIsLoading(false)})
+            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
         }
     }
     return(
@@ -103,7 +104,7 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {loadingPosts} />
+                        <CreatePosts loadingPosts = {updatePosts} />
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
