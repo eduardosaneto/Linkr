@@ -43,6 +43,7 @@ export default function Timeline(){
         setPosts([])
         setAfterLoading(null)
         setIsError(false)
+        setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
@@ -57,7 +58,6 @@ export default function Timeline(){
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
-
     useInterval(checkFollowingUsers,100000);
 
     return(
@@ -67,7 +67,7 @@ export default function Timeline(){
                 <h1>timeline</h1>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        <CreatePosts loadingPosts = {loadingPosts} />
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
