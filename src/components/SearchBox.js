@@ -12,14 +12,13 @@ export default function SearchBox() {
     const [search, setSearch] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [followedSuggestions, setFollowedSuggestions] = useState([]);
-    // const [following, setFollowing] = useState(false);
 
-    suggestions.sort(function(x, y) {
-        let a = x.followed.length[0];
-        let b = y.followed.length[0];
-        return a < b ? 1 : a === b ? 0 : -1;
-    });
-    console.log(suggestions);
+    // suggestions.sort(function(x, y) {
+    //     let a = x.followed.length[0];
+    //     let b = y.followed.length[0];
+    //     return a < b ? 1 : a === b ? 0 : -1;
+    // });
+    // console.log(suggestions);
 
     useEffect( () => {
         const config = {
@@ -52,7 +51,7 @@ export default function SearchBox() {
                         id: name.id, 
                         username: name.username, 
                         avatar: name.avatar,
-                        // followed: followedSuggestions.map(name2 => name.username === name2.username ? true : )
+                        followed: followedSuggestions.filter(name2 => name.username === name2.username)
                     }
                 );
             });            
