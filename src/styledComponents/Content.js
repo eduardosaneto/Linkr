@@ -26,7 +26,7 @@ export const Container = styled.div`
     margin-top: 140px;
     > h1 {
       margin-left: 17px;
-      font-size: 33px;
+      font-size: 30px;
     }
     > div {
       margin-top: 19px;

@@ -215,6 +215,14 @@ const Title = styled.div`
             word-break: break-word;
         }
     }
+
+    @media (max-width: 611px){
+        width: 80%;
+
+        img {
+           display: none;
+        }
+    }
 `;
 const Button = styled.button`
     width: 112px;
