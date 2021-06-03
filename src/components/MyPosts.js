@@ -44,7 +44,7 @@ export default function MyPosts() {
 
   function updateMyPosts(){
     setIsError(0)
-    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${posts[0].id}`,config)
+    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?offset=10`,config)
     
     request.then( response => {
         if(response.data.posts != undefined){
@@ -62,7 +62,7 @@ function fetchMyPosts(){
         return
     }
     if(posts.length !== 0){
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
         request.then( response => {
             if(response.data.posts.length < 10){

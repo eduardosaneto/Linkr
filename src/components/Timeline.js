@@ -17,7 +17,7 @@ export default function Timeline(){
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [afterLoading, setAfterLoading] = useState(null)
-    const [hasMorePosts, setHasMorePosts] = useState(true)
+    const [hasMorePosts, setHasMorePosts] = useState(false)
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -56,7 +56,8 @@ export default function Timeline(){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
-            }            
+            }
+            setHasMorePosts(true)            
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
