@@ -64,6 +64,7 @@ export default function Timeline(){
     useInterval(updatePosts,15000);
 
     function updatePosts(){
+        setIsError(true)
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${posts[0].id}`,config)
         
         request.then( response => {
@@ -72,10 +73,11 @@ export default function Timeline(){
             }
         })
         
-        request.catch( () => alert("Houve algum erro, tente novamente"))
+        request.catch( () => {setIsError(true); setIsLoading(false)})
     }
 
     function fetchPosts(){
+        setIsError(true)
         if(posts.length > 200){
             setHasMorePosts(false)
             return
@@ -91,7 +93,7 @@ export default function Timeline(){
                 console.log(posts)
             })
 
-            request.catch( () => alert("Houve algum erro, tente novamente!"))
+            request.catch( () => {setIsError(true); setIsLoading(false)})
         }
     }
     return(
