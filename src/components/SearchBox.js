@@ -1,22 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { IoIosSearch } from "react-icons/io";
 import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
+import ClickAwayListener from 'react-click-away-listener';
 
 export default function SearchBox() {
 
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const [search, setSearch] = useState("");
+    const [showSearch, setShowSearch] = useState(0);
     const [suggestions, setSuggestions] = useState([]);
     const [followedSuggestions, setFollowedSuggestions] = useState([]);
 
-
-    console.log(suggestions);
-
-    useEffect( () => {
+    useEffect(() => {
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,        
@@ -27,76 +26,74 @@ export default function SearchBox() {
             setFollowedSuggestions(response.data.users);
         });
         request.catch(error => {
-            console.log(error);
+            alert("Não foi possível obter os usuários que você segue");
         });
-    },[]);
+    },[search, token]);
 
     function searchUser(e) {    
 
         setSearch(e.target.value);
+        if(search.lenght <= 2) {
+            setSearch('');
+            setShowSearch(0);
+            return
+        };
+
+        setShowSearch(1);
+
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,        
                 },
             };
-        const req = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${search}`, config);
-        req.then(response => {
-            const sug = response.data.users.map(name => {
+        
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/search?username=${search}`, config);
+        request.then(response => {            
+            const newSuggestions = response.data.users.map(name => {
                 return (
                     {
                         id: name.id, 
                         username: name.username, 
                         avatar: name.avatar,
-                        followed: followedSuggestions.filter(name2 => name.username === name2.username)
+                        followed: followedSuggestions.filter(name2 => name.id === name2.id)
                     }
                 );
             });            
-            console.log(sug);
-            const teste = sug.sort(function(x, y) {
+            const orderedSuggestions = newSuggestions.sort(function(x, y) {
                 let a = x.followed.length;
-                console.log(a);
                 let b = y.followed.length;
-                console.log(b);
                 return b > a ? 1 : b === a ? 0 : -1;
             });
-            console.log(teste);
-            setSuggestions(teste);
-            console.log(suggestions);
+            setSuggestions(orderedSuggestions);
         });
-        req.catch(error => {
-            console.log(error);
-        });
+        
     };
-
-    const teste = suggestions.map(name => {
-        return console.log(name.followed.length);
-    })
-
-    console.log(teste);
 
     return (
         <Form>
-            <Suggestions>
-                <li>
-                    <DebounceInput 
-                        type="text" name="username" placeholder="Search for people and friends" 
-                        className="search-box" value={search} onChange={searchUser}
-                        minLength={3} debounceTimeout={300}
-                    />
-                <button type="submit">
-                <IoIosSearch className="search"/>  
-                </button> 
-                </li>
-                {suggestions.length > 0 ? suggestions.map(name => (
-                    <Link to={`/user/${name.id}`}>
-                        <Li key={name.id} avatar={name.avatar}>
-                            <span></span>
-                            <h2>{name.username}</h2>
-                            <h3>{name.followed.length !== 0 ? "• following" : "\u00A0"}</h3>                            
-                        </Li>
-                    </Link>
-                )) : <></>}
-            </Suggestions> 
+            <ClickAwayListener onClickAway={() => setShowSearch(0)}>
+                <Suggestions>
+                    <li>
+                        <DebounceInput 
+                            type="text" name="username" placeholder="Search for people and friends" 
+                            className="search-box" value={search} onChange={searchUser}
+                            debounceTimeout={300}
+                        />
+                    <button type="submit">
+                    <IoIosSearch className="search"/>  
+                    </button> 
+                    </li>                
+                    {search.length > 2 && showSearch === 1 ? suggestions.map(name => (
+                        <Link to={`/user/${name.id}`}>
+                            <Li key={name.id} avatar={name.avatar}>
+                                <span></span>
+                                <h2>{name.username}</h2>
+                                <h3>{name.followed.length !== 0 ? "• following" : "\u00A0"}</h3>                            
+                            </Li>
+                        </Link>
+                    )) : <></>}                
+                </Suggestions> 
+            </ClickAwayListener>
         </Form>
     );
 }
