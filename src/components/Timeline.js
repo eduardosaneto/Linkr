@@ -11,6 +11,8 @@ import CreatePosts from "./CreatePosts";
 import useInterval from "react-useinterval";
 import ReactModal from "react-modal";
 import styled from 'styled-components';
+import { ContainerModal,Modal } from '../styledComponents/Content';
+
 
 export default function Timeline() {
     const { user, setUser, followingUsers, setFollowingUsers } =
@@ -162,50 +164,3 @@ export default function Timeline() {
     );
 }
 
-const ContainerModal = styled.div`
-    position:fixed;
-    top:100px;
-    left: calc((100vw - 64%)/2);
-    width: 64%;
-    height: 83%;
-    background-color: rgba(51, 51, 51, 0.9);
-    border-radius: 20px;
-
-    div{
-        display: flex;
-        justify-content:space-between;
-        align-items: center;
-        padding: 0px 40px;
-
-        button{
-            margin-top: 10px;
-            border:none;
-            color: #fff;
-            font-family: 'Lato', sans-serif;
-        }
-    }
-    .OpenInNewTab{
-        background-color:#1877F2;
-        font-size:14px;
-        width:138px;
-        height:31px;
-        border-radius:5px;
-    }
-    .CloseModal{
-        background: none;
-        font-size: 23px;
-        font-weight: bold;
-    }
-`
-
-const Modal = styled.div`
-    width: 90%;
-    height: 80%;
-    margin: 30px auto 0 auto;
-    background-color: #fff;
-
-    iframe{
-        width:100%;
-        height:100%;
-    }
-`
