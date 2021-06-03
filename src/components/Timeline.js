@@ -57,9 +57,9 @@ export default function Timeline(){
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
-
+    
     useInterval(checkFollowingUsers,100000);
-
+    
     return(
         <>
             <Navbar />
