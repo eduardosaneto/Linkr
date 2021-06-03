@@ -169,6 +169,10 @@ export const ContainerModal = styled.div`
             border:none;
             color: #fff;
             font-family: 'Lato', sans-serif;
+
+            &:hover{
+              cursor:pointer;
+            }
         }
     }
     .OpenInNewTab{

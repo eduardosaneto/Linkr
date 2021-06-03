@@ -331,7 +331,7 @@ export default function Post({
             <iframe width="502" height="281" src={srcYoutube}></iframe>
             <p>{post.link}</p>
           </YoutubePlayer>
-        : <LinkSnippet href={post.link} target={"_blank"} onClick={()=>OpenModal(post.link)}>
+        : <LinkSnippet onClick={()=>OpenModal(post.link)}>
             <Text>
               <h2>{post.linkTitle}</h2>
               <p>{post.linkDescription}</p>
@@ -523,7 +523,7 @@ const Content = styled.div`
     }
   }
 `;
-const LinkSnippet = styled.a`
+const LinkSnippet = styled.div`
   border-radius: 11px;
   border: 1px solid #4d4d4d;
   height: 155px;
@@ -538,6 +538,11 @@ const LinkSnippet = styled.a`
     object-fit: cover;
     background-position: center;
   }
+
+  &:hover{
+    cursor:pointer;
+  }
+
   @media (max-width: 611px) {
     height: 115px;
     img {
