@@ -61,9 +61,21 @@ export default function Timeline(){
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
-    useInterval(checkFollowingUsers,100000);
+    useInterval(updatePosts,15000);
 
-    function fetchData(){
+    function updatePosts(){
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${posts[0].id}`,config)
+        
+        request.then( response => {
+            if(response.data.posts != undefined){
+                setPosts([...response.data.posts, ...posts]);
+            }
+        })
+        
+        request.catch( () => alert("Houve algum erro, tente novamente"))
+    }
+
+    function fetchPosts(){
         if(posts.length > 200){
             setHasMorePosts(false)
             return
@@ -78,6 +90,8 @@ export default function Timeline(){
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
                 console.log(posts)
             })
+
+            request.catch( () => alert("Houve algum erro, tente novamente!"))
         }
     }
     return(
@@ -86,13 +100,12 @@ export default function Timeline(){
             <Container>
                 <h1>timeline</h1>
                 <div>
-                    
                     <Posts>
                         <CreatePosts loadingPosts = {loadingPosts} />
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchData}>
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
