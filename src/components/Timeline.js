@@ -75,7 +75,6 @@ export default function Timeline() {
                     </Load>
                 );
             }
-            console.log(response.data);
         });
 
         request.catch(() => {
