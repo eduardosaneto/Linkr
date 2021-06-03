@@ -17,7 +17,7 @@ export default function Timeline(){
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
     const [afterLoading, setAfterLoading] = useState(null)
-    const [hasMoreItems, setHasMoreItems] = useState(true)
+    const [hasMorePosts, setHasMorePosts] = useState(true)
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -56,14 +56,30 @@ export default function Timeline(){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
-            } 
-            console.log(response.data);
+            }            
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
     useInterval(checkFollowingUsers,100000);
- 
+
+    function fetchData(){
+        if(posts.length > 200){
+            setHasMorePosts(false)
+            return
+        }
+        if(posts.length !== 0){
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
+
+            request.then( response => {
+                if(response.data.posts.length < 10){
+                    setHasMorePosts(false)
+                }
+                setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+                console.log(posts)
+            })
+        }
+    }
     return(
         <>
             <Navbar />
@@ -76,7 +92,7 @@ export default function Timeline(){
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} hasMore={hasMoreItems} loader={loadingMore}>
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchData}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
