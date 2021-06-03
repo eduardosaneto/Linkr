@@ -279,7 +279,7 @@ export default function Post({
         </div>
         <div>
           <RespostIcon />
-          <p></p>
+          <p>{post.repostCount} re-posts</p>
         </div>
       </Profile>
       <Content>
@@ -324,7 +324,6 @@ export default function Post({
                 </Link>
               )}>
               {isEdit ? editText : post.text}
-              {/* variavel com estado */}
             </ReactHashtag>
           </p>
         )}
@@ -401,7 +400,8 @@ const Profile = styled.div`
   }
   p {
     color: #fff;
-    font-size: 11px;
+    font-size: 12px;
+    margin-top:8px;
   }
   > div {
     display: flex;
@@ -409,6 +409,7 @@ const Profile = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-top : 18px;
+
   }
 
   @media (max-width: 611px) {
