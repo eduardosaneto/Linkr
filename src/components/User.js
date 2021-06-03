@@ -2,6 +2,7 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import { ContainerModal,Modal } from '../styledComponents/Content';
 
 import styled from "styled-components";
 import Navbar from "./Navbar";
@@ -20,6 +21,9 @@ export default function User() {
     const [followList, setFollowList] = useState([]);
     const [userInfo, setUserInfo] = useState(undefined);
     const [disabled, setDisabled] = useState(false);
+
+    const [modal, setModal] = useState(false);
+    const [link, setLink ] = useState("");
 
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
@@ -97,6 +101,19 @@ export default function User() {
         });
     }
 
+    function OpenModal(e){
+        setLink(e);
+        setModal(true);
+    }
+    
+    function CloseModal(){
+          setModal(false);
+    }
+    
+    function OpenInNewTab(){
+          window.open(link)
+    }
+
     useInterval(loadingPostsUser, 15000);
     
     return (
@@ -166,6 +183,7 @@ export default function User() {
                                 post={post}
                                 postUser={post.user}
                                 likes={post.likes}
+                                OpenModal={OpenModal}
                             />
                         ))}
                     </Posts>
@@ -174,6 +192,18 @@ export default function User() {
                     </Trending>
                 </div>
             </Container>
+            {modal
+            ?<ContainerModal>
+                <div>
+                    <button className="OpenInNewTab" onClick={OpenInNewTab}>Open in new tab</button>
+                    <button className="CloseModal"onClick={CloseModal}>X</button>
+                </div>
+                <Modal>
+                    <iframe src={link}></iframe>
+                </Modal>
+            </ContainerModal>
+            :""
+            }
         </>
     );
 }

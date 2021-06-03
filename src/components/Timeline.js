@@ -9,8 +9,6 @@ import loading from "../img/loading.svg";
 import TrendingBar from "./TrendingBar";
 import CreatePosts from "./CreatePosts";
 import useInterval from "react-useinterval";
-import ReactModal from "react-modal";
-import styled from 'styled-components';
 import { ContainerModal,Modal } from '../styledComponents/Content';
 
 
@@ -86,13 +84,13 @@ export default function Timeline() {
         });
     }
 
-    function CloseModal(){
-        setModal(false);
-    }
-
     function OpenModal(e){
         setLink(e);
         setModal(true);
+    }
+
+    function CloseModal(){
+        setModal(false);
     }
 
     function OpenInNewTab(){
