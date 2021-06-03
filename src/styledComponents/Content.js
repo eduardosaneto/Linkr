@@ -23,7 +23,7 @@ export const Container = styled.div`
 
   @media (max-width: 611px) {
     width: 100vw;
-    margin-top: 144px;
+    margin-top: 140px;
     > h1 {
       margin-left: 17px;
       font-size: 33px;
@@ -31,6 +31,19 @@ export const Container = styled.div`
     > div {
       margin-top: 19px;
     }
+  }
+`;
+
+export const PageTitle = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  word-break: break-all;
+  @media(max-width: 611px){
+    padding: 0 17px;
+    position: relative;
   }
 `;
 

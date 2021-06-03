@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios'
 import styled from 'styled-components'
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
 import TrendingBar from "./TrendingBar";
@@ -46,7 +46,9 @@ export default function Mylikes(){
         <>
             <Navbar />
             <Container>
-                <h1>my likes</h1>
+                <PageTitle>
+                    <h1>my likes</h1>
+                </PageTitle>                
                 <div>
                     <Posts>
                         { isLoading ? <Load>Loading</Load> : ""}

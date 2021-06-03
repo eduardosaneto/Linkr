@@ -175,6 +175,8 @@ const Photo = styled.div`
   background-size: cover;
   margin:5px 0px 0px 5px ;
   background-image: url(${(props) => props.image});
+  background-size: cover;
+  background-position: center;
   img {
     width: 50px;
     height: 50px;

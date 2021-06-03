@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
 import { useLocation } from "react-router-dom";
@@ -65,7 +65,9 @@ export default function Timeline(){
         <>
             <Navbar />
             <Container>
-                <h1>timeline</h1>
+                <PageTitle>
+                    <h1>timeline</h1>
+                </PageTitle>
                 <div>
                     <Posts>
                         <CreatePosts loadingPosts = {loadingPosts}/>

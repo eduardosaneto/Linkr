@@ -184,7 +184,7 @@ const Form = styled.form`
         border-radius: 8px;
         padding: 10px;
         position: absolute;
-        top: 1px;
+        top: 0px;
         right: 0px;
         background: #fff;
     }
@@ -216,7 +216,7 @@ const Form = styled.form`
         button {
             height: 42px;
             top: 10px;
-            right: 12px;
+            right: 13px;
         }
     }
 `;
