@@ -70,8 +70,8 @@ export default function SearchBox() {
     };
 
     return (
-        <Form>
-            <ClickAwayListener onClickAway={() => setShowSearch(0)}>
+        <ClickAwayListener onClickAway={() => setShowSearch(0)}>
+            <Form>            
                 <Suggestions>
                     <li>
                         <DebounceInput 
@@ -92,9 +92,9 @@ export default function SearchBox() {
                             </Li>
                         </Link>
                     )) : <></>}                
-                </Suggestions> 
-            </ClickAwayListener>
-        </Form>
+                </Suggestions>             
+            </Form>
+        </ClickAwayListener>
     );
 }
 
@@ -203,7 +203,7 @@ const Form = styled.form`
     @media(max-width: 611px){
         width: 100%;
         height: auto;
-        padding: 10px;
+        padding: 11px 15px;
         top: 72px;
         left: 0;
         background: #333;
@@ -214,9 +214,9 @@ const Form = styled.form`
             line-height: 20px;
         }
         button {
-        height: 42px;
-        top: 10px;
-        right: 10px;
-    }
+            height: 42px;
+            top: 10px;
+            right: 12px;
+        }
     }
 `;

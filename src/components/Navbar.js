@@ -79,7 +79,7 @@ const Header = styled.div`
 
     @media (max-width: 611px){
         padding-left: 17px;
-
+        width: 100%;
         h1{
             font-size: 45px;
         }

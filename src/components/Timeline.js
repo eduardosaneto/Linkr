@@ -69,7 +69,7 @@ export default function Timeline(){
                 <div>
                     <Posts>
                         <CreatePosts loadingPosts = {loadingPosts}/>
-                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
+                        { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
                         {posts.map( post => 
