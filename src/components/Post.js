@@ -238,7 +238,6 @@ export default function Post({
     };
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
     
-    request.then(reloadingPosts)
   }
 
   return (
