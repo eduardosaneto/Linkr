@@ -138,8 +138,6 @@ export default function Post({
       closeOnClickOutside: false,
     });
   }
-
-
   function ShowEdit() {
     if (controler) {
       setControler(false);
@@ -173,11 +171,14 @@ export default function Post({
     );
    
     request.then((response) => {
-      setIsEdit(true);
       setControler(false);
+      setIsEdit(true);
+      setEditText(response.data.post.text)
+      
     });
 
     request.catch(() => {
+
       alert("Não foi possível salvar as alterações");
     });
   }
@@ -319,17 +320,17 @@ export default function Post({
                 </Link>
               )}>
               {isEdit ? editText : post.text}
-              {/* variavel com estado */}
+              
             </ReactHashtag>
           </p>
         )}
 
         {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
-        ? <YoutubePlayer>
+        ? (<YoutubePlayer>
             <iframe width="502" height="281" src={srcYoutube}></iframe>
             <p>{post.link}</p>
-          </YoutubePlayer>
-        : <LinkSnippet href={post.link} target={"_blank"}>
+          </YoutubePlayer>)
+        : (<LinkSnippet href={post.link} target={"_blank"}>
             <Text>
               <h2>{post.linkTitle}</h2>
               <p>{post.linkDescription}</p>
@@ -338,7 +339,7 @@ export default function Post({
               </div>
             </Text>
             <img src={post.linkImage} alt='website' />
-          </LinkSnippet>
+          </LinkSnippet>)
          }  
       </Content>
     </PostContainer>
