@@ -32,7 +32,6 @@ export default function ModalMap({ openMaps, setOpenMaps, post }) {
           <Map>
             <p>Loading...</p>
             <iframe
-              // loading="lazy"
               allowFullScreen
               src={`https://www.google.com/maps/embed/v1/place?q=${geolocation.latitude},${geolocation.longitude}&key=AIzaSyAl_lBNuRGguDYVYY65rJez6TWE2XWvD-w`}></iframe>
           </Map>
@@ -146,7 +145,12 @@ const customStyle = {
   overlay: {
     zIndex: "4",
     backgroundColor: "rgba(255, 255, 255, 0.75)",
-    display: "flex",
     marginTop: "70px",
+    display: "flex",
     justifyContent: "center",
+    alignItems: "center",
+    focus: {
+      border: "0 none",
+      outline: "0"
+    }
   }};
