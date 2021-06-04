@@ -85,5 +85,9 @@ const Input = styled.input`
   ::placeholder{
     color: #FFF;
   }
+  :focus{
+    outline-color: transparent;
+    border: 0 none;
+  }
     color: #FFF; 
 `
