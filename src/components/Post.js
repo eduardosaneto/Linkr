@@ -470,6 +470,7 @@ const Profile = styled.div`
 
   @media (max-width: 611px) {
     height: 130px;
+    margin-left: -6px;
     img {
       width: 40px;
       height: 40px;
@@ -479,6 +480,7 @@ const Profile = styled.div`
     }
     >div{
       height:28px;
+      width: 55px;
     }
   }
 `;
