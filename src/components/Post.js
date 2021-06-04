@@ -383,16 +383,16 @@ export default function Post({
               <p>{post.link}</p>
             </YoutubePlayer>
           ) : (
-            <LinkSnippet href={post.link} target={"_blank"}>
-              <Text>
-                <h2>{post.linkTitle}</h2>
-                <p>{post.linkDescription}</p>
-                <div>
-                  <p>{post.link}</p>
-                </div>
-              </Text>
-              <img src={post.linkImage || linkrLogo} alt='website' />
-            </LinkSnippet>
+            (<LinkSnippet onClick={()=>OpenModal(post.link)}>
+            <Text>
+              <h2>{post.linkTitle}</h2>
+              <p>{post.linkDescription}</p>
+              <div>
+                <p>{post.link}</p>
+              </div>
+            </Text>
+            <img src={post.linkImage} alt='website' />
+          </LinkSnippet>)
           )}
       </Content>
     </PostContainer>
