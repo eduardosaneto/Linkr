@@ -391,7 +391,7 @@ export default function Post({
                   <p>{post.link}</p>
                 </div>
               </Text>
-              <img src={post.linkImage} alt='website' />
+              <img src={post.linkImage || linkrLogo} alt='website' />
             </LinkSnippet>
           )}
       </Content>
