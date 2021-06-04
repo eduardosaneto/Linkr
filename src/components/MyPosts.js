@@ -72,7 +72,6 @@ function fetchMyPosts(){
           setHasMorePosts(false)
       } 
       setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-      console.log(posts)
     })
 
     request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})

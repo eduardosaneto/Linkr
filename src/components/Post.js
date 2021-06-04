@@ -1,15 +1,16 @@
 import { useState, useContext, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
+import ModalMap from './ModalMap'
 import styled from "styled-components";
 import ReactHashtag from "react-hashtag";
 import { FiHeart } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart} from "react-icons/fa";
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import { FaTrash } from "react-icons/fa";
 import { FaPencilAlt } from "react-icons/fa";
-
+import {FaMapMarkerAlt} from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
@@ -41,6 +42,8 @@ export default function Post({
   const [isDisabled, setIsDisabled] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showComments, setShowComments] = useState(false)
+  const [locationOfPost, setLocationOfPost] = useState({});
+  const[openMaps, setOpenMaps] = useState(false);
 
   useEffect(() => {
     likes.some(
@@ -51,6 +54,9 @@ export default function Post({
       : setLike(0);
   }, []);
 
+  function ViewLocation(){
+    setOpenMaps(true);
+    };
 
   function likePost(config) {
     const request = axios.post(
@@ -319,18 +325,23 @@ export default function Post({
         </div>
       </Profile>
       <Content>
-        <div class='boxName'>
-          <Link to={`/user/${postUser.id}`}>
+      <div class='boxName'>
+          <div>
+            <Link to={`/user/${postUser.id}`}>
             <h2>{postUser.username}</h2>
-          </Link>
+            </Link>
+            {post.geolocation ? <FaMapMarkerAlt className='map-icon' onClick={ViewLocation}/>
+            : ""}
+            {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
+          </div>
           <div class='icons'>
             {post.user.id === localstorage.user.id ? (
-              <FaPencilAlt className="button" onClick={ShowEdit} className='pencil-icon' />
+              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
             ) : (
               ""
             )}
             {post.user.id === localstorage.user.id ? (
-              <FaTrashAlt className="button"
+              <FaTrashAlt
                 id={id}
                 className='trash-icon'
                 onClick={moveToTrash}

@@ -80,7 +80,6 @@ export default function Hashtag(){
                     setHasMorePosts(false)
                 } 
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-                console.log("hashtag",posts)
             })
             request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
         } 

@@ -78,7 +78,7 @@ export default function Mylikes(){
                     setHasMorePosts(false)
                 } 
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-                console.log(posts)
+
             })
     
             request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
