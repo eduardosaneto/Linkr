@@ -7,6 +7,7 @@ import useInterval from 'react-useinterval';
 import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
+import { ContainerModal,Modal } from '../styledComponents/Content';
 
 export default function MyPosts() {
   const { user, setUser } = useContext(Usercontext);
@@ -15,6 +16,9 @@ export default function MyPosts() {
   const [erro, setErro] = useState(0);
   const localstorage = JSON.parse(localStorage.user);
   const location = useLocation();
+
+  const [modal, setModal] = useState(false);
+  const [link, setLink ] = useState("");
 
   useEffect(loadMyPosts, []);
 
@@ -34,6 +38,19 @@ export default function MyPosts() {
     request.catch(() => {
       setErro(1);
     });
+  }
+
+  function OpenModal(e){
+    setLink(e);
+    setModal(true);
+  }
+
+  function CloseModal(){
+      setModal(false);
+  }
+
+  function OpenInNewTab(){
+      window.open(link)
   }
 
   useInterval(loadMyPosts, 15000);
@@ -65,6 +82,7 @@ export default function MyPosts() {
                   likes={post.likes}
                   loadMyPosts={loadMyPosts()}
                   location={location}
+                  OpenModal={OpenModal}
                 />
               ))
             ) : (
@@ -76,6 +94,18 @@ export default function MyPosts() {
           </Trending>
         </div>
       </Container>
+      {modal
+      ?<ContainerModal>
+          <div>
+              <button className="OpenInNewTab" onClick={OpenInNewTab}>Open in new tab</button>
+              <button className="CloseModal"onClick={CloseModal}>X</button>
+          </div>
+          <Modal>
+              <iframe src={link}></iframe>
+          </Modal>
+      </ContainerModal>
+      :""
+      }
     </>
   );
 }
