@@ -453,7 +453,8 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 150px;
+  height: 100%;
+  width: 75px;
 
   img {
     border-radius: 50%;
