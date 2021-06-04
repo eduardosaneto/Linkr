@@ -2,8 +2,8 @@ import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
 import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
-import Navbar from './Navbar';
-import Post from './Post';
+import Navbar from "./Navbar";
+import Post from "./Post";
 import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import loading from '../img/loading.svg'
@@ -21,7 +21,10 @@ export default function Timeline(){
     const location = useLocation();
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
-    const config = { headers:{ Authorization: `Bearer ${token}`}};
+    const config = { headers: { Authorization: `Bearer ${token}` } };
+
+    const [modal, setModal] = useState(false);
+    const [link, setLink ] = useState("");
 
     useEffect(() => checkFollowingUsers(),[])
 
@@ -29,13 +32,16 @@ export default function Timeline(){
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
 
-        request.then( response => {
+        request.then((response) => {
             setFollowingUsers(response.data.users);
             setUser(localStorage.user);
-            loadingPosts()
-        })
+            loadingPosts();
+        });
 
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch(() => {
+            setIsError(true);
+            setIsLoading(false);
+        });
     }
 
     function loadingPosts() {
@@ -56,10 +62,24 @@ export default function Timeline(){
             }
         })
 
-        request.catch( () => {setIsError(true); setIsLoading(false)});
+        request.catch(() => {
+            setIsError(true);
+            setIsLoading(false);
+        });
     }
 
-    useInterval(updatePosts,15000);
+    function OpenModal(e){
+        setLink(e);
+        setModal(true);
+    }
+
+    function CloseModal(){
+        setModal(false);
+    }
+
+    function OpenInNewTab(){
+        window.open(link)
+    }
 
     function updatePosts(){
         setIsError(false)
@@ -95,7 +115,10 @@ export default function Timeline(){
         }
     }
     // hasMorePosts ?<Load><div><img src={loading}/>Loading more posts...</div></Load> : ""
-    return(
+
+    useInterval(updatePosts,15000);
+    
+    return (
         <>
             <Navbar />
             <Container>
@@ -112,16 +135,29 @@ export default function Timeline(){
                                     key={post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
                                     reloadingPosts={loadingPosts}
-                                    location={location}
+                                    location={location} OpenModal={OpenModal}
                                 />
                             )}
                         </InfiniteScroll>
                     </Posts>
-                    <Trending >
+                    <Trending>
                         <TrendingBar />
                     </Trending>
                 </div>
             </Container>
+            {modal
+            ?<ContainerModal>
+                <div>
+                    <button className="OpenInNewTab" onClick={OpenInNewTab}>Open in new tab</button>
+                    <button className="CloseModal"onClick={CloseModal}>X</button>
+                </div>
+                <Modal>
+                    <iframe src={link}></iframe>
+                </Modal>
+            </ContainerModal>
+            :""
+            }
         </>
-    )
+    );
 }
+

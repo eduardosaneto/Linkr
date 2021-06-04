@@ -9,6 +9,7 @@ import Navbar from "./Navbar";
 import Post from "./Post";
 import TrendingBar from "./TrendingBar";
 import loading from '../img/loading.svg'
+import { ContainerModal,Modal } from '../styledComponents/Content';
 
 export default function MyPosts() {
   const { user, setUser } = useContext(Usercontext);
@@ -21,6 +22,9 @@ export default function MyPosts() {
   const location = useLocation();
   const token = localstorage.token;
   const config = { headers: { Authorization: `Bearer ${token}` } };
+
+  const [modal, setModal] = useState(false);
+  const [link, setLink ] = useState("");
 
   useEffect(loadMyPosts, []);
 
@@ -40,41 +44,54 @@ export default function MyPosts() {
     });
   }
 
-  useInterval(updateMyPosts, 15000);
-
-  function updateMyPosts(){
-    setIsError(0)
-    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?offset=10`,config)
-    
-    request.then( response => {
-        if(response.data.posts != undefined){
-            setPosts([...response.data.posts, ...posts]);
-        } 
-    })
-    
-    request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
+function updateMyPosts(){
+  setIsError(0)
+  const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?offset=10`,config)
+  
+  request.then( response => {
+      if(response.data.posts != undefined){
+          setPosts([...response.data.posts, ...posts]);
+      } 
+  })
+  
+  request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
 }
 
 function fetchMyPosts(){
-    setIsError(0)
-    if(posts.length > 200){
-        setHasMorePosts(false)
-        return
-    }
-    if(posts.length !== 0){
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?olderThan=${posts[posts.length - 1].id}`, config)
+  setIsError(0)
+  if(posts.length > 200){
+      setHasMorePosts(false)
+      return
+  }
+  if(posts.length !== 0){
+    const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/${localstorage.user["id"]}/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
-        request.then( response => {
-            if(response.data.posts.length < 10){
-                setHasMorePosts(false)
-            } 
-            setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-            console.log(posts)
-        })
+    request.then( response => {
+      if(response.data.posts.length < 10){
+          setHasMorePosts(false)
+      } 
+      setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+      console.log(posts)
+    })
 
-        request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
-    }
+    request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
 }
+}
+  
+function OpenModal(e){
+  setLink(e);
+  setModal(true);
+}
+
+function CloseModal(){
+    setModal(false);
+}
+
+function OpenInNewTab(){
+    window.open(link)
+}
+
+useInterval(updateMyPosts, 15000);
 
   return (
     <>
@@ -104,6 +121,7 @@ function fetchMyPosts(){
                     likes={post.likes}
                     loadMyPosts={updateMyPosts}
                     location={location}
+                    OpenModal={OpenModal}
                   />
                 ))}
             </InfiniteScroll>) : (
@@ -115,6 +133,18 @@ function fetchMyPosts(){
           </Trending>
         </div>
       </Container>
+      {modal
+      ?<ContainerModal>
+          <div>
+              <button className="OpenInNewTab" onClick={OpenInNewTab}>Open in new tab</button>
+              <button className="CloseModal"onClick={CloseModal}>X</button>
+          </div>
+          <Modal>
+              <iframe src={link}></iframe>
+          </Modal>
+      </ContainerModal>
+      :""
+      }
     </>
   );
 }
