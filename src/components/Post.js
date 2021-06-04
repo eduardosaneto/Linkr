@@ -334,7 +334,7 @@ export default function Post({
             : ""}
             {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
           </div>
-          <div class='icons'>
+          { post.hasOwnProperty('repostedBy') || <div class='icons'>
             {post.user.id === localstorage.user.id ? (
               <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
             ) : (
@@ -349,7 +349,7 @@ export default function Post({
             ) : (
               ""
             )}{" "}
-          </div>
+          </div>}
         </div>
         <div className='teste'>
             {controler ? (
