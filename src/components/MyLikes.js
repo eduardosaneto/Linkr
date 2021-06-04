@@ -23,7 +23,6 @@ export default function Mylikes(){
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
     const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
-    const [loader, setLoader] = useState(loadingMore)
 
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
@@ -38,8 +37,8 @@ export default function Mylikes(){
             setPosts(response.data.posts)
             setIsLoading(false)
             if(posts.length === 0){
-                setLoader(null)
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+                setHasMorePosts(false)
             }
             setHasMorePosts(true)   
         })
@@ -48,7 +47,7 @@ export default function Mylikes(){
     
     function updatePosts(){
         setIsError(false)
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?offset=10`,config)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?earlierThan=${posts[0].id}`,config)
         
         request.then( response => {
             if(response.data.posts != undefined){
@@ -56,11 +55,11 @@ export default function Mylikes(){
             } 
         })
         
-        request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
     }
     
     function fetchPosts(){
-        setIsError(0)
+        setIsError(false)
         if(posts.length > 200){
             setHasMorePosts(false)
             return
@@ -76,7 +75,7 @@ export default function Mylikes(){
                 console.log(posts)
             })
     
-            request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
+            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
         }
     }
     function OpenModal(e){
@@ -93,7 +92,7 @@ export default function Mylikes(){
           window.open(link)
     }
 
-    useInterval(updatePosts, 15000);
+    //useInterval(updatePosts, 15000);
 
     return(
         <>
