@@ -42,7 +42,13 @@ export default function Mylikes(){
             }
             setHasMorePosts(true)   
         })
-        request.catch( () => {setIsError(true); setIsLoading(false);setHasMorePosts(false)})
+        request.catch( (error) => {
+            if(error.response.data === 404){
+                setIsError(false)
+            } else{
+                setIsError(true)
+            }; 
+            setIsLoading(false);setHasMorePosts(false)})
     }
     
     function updatePosts(){
@@ -65,7 +71,7 @@ export default function Mylikes(){
             return
         }
         if(posts.length !== 0){
-            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?olderThan=${posts[posts.length - 1].id}`, config)
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?offset=20}`, config)
     
             request.then( response => {
                 if(response.data.posts.length < 10){
