@@ -261,7 +261,7 @@ const Button = styled.button`
   @media (max-width: 611px){
     height: 22px;
     left: calc(100vw - 127px);
-    top: 130px;
+    top: 133px;
     font-size: 13px;
   }
 

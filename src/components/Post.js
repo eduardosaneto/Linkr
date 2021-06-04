@@ -586,7 +586,7 @@ const Content = styled.div`
   input {
     display: flex;
     flex-wrap: wrap;
-    width: 503px;
+    width: 170%;
     height: 23px;
     border-radius: 7px;
     padding: 0px 5px;
@@ -601,8 +601,12 @@ const Content = styled.div`
     line-height: 23px;
   }
 
+
   @media (max-width: 611px) {
-    width: 82%;
+    width: 100%;
+    input{
+      width: 75%;
+    }
     > h2 {
       font-size: 16px;
     }
