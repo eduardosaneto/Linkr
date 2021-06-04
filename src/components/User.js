@@ -160,7 +160,7 @@ export default function User() {
             <Container>
                 <PageTitle>
                     {!userInfo ? (
-                        "Loading"
+                        ""
                     ) : (
                         <>
                             <Title avatar={userInfo.avatar}>

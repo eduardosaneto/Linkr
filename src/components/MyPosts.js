@@ -41,6 +41,7 @@ export default function MyPosts() {
     });
     request.catch(() => {
       setIsError(1);
+      setIsLoading(1);
     });
   }
 
@@ -110,7 +111,7 @@ useInterval(updateMyPosts, 15000);
                   por favor atualize a página.
                 </Load>
               ) : (
-                <Load>Loading</Load>
+                <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>
               )
             ) : posts.length ?  (
             <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchMyPosts}>

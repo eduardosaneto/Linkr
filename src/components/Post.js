@@ -340,45 +340,49 @@ export default function Post({
             )}{" "}
           </div>
         </div>
-        {controler ? (
-          <form onSubmit={Edit}>
-            <input
-              type='text'
-              required
-              value={editText}
-              onChange={(e) => setEditText(e.target.value)}
-              ref={inputRefText}
-              onKeyDown={(e) => keydowm(e)}
-            />
-          </form>
-        ) : (
-          <p>
-            <ReactHashtag
-              renderHashtag={(hashtagValue) => (
-                <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
-                  <Hashtag>{hashtagValue}</Hashtag>
-                </Link>
-              )}>
-              {isEdit ? editText : post.text}
-            </ReactHashtag>
-          </p>
-        )}
-        {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
-        ? <YoutubePlayer>
-            <iframe title="post-link" width="502" height="281" src={srcYoutube}></iframe>
-            <p>{post.link}</p>
-          </YoutubePlayer>
-        : (<LinkSnippet onClick={()=>OpenModal(post.link)}>
-            <Text>
-              <h2>{post.linkTitle}</h2>
-              <p>{post.linkDescription}</p>
-              <div>
-                <p>{post.link}</p>
-              </div>
-            </Text>
-            <img src={post.linkImage} onError={(e)=>{e.target.onerror = null; e.target.src=(linkrLogo)}} alt='website'/>
-          </LinkSnippet>)
-         }  
+        <div className='teste'>
+            {controler ? (
+              <form onSubmit={Edit}>
+                <input
+                  type='text'
+                  required
+                  value={editText}
+                  onChange={(e) => setEditText(e.target.value)}
+                  ref={inputRefText}
+                  onKeyDown={(e) => keydowm(e)}
+                />
+              </form>
+            ) : (
+              <p>
+                <ReactHashtag
+                  renderHashtag={(hashtagValue) => (
+                    <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                      <Hashtag>{hashtagValue}</Hashtag>
+                    </Link>
+                  )}>
+                  {isEdit ? editText : post.text}
+                </ReactHashtag>
+              </p>
+            )}
+          </div>
+          {post.link.includes("youtube.com/watch") ||
+          post.link.includes("youtu.be/") ? (
+            <YoutubePlayer>
+              <iframe width='502' height='281' src={srcYoutube}></iframe>
+              <p>{post.link}</p>
+            </YoutubePlayer>
+          ) : (
+            <LinkSnippet href={post.link} target={"_blank"}>
+              <Text>
+                <h2>{post.linkTitle}</h2>
+                <p>{post.linkDescription}</p>
+                <div>
+                  <p>{post.link}</p>
+                </div>
+              </Text>
+              <img src={post.linkImage} alt='website' />
+            </LinkSnippet>
+          )}
       </Content>
     </PostContainer>
     {showComments ? <Comments id={id} postUser={post.user} /> : null}
@@ -514,9 +518,35 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  white-space: nowrap;
   overflow: hidden;
+  font-weight: bold;
   text-overflow: ellipsis;
+  .teste {
+    width: 503px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    line-height: 23px;
+    margin-bottom: 1.5px;
+    > h2 {
+      color: #fff;
+      font-size: 19px;
+      text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    }
+    > p {
+      font-size: 17px;
+      line-height: 23px;
+      color: #b7b7b7;
+      max-height: 70px;
+      margin-top: 19px;
+      margin-bottom: 14px;
+      text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    }
+  }
   .boxName {
     display: flex;
     justify-content: space-between;
@@ -540,7 +570,7 @@ const Content = styled.div`
     font-size: 19px;
   }
   > p {
-    font-size: 19px;
+    font-size: 17px;
     line-height: 23px;
     color: #b7b7b7;
     max-height: 70px;
@@ -554,15 +584,21 @@ const Content = styled.div`
   }
 
   input {
-    width: 100%;
-    height: 60px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 503px;
+    height: 23px;
     border-radius: 7px;
-    font-size: 14px;
-    padding: 4px 9px;
-    outline: 1px solid black;
-    overflow-y: auto;
-    overflow-wrap: break-word;
+    padding: 0px 5px;
     color: #4c4c4c;
+    background-color: #ffff;
+    outline: none;
+    border: none;
+    margin-top: 19px;
+    margin-bottom: 14px;
+    font-weight: bold;
+    font-size: 17px;
+    line-height: 23px;
   }
 
   @media (max-width: 611px) {

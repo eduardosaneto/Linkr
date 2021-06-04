@@ -47,7 +47,7 @@ export default function Mylikes(){
     }
     
     function updatePosts(){
-        setIsError(0)
+        setIsError(false)
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?offset=10`,config)
         
         request.then( response => {
@@ -107,7 +107,7 @@ export default function Mylikes(){
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={loader} hasMore={hasMorePosts} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
