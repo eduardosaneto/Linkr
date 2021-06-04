@@ -68,14 +68,9 @@ export default function Timeline() {
             if (posts.length === 0 && followingUsers.length !== 0) {
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>);
             } else if (posts.length === 0 && followingUsers.length === 0) {
-                setAfterLoading(
-                    <Load>
-                        Você não segue ninguém ainda, procure por perfis na
-                        busca
-                    </Load>
-                );
-            }
-        });
+                setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
+            } 
+        })
 
         request.catch(() => {
             setIsError(true);

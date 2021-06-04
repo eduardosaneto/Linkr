@@ -14,6 +14,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
 import { AiOutlineComment } from 'react-icons/ai';
+import { BiRepost } from 'react-icons/bi'
 
 import UserContext from "../contexts/UserContext";
 
@@ -207,8 +208,40 @@ export default function Post({
     setShowComments(!showComments)
   }
 
+  function DoYouWannaRepost(){
+    confirmAlert({
+      message: "Você deseja repostar esse link?",
+      buttons: [
+        {
+          label: "Sim, compartilhar!",
+          onClick: () => Repost(),
+          className: "yesShare",
+        },
+        {
+          label: "Não, voltar",
+        },
+      ],
+      closeOnClickOutside: false,
+    });
+  }
+
+  function Repost(){
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+    const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
+    
+  }
+
   return (
     <>
+    {post.hasOwnProperty('repostedBy')
+    ? <RepostContainer>
+        <RespostIcon className="RepostBar"></RespostIcon>
+        <p>re-posted by <span>{localstorage.user.id===post.repostedBy['id']?'You':post.repostedBy['username']}</span></p>
+      </RepostContainer>
+    : ""
+    }
     <PostContainer key={postUser.id}>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
@@ -279,6 +312,10 @@ export default function Post({
           <CommentIcon onClick={toggleComments}/>
           <p>{post.commentCount} comments</p>
         </div>
+        <div>
+          <RespostIcon onClick={DoYouWannaRepost}/>
+          <p>{post.repostCount} re-posts</p>
+        </div>
       </Profile>
       <Content>
         <div class='boxName'>
@@ -322,7 +359,6 @@ export default function Post({
                 </Link>
               )}>
               {isEdit ? editText : post.text}
-              
             </ReactHashtag>
           </p>
         )}
@@ -350,6 +386,34 @@ export default function Post({
   );
 }
 
+const RepostContainer = styled.div`
+  height: 44px;
+  display: flex;
+  position: relative;
+  top:12px;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+  background-color:#1E1E1E;
+  
+  .RepostBar{
+    cursor: default;
+    margin-left: 24px;
+    margin-bottom: 10px;
+  }
+
+  p{
+    font-size:11px;
+    margin-left: 6px;
+    color: #FFF;
+    margin-bottom: 10px;
+
+    span{
+      font-weight: bold;
+    }
+  }
+`
+
 const YoutubePlayer = styled.div`
   display: flex;
   flex-direction: column;
@@ -370,7 +434,6 @@ const YoutubePlayer = styled.div`
 const PostContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  //height: 276px;
   width: 100%;
   font-weight: 400;
   padding: 18px 18px 20px 21px;
@@ -390,7 +453,6 @@ const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
   height: 150px;
 
   img {
@@ -400,14 +462,16 @@ const Profile = styled.div`
   }
   p {
     color: #fff;
-    font-size: 11px;
+    font-size: 12px;
+    margin-top:8px;
   }
   > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    height: 32px;
+    margin-top : 18px;
+
   }
 
   @media (max-width: 611px) {
@@ -609,13 +673,13 @@ const FaTrashAlt = styled(FaTrash)`
   margin-left: 10px;
 `;
 const HeartIconEmpty = styled(FiHeart)`
-  font-size: 18px;
+  font-size: 21px;
   color: #fff;
   cursor: pointer;
 `;
 
 const HeartIconFill = styled(FaHeart)`
-  font-size: 18px;
+  font-size: 21px;
   color: #ac0000;
   cursor: pointer;
 `;
@@ -627,7 +691,12 @@ const Hashtag = styled.span`
 `;
 
 const CommentIcon = styled(AiOutlineComment)`
-  font-size: 18px;
+  font-size: 22px;
+  color: #fff;
+  cursor: pointer;
+`
+const RespostIcon = styled(BiRepost)`
+  font-size: 23px;
   color: #fff;
   cursor: pointer;
 `
