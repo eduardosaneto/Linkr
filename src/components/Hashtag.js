@@ -39,25 +39,31 @@ export default function Hashtag(){
             setIsLoading(false)
             if(posts.length === 0){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+                setHasMorePosts(false)
             }
             setHasMorePosts(true)   
         })
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false);setHasMorePosts(false)})
     }
 
     useInterval(updateHashtagPosts, 15000);
 
     function updateHashtagPosts(){
         setIsError(false)
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts?earlierThan=${posts[0].id}`,config)
+        if(posts.length !== 0){
+            let request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts?earlierThan=${posts[0].id}`,config)
         
-        request.then( response => {
-            if(response.data.posts != undefined){
-                setPosts([...response.data.posts, ...posts]);
-            } 
-        })
+            request.then( response => {
+                if(response.data.posts != undefined){
+                    setPosts([...response.data.posts, ...posts]);
+                } 
+            })
         
-        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+        } else {
+            setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+            setHasMorePosts(false)
+        }
     }
 
     function fetchHashtagPosts(){
@@ -76,9 +82,8 @@ export default function Hashtag(){
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
                 console.log("hashtaga",posts)
             })
-
             request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
-        }
+        } 
     }
 
     return(
