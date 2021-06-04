@@ -1,7 +1,7 @@
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
 import { useState, useContext, useEffect } from 'react';
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import Navbar from "./Navbar";
 import Post from "./Post";
 import { useLocation } from "react-router-dom";
@@ -124,11 +124,13 @@ export default function Timeline(){
         <>
             <Navbar />
             <Container>
-                <h1>timeline</h1>
+                <PageTitle>
+                    <h1>timeline</h1>
+                </PageTitle>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {updatePosts} />
-                        { isLoading ? <Load><div><img src={loading}/>Loading...</div></Load>  : ""}
+                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
                         <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={true} loadMore={fetchPosts}>

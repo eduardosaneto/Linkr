@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Usercontext from "../contexts/UserContext";
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import useInterval from 'react-useinterval';
 import Navbar from "./Navbar";
 import Post from "./Post";
@@ -97,7 +97,9 @@ useInterval(updateMyPosts, 15000);
     <>
       <Navbar />
       <Container>
-        <h1>my posts</h1>
+        <PageTitle>
+          <h1>my posts</h1>
+        </PageTitle>
         <div>
           <Posts>
             {isLoading ? (

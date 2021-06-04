@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
-import { ContainerModal,Modal } from '../styledComponents/Content';
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal, Modal } from "../styledComponents/Content";
 
 import styled from "styled-components";
 import Navbar from "./Navbar";
@@ -121,21 +120,18 @@ export default function User() {
         <>
             <Navbar />
             <Container>
-                <TitleContainer>
+                <PageTitle>
                     {!userInfo ? (
                         "Loading"
                     ) : (
                         <>
-                            <Title>
+                            <Title avatar={userInfo.avatar}>
                                 {userInfo ? (
-                                    <img
-                                        src={`${userInfo.avatar}`}
-                                        alt={`${userInfo.username} profile`}
-                                    />
+                                    <div></div>
                                 ) : (
                                     ""
                                 )}
-                                <h1>{userInfo ? username() : ""}</h1>
+                                <div><h1>{userInfo ? username() : ""}</h1></div>
                             </Title>
                             {userInfo.id === localstorage.user.id ? (
                                 ""
@@ -159,7 +155,7 @@ export default function User() {
                             )}
                         </>
                     )}
-                </TitleContainer>
+                </PageTitle>
                 <div>
                     <Posts>
                         {isLoading ? <Load>Loading</Load> : ""}
@@ -208,23 +204,45 @@ export default function User() {
     );
 }
 
-const TitleContainer = styled.div`
-    align-items: center !important;
-
-    @media (max-width: 611px) {
-        margin: 0 17px;
-    }
-`;
 const Title = styled.div`
+    width: 85%;
     display: flex;
     justify-content: flex-start !important;
-    align-items: center !important;
-
-    img {
+    align-items: center;
+    div:first-child {
         border-radius: 50%;
         width: 50px;
         height: 50px;
-        margin-right: 18px;
+        background: url("${props => props.avatar}");
+        background-size: cover;
+        background-position: center;
+    }
+    div:last-child{
+        margin-left: 18px;
+        width: 80%;
+        display: flex;
+        align-items: center;
+        padding-bottom: 12px;
+    }
+    @media(max-width: 611px){
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        width: 100%;
+        div:first-child {
+            margin-top: 2px;
+            margin-left: 5px;
+        }
+        div:last-child{
+        margin-left: 25px;
+        width: 70%;
+        display: flex;
+        align-items: flex-end;
+        padding-bottom: 12px;
+        }
+        h1 {
+            word-break: break-word;
+        }
     }
 
     @media (max-width: 611px){
@@ -248,12 +266,12 @@ const Button = styled.button`
     &:hover{
         cursor:pointer;
     }
-
-    @media (max-width: 611px) {
-        width: 20%;
-        height: 112px;
-        writing-mode: vertical-rl;
-        text-orientation: upright;
-        font-size: 12px;
+    @media(max-width: 611px){
+        position: absolute;
+        top: 60px;
+        left: 17.5px;
+        width: 58px;
+        height: 17px;
+        font-size: 10px;
     }
 `;
