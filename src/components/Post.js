@@ -602,6 +602,10 @@ const LinkSnippet = styled.div`
     object-fit: cover;
     background-position: center;
   }
+
+  &:hover{
+    cursor:pointer;
+
   img:before{
     content: ' ';
     border-top-right-radius: 11px;
