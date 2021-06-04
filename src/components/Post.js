@@ -561,8 +561,14 @@ const Content = styled.div`
   .boxName {
     display: flex;
     justify-content: space-between;
-    width: 502px;
-
+    width: 100%;
+    
+    .map-icon{
+      cursor: pointer;
+    color:white;
+    margin-left:10px;
+    font-size:16px;
+  }
     @media (max-width: 611px) {
       width: 100%;
     }
@@ -615,6 +621,7 @@ const Content = styled.div`
 
   @media (max-width: 611px) {
     width: 100%;
+
     input{
       width: 75%;
     }
