@@ -1,8 +1,8 @@
-import axios from "axios";
-import { useState, useContext, useEffect } from "react";
-import { Container, Posts, Trending, Load } from "../styledComponents/Content";
-import Navbar from "./Navbar";
-import Post from "./Post";
+import axios from 'axios'
+import { useState, useContext, useEffect } from 'react';
+import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
+import Navbar from './Navbar';
+import Post from './Post';
 import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import loading from "../img/loading.svg";
@@ -97,43 +97,24 @@ export default function Timeline() {
         <>
             <Navbar />
             <Container>
-                <h1>timeline</h1>
+                <PageTitle>
+                    <h1>timeline</h1>
+                </PageTitle>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts={loadingPosts} />
-                        {isLoading ? (
-                            <Load>
-                                <div>
-                                    <img src={loading} /> Loading...
-                                </div>
-                            </Load>
-                        ) : (
-                            ""
-                        )}
-                        {isError ? (
-                            <Load>
-                                Houve uma falha ao obter os posts, <br /> por
-                                favor atualize a página
-                            </Load>
-                        ) : (
-                            ""
-                        )}
-                        {(posts.length === 0 && afterLoading === null) ||
-                        posts.length !== 0
-                            ? ""
-                            : afterLoading}
-                        {posts.map((post) => (
-                            <Post
-                                key={post.id}
-                                id={post.id}
-                                post={post}
-                                postUser={post.user}
-                                likes={post.likes}
+                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
+                        { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
+                        { (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
+                        {posts.map( post => 
+                            <Post 
+                                key={post.id} id={post.id} post={post} 
+                                postUser={post.user} likes={post.likes}
                                 reloadingPosts={loadingPosts}
                                 location={location}
                                 OpenModal={OpenModal}
                             />
-                        ))}
+                        )}
                     </Posts>
                     <Trending>
                         <TrendingBar />
