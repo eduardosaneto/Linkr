@@ -206,7 +206,7 @@ export default function Post({
 
   return (
     <>
-    <PostContainer key={postUser.id}>
+    <PostContainer>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
           <img src={postUser.avatar} alt={`${postUser.username}' profile`} />

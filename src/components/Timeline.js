@@ -24,12 +24,9 @@ export default function Timeline(){
     const config = { headers:{ Authorization: `Bearer ${token}`}};
     const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
 
-    useEffect(() => {checkFollowingUsers()},[])
+    useEffect(() => checkFollowingUsers(),[])
 
     function checkFollowingUsers() {
-        setPosts([])
-        setAfterLoading(null)
-        setIsError(false)
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/users/follows', config)
 
@@ -43,26 +40,28 @@ export default function Timeline(){
     }
 
     function loadingPosts() {
-        setPosts([])
-        setAfterLoading(null)
-        setIsError(false)
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
             setPosts(response.data.posts)
             setIsLoading(false)
+            const teste = true
+            setHasMorePosts(teste)
+            console.log("setei true", hasMorePosts)  
             if(posts.length === 0 && followingUsers.length !== 0){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
+                return
             } else if (posts.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
+                return
             }
-            setHasMorePosts(true)            
+          
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
     }
-    
+
     useInterval(updatePosts,15000);
 
     function updatePosts(){
@@ -70,33 +69,31 @@ export default function Timeline(){
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?earlierThan=${posts[0].id}`,config)
         
         request.then( response => {
-            if(response.data.posts != undefined){
+            if(response.data.posts !== undefined){
                 setPosts([...response.data.posts, ...posts]);
             } 
         })
-        
         request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
     }
 
     function fetchPosts(){
-        setIsError(false)
-        if(posts.length > 200){
+        console.log("fetch", posts)
+        if(posts.length > 200 || posts.length === 0){
             setHasMorePosts(false)
             return
         }
-        if(posts.length !== 0){
-            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
-            request.then( response => {
-                if(response.data.posts.length < 10){
-                    setHasMorePosts(false)
-                } 
-                setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-                console.log(posts)
-            })
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
-            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
-        }
+        request.then( response => {
+            if(response.data.posts.length < 10){
+                setHasMorePosts(false)
+            } 
+            setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+            console.log("entrei no fetch",posts)
+        })
+
+        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
     }
     return(
         <>
@@ -109,7 +106,7 @@ export default function Timeline(){
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={true} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
