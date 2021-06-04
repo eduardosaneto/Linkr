@@ -1,10 +1,11 @@
 import { useState, useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios'
-import styled from 'styled-components'
+import InfiniteScroll from 'react-infinite-scroller';
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
+import loading from '../img/loading.svg'
 import TrendingBar from "./TrendingBar";
 import useInterval from 'react-useinterval';
 
@@ -12,54 +13,91 @@ import UserContext from "../contexts/UserContext";
 
 export default function Hashtag(){
     const {user, setUser} = useContext(UserContext);
-    const [hashtagPosts, setHashtagPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(false)
+    const [hasMorePosts, setHasMorePosts] = useState(false)
+    const [afterLoading, setAfterLoading] = useState(null)
     const { hashtag } = useParams();
+    const localstorage = JSON.parse(localStorage.user);
+    const token = localstorage.token;
+    const config = { headers:{ Authorization: `Bearer ${token}`}};
+    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
 
     useEffect(() => {loadingHashtag()},[hashtag])
 
     function loadingHashtag() {
-        const localstorage = JSON.parse(localStorage.user);
-        const token = localstorage.token;
+        setPosts([])
         setIsLoading(true)
+        setAfterLoading(null)
         setIsError(false)
-        const config = { headers:{ Authorization: `Bearer ${token}`}};
+        setHasMorePosts(false)  
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`, config)
 
         request.then( response => {
-            setUser(localStorage.user);
-            const data = response.data.posts
-            setHashtagPosts([...response.data.posts])
+            setPosts(response.data.posts)
             setIsLoading(false)
-            if(hashtagPosts === data) {
-                setIsEmpty(true)
-            } else {
-                setIsEmpty(false)
+            if(posts.length === 0){
+                setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
             }
+            setHasMorePosts(true)   
         })
         request.catch( () => {setIsError(true); setIsLoading(false)})
     }
 
-    useInterval(loadingHashtag, 15000);
+    useInterval(updateHashtagPosts, 15000);
+
+    function updateHashtagPosts(){
+        setIsError(false)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts?earlierThan=${posts[0].id}`,config)
+        
+        request.then( response => {
+            if(response.data.posts != undefined){
+                setPosts([...response.data.posts, ...posts]);
+            } 
+        })
+        
+        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+    }
+
+    function fetchHashtagPosts(){
+        setIsError(false)
+        if(posts.length > 200){
+            setHasMorePosts(false)
+            return
+        }
+        if(posts.length !== 0){
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts?olderThan=${posts[posts.length - 1].id}`, config)
+
+            request.then( response => {
+                if(response.data.posts.length < 10){
+                    setHasMorePosts(false)
+                } 
+                setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+                console.log("hashtaga",posts)
+            })
+
+            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+        }
+    }
 
     return(
         <>
             <Navbar />
             <Container>
-                <h1>#{hashtag}</h1>
+                <h1>{isLoading ? "" : `#${hashtag}`}</h1>
                 <div>
                     <Posts>
-                        { isLoading ? <Load>Loading</Load> : ""}
+                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isEmpty && !isLoading ? <Load>Não há posts relacionados a nenhuma hashtag até o momento</Load> : ""}
-                        { isLoading ? "" : hashtagPosts.map( post => 
+                        { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchHashtagPosts}>
+                            {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
-                            />)
-                        }
+                            />)}
+                        </InfiniteScroll>)
                     </Posts>
                     <Trending >
                         <TrendingBar />
