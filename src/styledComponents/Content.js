@@ -24,9 +24,9 @@ export const Container = styled.div`
   @media (max-width: 611px) {
     width: 100vw;
     margin-top: 91px;
-    > h1 {
+     h1 {
       margin-left: 17px;
-      font-size: 33px;
+      font-size: 30px;
     }
     > div {
       margin-top: 19px;
@@ -121,15 +121,30 @@ export const Load = styled.div`
   text-align: center;
   color: #6d6d6d;
   font-size: 36px;
-  padding-top: 100px;
+  padding-top: 35px;
 
   div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    color: #6D6D6D;
+    font-size: 30px;
+    padding-top: 30px;
   }
-  @media (max-width: 611px) {
-    font-size: 25px;
-  }
+    img{
+        height: 100px;
+        width: 100px;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    @media (max-width: 611px){
+        font-size: 25px;
+}
 `;
