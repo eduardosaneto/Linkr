@@ -160,7 +160,7 @@ const Form = styled.form`
     border-radius: 8px;
     position: relative;
     position: fixed;
-    top: 13px;
+    top: 15px;
     left: calc(50% - 563px / 2);
     z-index: 10;
     background: #E7E7E7;
