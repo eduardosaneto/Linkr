@@ -646,22 +646,36 @@ const Text = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  overflow-y: scroll;
-  > h2 {
+  //overflow-y: scroll;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  word-break: break-all;
+> h2 {
     font-size: 16px;
     color: #cecece;
     margin-bottom: 10px;
+    text-overflow: ellipsis;
+    //overflow: hidden;
+    //white-space: nowrap;
   }
-  > p {
+
+   /* display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden; */
+
+> p {
     color: #9b9595;
     font-size: 11px;
     line-height: 15px;
     margin-bottom: 15px;
   }
-  > div {
+> div {
     width: 100%;
   }
-  > div p {
+> div p {
     color: #cecece;
     font-size: 11px;
   }

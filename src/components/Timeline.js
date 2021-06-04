@@ -96,7 +96,6 @@ export default function Timeline(){
     }
 
     function fetchPosts(){
-        console.log("fetch", posts)
         if(posts.length > 200){
             setHasMorePosts(false)
             return
@@ -106,7 +105,6 @@ export default function Timeline(){
             const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
             request.then( response => {
-                console.log("TO AQUI")
                 if(response.data.posts.length < 10){
                     setHasMorePosts(false)
                 } 
@@ -116,7 +114,6 @@ export default function Timeline(){
             request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
         }
     }
-    // hasMorePosts ?<Load><div><img src={loading}/>Loading more posts...</div></Load> : ""
 
     useInterval(updatePosts,15000);
     
@@ -133,7 +130,7 @@ export default function Timeline(){
                         { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={true} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
