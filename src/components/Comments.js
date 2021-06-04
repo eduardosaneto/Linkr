@@ -107,7 +107,7 @@ const CommentsContainer = styled.div`
     margin-top: -46px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
-
+    
     .username{
         color: #FFF;
         font-weight: 700;
