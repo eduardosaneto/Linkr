@@ -107,7 +107,7 @@ const CommentsContainer = styled.div`
     margin-top: -46px;
     border-bottom-left-radius: 16px;
     border-bottom-right-radius: 16px;
-    
+
     .username{
         color: #FFF;
         font-weight: 700;
@@ -177,6 +177,9 @@ const CommentBox = styled.div`
     border-bottom: 1px solid #353535;
     margin: 0 20px;
     padding: 16px 0;
+    p {
+        word-break: break-all;
+    }
 `
 const PlaneIcon = styled(IoPaperPlaneOutline)`
     color: #FFF;
