@@ -22,7 +22,7 @@ export default function Hashtag(){
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
-    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
+    const loadingMore = ""
 
     useEffect(() => {loadingHashtag()},[hashtag])
 
@@ -30,8 +30,7 @@ export default function Hashtag(){
         setPosts([])
         setIsLoading(true)
         setAfterLoading(null)
-        setIsError(false)
-        setHasMorePosts(false)  
+        setIsError(false) 
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts`, config)
 
         request.then( response => {
@@ -90,7 +89,7 @@ export default function Hashtag(){
         <>
             <Navbar />
             <Container>
-                <h1>{isLoading ? "" : `#${hashtag}`}</h1>
+                <h1>#{hashtag}</h1>
                 <div>
                     <Posts>
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}

@@ -1,6 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import axios from 'axios'
-import styled from 'styled-components'
+import InfiniteScroll from 'react-infinite-scroller';
+import loading from '../img/loading.svg'
 import { Container, Posts, Trending, Load } from "../styledComponents/Content";
 import Navbar from './Navbar';
 import Post from './Post';
@@ -12,36 +13,70 @@ import UserContext from "../contexts/UserContext";
 export default function Mylikes(){
 
     const {user, setUser} = useContext(UserContext);
-    const [likedPosts, setLikedPosts] = useState([]);
+    const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-    const [isEmpty, setIsEmpty] = useState(false)
-
+    const [afterLoading, setAfterLoading] = useState(null)
+    const [hasMorePosts, setHasMorePosts] = useState(false)
+    const localstorage = JSON.parse(localStorage.user);
+    const token = localstorage.token;
+    const config = { headers:{ Authorization: `Bearer ${token}`}};
+    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
+    const [loader, setLoader] = useState(loadingMore)
     useEffect(() => {loadingPosts()},[])
+
     function loadingPosts() {
-        const localstorage = JSON.parse(localStorage.user);
-        const token = localstorage.token;
         setIsLoading(true);
         setIsError(false);
-        const config = { headers:{ Authorization: `Bearer ${token}`}};
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked', config)
 
         request.then( response => {
-            setUser(localStorage.user);
-            const data = response.data.posts
-            setLikedPosts([...response.data.posts])
+            setPosts(response.data.posts)
             setIsLoading(false)
-            if(likedPosts === data) {
-                setIsEmpty(true)
-            } else {
-                setIsEmpty(false)
+            if(posts.length === 0){
+                setLoader(null)
+                setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
             }
+            setHasMorePosts(true)   
         })
-        request.catch( () => {setIsError(true); setIsLoading(false)})
+        request.catch( () => {setIsError(true); setIsLoading(false);setHasMorePosts(false)})
     }
 
-    useInterval(loadingPosts, 15000);
-
+    useInterval(updatePosts, 15000);
+    
+    function updatePosts(){
+        setIsError(0)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?offset=10`,config)
+        
+        request.then( response => {
+            if(response.data.posts != undefined){
+                setPosts([...response.data.posts, ...posts]);
+            } 
+        })
+        
+        request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
+    }
+    
+    function fetchPosts(){
+        setIsError(0)
+        if(posts.length > 200){
+            setHasMorePosts(false)
+            return
+        }
+        if(posts.length !== 0){
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?olderThan=${posts[posts.length - 1].id}`, config)
+    
+            request.then( response => {
+                if(response.data.posts.length < 10){
+                    setHasMorePosts(false)
+                } 
+                setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+                console.log(posts)
+            })
+    
+            request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
+        }
+    }
     return(
         <>
             <Navbar />
@@ -49,15 +84,17 @@ export default function Mylikes(){
                 <h1>my likes</h1>
                 <div>
                     <Posts>
-                        { isLoading ? <Load>Loading</Load> : ""}
+                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-                        { isEmpty && !isLoading ? <Load>Ainda não há posts curtidos por você</Load> : ""}
-                        {likedPosts.map( post => 
-                            <Post 
-                                key={post.id} id={post.id} post={post} 
-                                postUser={post.user} likes={post.likes}
-                            />)
-                        }
+                        { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
+                        <InfiniteScroll pageStart={0} loader={loader} hasMore={hasMorePosts} loadMore={fetchPosts}>
+                            {posts.map( post => 
+                                <Post 
+                                    key={post.id} id={post.id} post={post} 
+                                    postUser={post.user} likes={post.likes}
+                                />)
+                            }
+                        </InfiniteScroll>
                     </Posts>
                     <Trending >
                         <TrendingBar />
