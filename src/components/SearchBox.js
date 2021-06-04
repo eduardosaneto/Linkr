@@ -216,7 +216,7 @@ const Form = styled.form`
         button {
             height: 42px;
             top: 10px;
-            right: 13px;
+            right: 15px;
         }
     }
 `;
