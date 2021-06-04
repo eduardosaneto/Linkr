@@ -605,7 +605,7 @@ const LinkSnippet = styled.div`
 
   &:hover{
     cursor:pointer;
-
+  }
   img:before{
     content: ' ';
     border-top-right-radius: 11px;

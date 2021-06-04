@@ -23,11 +23,7 @@ export const Container = styled.div`
 
   @media (max-width: 611px) {
     width: 100vw;
-<<<<<<< HEAD
     margin-top: 140px;
-=======
-    margin-top: 144px;
->>>>>>> 39192ed843658e6bd54d7ddbf55c6572d2024f31
     > h1 {
       margin-left: 17px;
       font-size: 30px;
