@@ -23,14 +23,31 @@ export const Container = styled.div`
 
   @media (max-width: 611px) {
     width: 100vw;
-    margin-top: 91px;
-     h1 {
+<<<<<<< HEAD
+    margin-top: 140px;
+=======
+    margin-top: 144px;
+>>>>>>> 39192ed843658e6bd54d7ddbf55c6572d2024f31
+    > h1 {
       margin-left: 17px;
       font-size: 30px;
     }
     > div {
       margin-top: 19px;
     }
+  }
+`;
+
+export const PageTitle = styled.div`
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  word-break: break-all;
+  @media(max-width: 611px){
+    padding: 0 17px;
+    position: relative;
   }
 `;
 
