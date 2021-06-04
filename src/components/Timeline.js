@@ -22,7 +22,6 @@ export default function Timeline(){
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
-    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
 
     useEffect(() => checkFollowingUsers(),[])
 
@@ -44,19 +43,17 @@ export default function Timeline(){
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
         request.then( response => {
+            const data = response.data.posts 
             setPosts(response.data.posts)
             setIsLoading(false)
-            const teste = true
-            setHasMorePosts(teste)
-            console.log("setei true", hasMorePosts)  
-            if(posts.length === 0 && followingUsers.length !== 0){
+            setHasMorePosts(true)  
+            if(data.length === 0 && followingUsers.length !== 0){
                 setAfterLoading(<Load>Nenhuma publicação encontrada</Load>)
                 return
-            } else if (posts.length === 0 && followingUsers.length === 0) {
+            } else if (data.length === 0 && followingUsers.length === 0) {
                 setAfterLoading(<Load>Você não segue ninguém ainda, procure por perfis na busca</Load>)
                 return
             }
-          
         })
 
         request.catch( () => {setIsError(true); setIsLoading(false)});
@@ -78,23 +75,26 @@ export default function Timeline(){
 
     function fetchPosts(){
         console.log("fetch", posts)
-        if(posts.length > 200 || posts.length === 0){
+        if(posts.length > 200){
             setHasMorePosts(false)
             return
         }
 
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
+        if(posts.length !== 0){
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts?olderThan=${posts[posts.length - 1].id}`, config)
 
-        request.then( response => {
-            if(response.data.posts.length < 10){
-                setHasMorePosts(false)
-            } 
-            setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-            console.log("entrei no fetch",posts)
-        })
+            request.then( response => {
+                console.log("TO AQUI")
+                if(response.data.posts.length < 10){
+                    setHasMorePosts(false)
+                } 
+                setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
+            })
 
-        request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+        }
     }
+    // hasMorePosts ?<Load><div><img src={loading}/>Loading more posts...</div></Load> : ""
     return(
         <>
             <Navbar />
@@ -103,10 +103,10 @@ export default function Timeline(){
                 <div>
                     <Posts>
                         <CreatePosts loadingPosts = {updatePosts} />
-                        { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
+                        { isLoading ? <Load><div><img src={loading}/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={true} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={true} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
