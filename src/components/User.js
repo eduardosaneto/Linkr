@@ -9,6 +9,7 @@ import Usercontext from "../contexts/UserContext";
 import TrendingBar from "./TrendingBar";
 import Post from "./Post";
 import useInterval from 'react-useinterval';
+// import SearchBox from './SearchBox';
 
 export default function User() {
     const { user, setUser } = useContext(Usercontext);
@@ -119,6 +120,7 @@ export default function User() {
 
         <>
             <Navbar />
+            {/* <SearchBox /> */}
             <Container>
                 <PageTitle>
                     {!userInfo ? (
