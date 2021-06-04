@@ -14,6 +14,7 @@ import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
 import { AiOutlineComment } from 'react-icons/ai';
+import linkrLogo from '../img/linkrLogo.JPG';
 
 import UserContext from "../contexts/UserContext";
 
@@ -82,10 +83,10 @@ export default function Post({
       setUser(localStorage.user);
       setLike(0);
       setLikeQuantity(response.data.post.likes.length);
-      const teste = peopleThatLiked.filter(
+      const storePeopleThatLiked = peopleThatLiked.filter(
         (name) => name["user.username"] !== localstorage.user.username
       );
-      setPeopleThatLiked(teste);
+      setPeopleThatLiked(storePeopleThatLiked);
     });
     request.catch(() => {
       alert(
@@ -212,7 +213,7 @@ export default function Post({
     <PostContainer key={postUser.id}>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
-          <img src={postUser.avatar} alt={`${postUser.username}' profile`} />
+          <Image avatar={postUser.avatar}></Image>
         </Link>
         <div>
           {like === 1 ? (
@@ -326,12 +327,11 @@ export default function Post({
             </ReactHashtag>
           </p>
         )}
-
         {(post.link).includes("youtube.com/watch") || (post.link).includes("youtu.be/")
-        ? (<YoutubePlayer>
-            <iframe width="502" height="281" src={srcYoutube}></iframe>
+        ? <YoutubePlayer>
+            <iframe title="post-link" width="502" height="281" src={srcYoutube}></iframe>
             <p>{post.link}</p>
-          </YoutubePlayer>)
+          </YoutubePlayer>
         : (<LinkSnippet onClick={()=>OpenModal(post.link)}>
             <Text>
               <h2>{post.linkTitle}</h2>
@@ -340,7 +340,7 @@ export default function Post({
                 <p>{post.link}</p>
               </div>
             </Text>
-            <img src={post.linkImage} alt='website' />
+            <img src={post.linkImage} onError={(e)=>{e.target.onerror = null; e.target.src=(linkrLogo)}} alt='website'/>
           </LinkSnippet>)
          }  
       </Content>
@@ -370,7 +370,6 @@ const YoutubePlayer = styled.div`
 const PostContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  //height: 276px;
   width: 100%;
   font-weight: 400;
   padding: 18px 18px 20px 21px;
@@ -385,19 +384,13 @@ const PostContainer = styled.div`
     height: 232px;
   }
 `;
-
 const Profile = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
   height: 150px;
-
-  img {
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-  }
+  padding-right: 10px;
   p {
     color: #fff;
     font-size: 11px;
@@ -424,6 +417,14 @@ const Profile = styled.div`
     }
   }
 `;
+const Image = styled.div`
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    background: url("${props => props.avatar}");
+    background-size: cover;
+    background-position: center;
+`;
 const Content = styled.div`
   width: 503px;
   height: 100%;
@@ -432,12 +433,9 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
-  overflow: hidden;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-all;
-
   .boxName {
     display: flex;
     justify-content: space-between;
@@ -539,11 +537,24 @@ const LinkSnippet = styled.div`
     object-fit: cover;
     background-position: center;
   }
+<<<<<<< HEAD
 
   &:hover{
     cursor:pointer;
   }
 
+=======
+  img:before{
+    content: ' ';
+    border-top-right-radius: 11px;
+    border-bottom-right-radius: 11px;
+    height: 100%;
+    width: 154px;
+    background-image: url(${linkrLogo});
+    object-fit: cover;
+    background-position: center;
+  }
+>>>>>>> feature/other-mobile-adjustments
   @media (max-width: 611px) {
     height: 115px;
     img {
