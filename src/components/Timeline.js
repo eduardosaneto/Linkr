@@ -13,8 +13,7 @@ import { ContainerModal,Modal } from '../styledComponents/Content';
 
 
 export default function Timeline() {
-    const { user, setUser, followingUsers, setFollowingUsers } =
-        useContext(UserContext);
+    const { user, setUser, followingUsers, setFollowingUsers } = useContext(UserContext);
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
