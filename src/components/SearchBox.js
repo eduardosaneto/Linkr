@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { IoIosSearch } from "react-icons/io";
 import styled from 'styled-components';
@@ -14,6 +14,7 @@ export default function SearchBox() {
     const [showSearch, setShowSearch] = useState(0);
     const [suggestions, setSuggestions] = useState([]);
     const [followedSuggestions, setFollowedSuggestions] = useState([]);
+    let history = useHistory();
 
     useEffect(() => {
         const config = {
@@ -69,6 +70,12 @@ export default function SearchBox() {
         
     };
 
+    function loadUserPage(id) {
+        history.push(`/user/${id}`);
+        setShowSearch(0);
+        window.location.reload()
+      }
+
     return (
         <ClickAwayListener onClickAway={() => setShowSearch(0)}>
             <Form>            
@@ -84,13 +91,11 @@ export default function SearchBox() {
                     </button> 
                     </li>                
                     {search.length > 2 && showSearch === 1 ? suggestions.map(name => (
-                        <Link to={`/user/${name.id}`}>
-                            <Li key={name.id} avatar={name.avatar}>
-                                <span></span>
-                                <h2>{name.username}</h2>
-                                <h3>{name.followed.length !== 0 ? "• following" : "\u00A0"}</h3>                            
-                            </Li>
-                        </Link>
+                        <Li key={name.id} avatar={name.avatar} onClick={() => loadUserPage(name.id)}>
+                            <span></span>
+                            <h2>{name.username}</h2>
+                            <h3>{name.followed.length !== 0 ? "• following" : "\u00A0"}</h3>                            
+                        </Li>
                     )) : <></>}                
                 </Suggestions>             
             </Form>
@@ -105,7 +110,7 @@ const Li = styled.li`
     justify-content: flex-start;
     align-items: center;
     margin-bottom: 16px !important;
-    :first-child {
+    :nth-child(2){
         margin-top: 16px;
     }
     span {
@@ -155,7 +160,7 @@ const Form = styled.form`
     border-radius: 8px;
     position: relative;
     position: fixed;
-    top: 13px;
+    top: 15px;
     left: calc(50% - 563px / 2);
     z-index: 10;
     background: #E7E7E7;
@@ -216,7 +221,7 @@ const Form = styled.form`
         button {
             height: 42px;
             top: 10px;
-            right: 13px;
+            right: 15px;
         }
     }
 `;
