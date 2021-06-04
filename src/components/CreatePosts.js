@@ -107,7 +107,7 @@ export default function CreatePosts({loadingPosts}) {
               <BiMap className="map-icon"/>
               <p>{enableLocation ? "Localização ativada" : "Localização desativada"}</p>
             </Localization>
-            <Button 
+            <Button
             isDisabled={isDisabled}
             onClick={
                 isDisabled
@@ -244,6 +244,7 @@ const StyledinputText = styled.input`
   }
 `;
 const Button = styled.button`
+  cursor:pointer;
   position: absolute;
   width: 112px;
   height: 31px;
@@ -260,7 +261,12 @@ const Button = styled.button`
   @media (max-width: 611px){
     height: 22px;
     left: calc(100vw - 127px);
-    top: 133px;
+    top: 130px;
     font-size: 13px;
   }
+
+&:hover {
+filter: brightness(110%);
+opacity: 0.8;
+}
 `;

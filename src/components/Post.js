@@ -250,9 +250,9 @@ export default function Post({
         </Link>
         <div>
           {like === 1 ? (
-            <HeartIconFill onClick={toggleLike} />
+            <HeartIconFill className="button" onClick={toggleLike} />
           ) : (
-            <HeartIconEmpty onClick={toggleLike} />
+            <HeartIconEmpty className="button" onClick={toggleLike} />
           )}
           <Tooltip
             content={
@@ -310,11 +310,11 @@ export default function Post({
           </Tooltip>
         </div>
         <div>
-          <CommentIcon onClick={toggleComments}/>
+          <CommentIcon className="button" onClick={toggleComments}/>
           <p>{post.commentCount} comments</p>
         </div>
         <div>
-          <RespostIcon onClick={DoYouWannaRepost}/>
+          <RespostIcon className="button" onClick={DoYouWannaRepost}/>
           <p>{post.repostCount} re-posts</p>
         </div>
       </Profile>
@@ -325,12 +325,12 @@ export default function Post({
           </Link>
           <div class='icons'>
             {post.user.id === localstorage.user.id ? (
-              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+              <FaPencilAlt className="button" onClick={ShowEdit} className='pencil-icon' />
             ) : (
               ""
             )}
             {post.user.id === localstorage.user.id ? (
-              <FaTrashAlt
+              <FaTrashAlt className="button"
                 id={id}
                 className='trash-icon'
                 onClick={moveToTrash}
@@ -442,6 +442,14 @@ const PostContainer = styled.div`
   border-radius: 16px;
   position: relative;
   z-index:0;
+
+  .button:focus,
+.button:hover {   
+  filter: brightness(700%);
+  animation: pulse 1s;
+  opacity: 0.8;
+
+}
   @media (max-width: 611px) {
     border-radius: 0;
     padding: 9px 18px 15px 15px;
