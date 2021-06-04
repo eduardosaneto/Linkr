@@ -238,6 +238,7 @@ export default function Post({
     };
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
     
+    request.then(reloadingPosts)
   }
 
   return (
@@ -334,7 +335,7 @@ export default function Post({
             : ""}
             {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
           </div>
-          <div class='icons'>
+          { post.hasOwnProperty('repostedBy') || <div class='icons'>
             {post.user.id === localstorage.user.id ? (
               <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
             ) : (
@@ -349,7 +350,7 @@ export default function Post({
             ) : (
               ""
             )}{" "}
-          </div>
+          </div>}
         </div>
         <div className='teste'>
             {controler ? (
@@ -533,12 +534,16 @@ const Content = styled.div`
   font-weight: bold;
   text-overflow: ellipsis;
   .teste {
-    width: 503px;
+    width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     line-height: 23px;
     margin-bottom: 1.5px;
+
+    form{
+      width:100%;
+    }
     > h2 {
       color: #fff;
       font-size: 19px;
@@ -561,8 +566,14 @@ const Content = styled.div`
   .boxName {
     display: flex;
     justify-content: space-between;
-    width: 502px;
-
+    width: 100%;
+    
+    .map-icon{
+      cursor: pointer;
+    color:white;
+    margin-left:10px;
+    font-size:16px;
+  }
     @media (max-width: 611px) {
       width: 100%;
     }
@@ -597,7 +608,7 @@ const Content = styled.div`
   input {
     display: flex;
     flex-wrap: wrap;
-    width: 170%;
+    width: 100%;
     height: 23px;
     border-radius: 7px;
     padding: 0px 5px;
@@ -615,9 +626,6 @@ const Content = styled.div`
 
   @media (max-width: 611px) {
     width: 100%;
-    input{
-      width: 75%;
-    }
     > h2 {
       font-size: 16px;
     }
@@ -702,7 +710,7 @@ const Text = styled.div`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  word-break: break-all;
+  word-break: break-word;
 > h2 {
     font-size: 16px;
     color: #cecece;
