@@ -17,7 +17,6 @@ export default function Mylikes(){
     const [posts, setPosts] = useState([]);
     const [isLoading, setIsLoading] = useState(false)
     const [isError, setIsError] = useState(false)
-<<<<<<< HEAD
     const [afterLoading, setAfterLoading] = useState(null)
     const [hasMorePosts, setHasMorePosts] = useState(false)
     const localstorage = JSON.parse(localStorage.user);
@@ -25,13 +24,9 @@ export default function Mylikes(){
     const config = { headers:{ Authorization: `Bearer ${token}`}};
     const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
     const [loader, setLoader] = useState(loadingMore)
-=======
-    const [isEmpty, setIsEmpty] = useState(false)
 
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
-
->>>>>>> main
     useEffect(() => {loadingPosts()},[])
 
     function loadingPosts() {
@@ -50,9 +45,6 @@ export default function Mylikes(){
         })
         request.catch( () => {setIsError(true); setIsLoading(false);setHasMorePosts(false)})
     }
-
-<<<<<<< HEAD
-    useInterval(updatePosts, 15000);
     
     function updatePosts(){
         setIsError(0)
@@ -87,7 +79,6 @@ export default function Mylikes(){
             request.catch( () => {setIsError(1); setIsLoading(0); setHasMorePosts(false)})
         }
     }
-=======
     function OpenModal(e){
         setLink(e);
         setModal(true);
@@ -102,9 +93,8 @@ export default function Mylikes(){
           window.open(link)
     }
 
-    useInterval(loadingPosts, 15000);
+    useInterval(updatePosts, 15000);
 
->>>>>>> main
     return(
         <>
             <Navbar />
@@ -114,26 +104,16 @@ export default function Mylikes(){
                     <Posts>
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
-<<<<<<< HEAD
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
                         <InfiniteScroll pageStart={0} loader={loader} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
+                                    OpenModal={OpenModal}
                                 />)
                             }
                         </InfiniteScroll>
-=======
-                        { isEmpty && !isLoading ? <Load>Ainda não há posts curtidos por você</Load> : ""}
-                        {likedPosts.map( post => 
-                            <Post 
-                                key={post.id} id={post.id} post={post} 
-                                postUser={post.user} likes={post.likes}
-                                OpenModal={OpenModal}
-                            />)
-                        }
->>>>>>> main
                     </Posts>
                     <Trending >
                         <TrendingBar />

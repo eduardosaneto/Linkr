@@ -23,8 +23,7 @@ export default function Hashtag(){
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = { headers:{ Authorization: `Bearer ${token}`}};
-    const loadingMore = ""
-
+    const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
 
@@ -49,9 +48,7 @@ export default function Hashtag(){
         request.catch( () => {setIsError(true); setIsLoading(false);setHasMorePosts(false)})
     }
 
-    useInterval(updateHashtagPosts, 15000);
-
-    function updateHashtagPosts(){
+    function updatePosts(){
         setIsError(false)
         if(posts.length !== 0){
             let request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/${hashtag}/posts?earlierThan=${posts[0].id}`,config)
@@ -69,7 +66,7 @@ export default function Hashtag(){
         }
     }
 
-    function fetchHashtagPosts(){
+    function fetchPosts(){
         setIsError(false)
         if(posts.length > 200){
             setHasMorePosts(false)
@@ -83,11 +80,12 @@ export default function Hashtag(){
                     setHasMorePosts(false)
                 } 
                 setTimeout(() => setPosts([...posts,...response.data.posts]),1000)
-                console.log("hashtaga",posts)
+                console.log("hashtag",posts)
             })
             request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
         } 
     }
+
     function OpenModal(e){
         setLink(e);
         setModal(true);
@@ -101,7 +99,7 @@ export default function Hashtag(){
           window.open(link)
     }
 
-    useInterval(loadingHashtag, 15000);
+    useInterval(updatePosts, 15000);
 
     return(
         <>
@@ -113,7 +111,7 @@ export default function Hashtag(){
                         { isLoading ? <Load><div><img src={loading}/> Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchHashtagPosts}>
+                        <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                             <Post 
                                 key={post.id} id={post.id} post={post} 

@@ -11,6 +11,8 @@ import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
 import useInterval from 'react-useinterval';
 import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
+import { ContainerModal, Modal } from '../styledComponents/Content'
+
 export default function Timeline(){
     const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
     const [posts, setPosts] = useState([]);
