@@ -162,7 +162,7 @@ const Form = styled.form`
     position: fixed;
     top: 13px;
     left: calc(50% - 563px / 2);
-    z-index: 15;
+    z-index: 10;
     background: #E7E7E7;
     .search-box {
         width: 563px;
