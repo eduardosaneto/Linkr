@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
 import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
@@ -26,6 +26,7 @@ export default function Hashtag(){
     const loadingMore = <Load><div><img src={loading}/> Loading more posts...</div></Load>
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
+    const location = useLocation();
 
     useEffect(() => {loadingHashtag()},[hashtag])
 
@@ -117,7 +118,9 @@ export default function Hashtag(){
                             <Post 
                                 key={post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
-                                OpenModal={OpenModal}
+                                loadingHashtag={loadingHashtag}
+                                location={location} OpenModal={OpenModal}
+                                hashtag={hashtag}
                             />)}
                         </InfiniteScroll>)
                     </Posts>

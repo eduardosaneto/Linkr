@@ -27,6 +27,8 @@ export default function Post({
   likes,
   reloadingPosts,
   loadMyPosts,
+  loadingHashtag,
+  hashtag,
   location,
   OpenModal
 }) {
@@ -115,21 +117,41 @@ export default function Post({
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
-    const request = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
-      config
-    );
-    request.then(() => {
-      setUser(localStorage.user);
-      if (location.pathname === "/timeline") {
-        reloadingPosts();
-      } else if (location.pathname === "/my-posts") {
-        loadMyPosts();
-      }
-    });
-    request.catch(() => {
-      alert("Não foi possível excluir o post");
-    });
+    if(post.hasOwnProperty('repostedBy')){
+      const request = axios.delete(
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.repostId}`,
+        config
+      );
+      request.then(() => {
+        setUser(localStorage.user);
+        if (location.pathname === "/timeline") {
+          reloadingPosts();
+        } else if (location.pathname === "/my-posts") {
+          loadMyPosts();
+        } 
+      })
+      request.catch(() => {
+        alert("Não foi possível excluir o post");
+      });
+    } else {
+        const request = axios.delete(
+          `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
+          config
+        );
+        request.then(() => {
+          setUser(localStorage.user);
+          if (location.pathname === "/timeline") {
+            reloadingPosts();
+          } else if (location.pathname === "/my-posts") {
+            loadMyPosts();
+          } else if (location.pathname === `/hashtag/${hashtag}`) {
+            loadingHashtag();
+          }
+        });
+        request.catch(() => {
+          alert("Não foi possível excluir o post");
+        });
+    }
   }
 
   function moveToTrash() {
@@ -237,7 +259,9 @@ export default function Post({
       headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
-    
+    request.then(() => {
+      if (location.pathname === "/timeline") reloadingPosts();
+    })
   }
 
   return (
@@ -246,6 +270,12 @@ export default function Post({
     ? <RepostContainer>
         <RespostIcon className="RepostBar"></RespostIcon>
         <p>re-posted by <span>{localstorage.user.id===post.repostedBy['id']?'You':post.repostedBy['username']}</span></p>
+        {(post.hasOwnProperty('repostedBy') && post.repostedBy.id === localstorage.user.id) ? 
+          <FaTrashAlt
+            id={id}
+            className='trash-icon'
+            onClick={moveToTrash}
+          /> : ""}
       </RepostContainer>
     : ""
     }
@@ -334,23 +364,23 @@ export default function Post({
             : ""}
             {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
           </div>
-          { post.hasOwnProperty('repostedBy') || <div class='icons'>
-            {post.user.id === localstorage.user.id ? (
-              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
-            ) : (
-              ""
-            )}
-            {post.user.id === localstorage.user.id ? (
-              <FaTrashAlt
-                id={id}
-                className='trash-icon'
-                onClick={moveToTrash}
-              />
-            ) : (
-              ""
-            )}{" "}
-          </div>}
-        </div>
+            { post.hasOwnProperty('repostedBy') || <div class='icons'>
+              {post.user.id === localstorage.user.id ? (
+                <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+              ) : (
+                ""
+              )}
+              {post.user.id === localstorage.user.id ? (
+                <FaTrashAlt
+                  id={id}
+                  className='trash-icon'
+                  onClick={moveToTrash}
+                />
+              ) : (
+                ""
+              )}{" "}
+            </div>}
+          </div>
         <div className='teste'>
             {controler ? (
               <form onSubmit={Edit}>
@@ -426,6 +456,11 @@ const RepostContainer = styled.div`
     span{
       font-weight: bold;
     }
+  }
+  .trash-icon {
+    position: absolute;
+    top: 8.5px;
+    right: 22px;
   }
 `
 
