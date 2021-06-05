@@ -4,17 +4,12 @@ import axios from "axios";
 import ModalMap from './ModalMap'
 import styled from "styled-components";
 import ReactHashtag from "react-hashtag";
-import { FiHeart } from "react-icons/fi";
-import { FaHeart} from "react-icons/fa";
+import { CommentIcon, TrashIcon, PencilIcon, HeartIconEmpty, HeartIconFill, RespostIcon, MapMarkerIcon } from '../styledComponents/IconStyles'
 import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
-import { FaTrash } from "react-icons/fa";
-import { FaPencilAlt } from "react-icons/fa";
-import {FaMapMarkerAlt} from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
-import { AiOutlineComment } from 'react-icons/ai';
 import linkrLogo from '../img/linkrLogo.JPG';
 import Repost from './Repost'
 import UserContext from "../contexts/UserContext";
@@ -323,20 +318,19 @@ export default function Post({
             <Link to={`/user/${postUser.id}`}>
             <h2>{postUser.username}</h2>
             </Link>
-            {post.geolocation ? <FaMapMarkerAlt className='map-icon' onClick={ViewLocation}/>
+            {post.geolocation ? <MapMarkerIcon onClick={ViewLocation}/>
             : ""}
             {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
           </div>
           { post.hasOwnProperty('repostedBy') || <div class='icons'>
             {post.user.id === localstorage.user.id ? (
-              <FaPencilAlt onClick={ShowEdit} className='pencil-icon' />
+              <PencilIcon onClick={ShowEdit} />
             ) : (
               ""
             )}
             {post.user.id === localstorage.user.id ? (
-              <FaTrashAlt
+              <TrashIcon
                 id={id}
-                className='trash-icon'
                 onClick={moveToTrash}
               />
             ) : (
@@ -394,34 +388,11 @@ export default function Post({
   );
 }
 
-const RepostContainer = styled.div`
-  height: 44px;
-  display: flex;
-  position: relative;
-  top:12px;
-  justify-content: flex-start;
-  align-items: center;
-  border-radius: 16px 16px 0 0;
-  background-color:#1E1E1E;
-  
-  .RepostBar{
-    cursor: default;
-    margin-left: 24px;
-    margin-bottom: 10px;
-  }
-
-  p{
-    font-size:11px;
-    margin-left: 6px;
-    color: #FFF;
-    margin-bottom: 10px;
-
-    span{
-      font-weight: bold;
-    }
-  }
+const RespostIcon = styled(BiRepost)`
+  font-size: 23px;
+  color: #fff;
+  cursor: pointer;
 `
-
 const YoutubePlayer = styled.div`
   display: flex;
   flex-direction: column;
@@ -559,24 +530,10 @@ const Content = styled.div`
     display: flex;
     justify-content: space-between;
     width: 100%;
-    
-    .map-icon{
-      cursor: pointer;
-    color:white;
-    margin-left:10px;
-    font-size:16px;
-  }
+ 
     @media (max-width: 611px) {
       width: 100%;
     }
-  }
-
-  .pencil-icon {
-    color: #ffffff;
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-    margin-left: 15px;
   }
 
   > h2 {
@@ -754,41 +711,11 @@ const Text = styled.div`
   }
 `;
 
-const FaTrashAlt = styled(FaTrash)`
-  color: #ffffff;
-  width: 14px;
-  height: 14px;
-  cursor: pointer;
-  margin-left: 10px;
-`;
-const HeartIconEmpty = styled(FiHeart)`
-  font-size: 21px;
-  color: #fff;
-  cursor: pointer;
-`;
-
-const HeartIconFill = styled(FaHeart)`
-  font-size: 21px;
-  color: #ac0000;
-  cursor: pointer;
-`;
-
 const Hashtag = styled.span`
   color: #fff;
   font-size: 19px;
   line-height: 23px;
 `;
-
-const CommentIcon = styled(AiOutlineComment)`
-  font-size: 22px;
-  color: #fff;
-  cursor: pointer;
-`
-const RespostIcon = styled(BiRepost)`
-  font-size: 23px;
-  color: #fff;
-  cursor: pointer;
-`
 
 const Tooltip = styled(Tippy)`
   background: #ebebeb !important;
