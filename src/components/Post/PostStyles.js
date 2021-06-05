@@ -89,7 +89,7 @@ export const ContentContainer = styled.div`
   overflow: hidden;
   font-weight: bold;
   text-overflow: ellipsis;
-  .teste {
+  .edit-text {
     width: 100%;
     text-overflow: ellipsis;
     overflow: hidden;

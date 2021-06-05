@@ -117,75 +117,74 @@ export default function Content({post, OpenModal, location, loadMyPosts, reloadi
     }
 
     return (
-        <ContentContainer>
-            <NameBox>
-                <div>
-                    <Link to={`/user/${post.user.id}`}>
-                    <h2>{post.user.username}</h2>
-                    </Link>
-                    {post.geolocation ? <MapMarkerIcon onClick={ViewLocation}/>
-                    : ""}
-                    {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
-                </div>
-                {post.hasOwnProperty('repostedBy') || <div class='icons'>
-                    {post.user.id === localstorage.user.id ? (
-                    <PencilIcon onClick={ShowEdit} />
-                    ) : (
-                    ""
-                    )}
-                    {post.user.id === localstorage.user.id ? (
-                    <TrashIcon
-                        id={post.id}
-                        onClick={moveToTrash}
-                    />
-                    ) : (
-                    ""
-                    )}{" "}
-                </div>}
-            </NameBox>
-        <div className='teste'>
-            {controler ? (
-              <form onSubmit={Edit}>
-                <input
-                  type='text'
-                  required
-                  value={editText}
-                  onChange={(e) => setEditText(e.target.value)}
-                  ref={inputRefText}
-                  onKeyDown={(e) => keydowm(e)}
-                />
-              </form>
-            ) : (
-              <p>
-                <ReactHashtag
-                  renderHashtag={(hashtagValue) => (
-                    <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
-                      <Hashtag>{hashtagValue}</Hashtag>
-                    </Link>
-                  )}>
-                  {isEdit ? editText : post.text}
-                </ReactHashtag>
-              </p>
-            )}
+      <ContentContainer>
+        <NameBox>
+          <div>
+              <Link to={`/user/${post.user.id}`}>
+              <h2>{post.user.username}</h2>
+              </Link>
+              {post.geolocation ? <MapMarkerIcon onClick={ViewLocation}/>
+              : ""}
+              {openMaps? <ModalMap  openMaps={openMaps} setOpenMaps={setOpenMaps} post={post}/> : ""}
           </div>
-          {post.link.includes("youtube.com/watch") ||
-          post.link.includes("youtu.be/") ? (
-            <YoutubePlayer>
-              <iframe width='502' height='281' src={srcYoutube}></iframe>
-              <p>{post.link}</p>
-            </YoutubePlayer>
+          {post.hasOwnProperty('repostedBy') || <div class='icons'>
+              {post.user.id === localstorage.user.id ? (
+              <PencilIcon onClick={ShowEdit} />
+              ) : (
+              ""
+              )}
+              {post.user.id === localstorage.user.id ? (
+              <TrashIcon
+                  id={post.id}
+                  onClick={moveToTrash}
+              />
+              ) : (
+              ""
+              )}{" "}
+          </div>}
+        </NameBox>
+        <div className='edit-text'>
+          {controler ? (
+            <form onSubmit={Edit}>
+              <input
+                type='text'
+                required
+                value={editText}
+                onChange={(e) => setEditText(e.target.value)}
+                ref={inputRefText}
+                onKeyDown={(e) => keydowm(e)}
+              />
+            </form>
           ) : (
-            (<LinkSnippet onClick={()=>OpenModal(post.link)}>
-            <Text>
-              <h2>{post.linkTitle}</h2>
-              <p>{post.linkDescription}</p>
-              <div>
-                <p>{post.link}</p>
-              </div>
-            </Text>
-            <img src={post.linkImage || linkrLogo} alt='website' />
-          </LinkSnippet>)
+            <p>
+              <ReactHashtag
+                renderHashtag={(hashtagValue) => (
+                  <Link to={`/hashtag/${hashtagValue}`.replace("#", "")}>
+                    <Hashtag>{hashtagValue}</Hashtag>
+                  </Link>
+                )}>
+                {isEdit ? editText : post.text}
+              </ReactHashtag>
+            </p>
           )}
-      </ContentContainer>
+        </div>
+        {post.link.includes("youtube.com/watch") ||
+        post.link.includes("youtu.be/") ? (
+          <YoutubePlayer>
+            <iframe width='502' height='281' src={srcYoutube}></iframe>
+            <p>{post.link}</p>
+          </YoutubePlayer>
+        ) : (
+          (<LinkSnippet onClick={()=>OpenModal(post.link)}>
+          <Text>
+            <h2>{post.linkTitle}</h2>
+            <p>{post.linkDescription}</p>
+            <div>
+              <p>{post.link}</p>
+            </div>
+          </Text>
+          <img src={post.linkImage || linkrLogo} alt='website' />
+        </LinkSnippet>))}
+    </ContentContainer>
     )
 }
