@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import { RespostIcon, TrashIcon } from '../../styledComponents/IconStyles'
 
-export default function Repost({post}) {
+export default function Repost({post, moveToTrash}) {
     const localstorage = JSON.parse(localStorage.user);
     
     return (
@@ -11,8 +11,9 @@ export default function Repost({post}) {
             </p>
             {(post.hasOwnProperty('repostedBy') && post.repostedBy.id === localstorage.user.id) ? 
             <TrashIcon
+              className="trash-icon"
               id={post.id}
-              onClick={() => alert("moveToTrash")}
+              onClick={moveToTrash}
             /> : ""}
         </RepostContainer>
     )
@@ -43,5 +44,11 @@ const RepostContainer = styled.div`
     span{
       font-weight: bold;
     }
+  }
+
+  .trash-icon {
+    position: absolute;
+    top: 8.5px;
+    right: 22px;
   }
 `;

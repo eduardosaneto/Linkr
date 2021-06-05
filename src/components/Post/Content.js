@@ -1,8 +1,7 @@
 import axios from 'axios'
-import { useState, useContext, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import ReactHashtag from "react-hashtag";
-import { confirmAlert } from "react-confirm-alert";
 
 import { ContentContainer, NameBox, Text, YoutubePlayer, LinkSnippet, Hashtag } from './PostStyles'
 import { TrashIcon, PencilIcon, MapMarkerIcon } from '../../styledComponents/IconStyles'
@@ -10,10 +9,7 @@ import { TrashIcon, PencilIcon, MapMarkerIcon } from '../../styledComponents/Ico
 import linkrLogo from '../../img/linkrLogo.JPG'
 import ModalMap from '../ModalMap'
 
-import UserContext from "../../contexts/UserContext";
-
-export default function Content({post, OpenModal, location, loadMyPosts, reloadingPosts}) {
-    const { user, setUser } = useContext(UserContext);
+export default function Content({post, OpenModal, moveToTrash}) {
     const[openMaps, setOpenMaps] = useState(false);
     const [isEdit, setIsEdit] = useState(false);
     const [controler, setControler] = useState(false);
@@ -22,45 +18,10 @@ export default function Content({post, OpenModal, location, loadMyPosts, reloadi
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = {headers: { Authorization: `Bearer ${token}` }};
-
+  console.log(post.linkImage)
     function ViewLocation(){
       setOpenMaps(true);
     };
-
-    function moveToTrash() {
-      confirmAlert({
-        message: "Tem certeza que deseja excluir essa publicação?",
-        buttons: [
-          {
-            label: "Sim, excluir",
-            onClick: () => deletePost(),
-            className: "yes",
-          },
-          {
-            label: "Não, voltar",
-          },
-        ],
-        closeOnClickOutside: false,
-      });
-    }
-
-    function deletePost() {
-      const request = axios.delete(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,config);
-      
-      request.then(() => {
-        setUser(localStorage.user);
-        if (location.pathname === "/timeline") {
-          reloadingPosts();
-        } else if (location.pathname === "/my-posts") {
-          loadMyPosts();
-        }
-      });
-    
-      request.catch(() => {
-        alert("Não foi possível excluir o post");
-      });
-    }
 
     function ShowEdit() {
       if (controler) {
