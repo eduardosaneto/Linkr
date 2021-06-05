@@ -18,7 +18,7 @@ export default function Content({post, OpenModal, moveToTrash}) {
     const localstorage = JSON.parse(localStorage.user);
     const token = localstorage.token;
     const config = {headers: { Authorization: `Bearer ${token}` }};
-  console.log(post.linkImage)
+
     function ViewLocation(){
       setOpenMaps(true);
     };

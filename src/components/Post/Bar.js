@@ -10,7 +10,7 @@ import ToolTip from './ToolTip'
 
 import UserContext from "../../contexts/UserContext";
 
-export default function Bar({post, likes, showComments, setShowComments}) {
+export default function Bar({post, likes, showComments, setShowComments, reloadingPosts}) {
     const { user, setUser } = useContext(UserContext);
     const [peopleThatLiked, setPeopleThatLiked] = useState(likes);
     const [likeQuantity, setLikeQuantity] = useState(likes.length);
@@ -86,6 +86,9 @@ export default function Bar({post, likes, showComments, setShowComments}) {
       function Reposts(){
         const request = axios.post(
             `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
+
+        request.then( () => reloadingPosts())
+        request.catch( () => alert("Não foi possível repostar"))
       }
 
     return (

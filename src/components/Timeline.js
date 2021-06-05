@@ -27,8 +27,6 @@ export default function Timeline(){
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
 
-    console.log(posts);
-
     useEffect(() => checkFollowingUsers(),[])
 
     function checkFollowingUsers() {
@@ -49,6 +47,7 @@ export default function Timeline(){
     }
 
     function loadingPosts() {
+        setPosts([])
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
@@ -130,7 +129,7 @@ export default function Timeline(){
                 </PageTitle>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        <CreatePosts loadingPosts = {updatePosts}/>
                         { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
@@ -139,7 +138,7 @@ export default function Timeline(){
                                 <Post 
                                     key={post.repostId || post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
-                                    reloadingPosts={updatePosts}
+                                    reloadingPosts={loadingPosts}
                                     location={location} OpenModal={OpenModal}
                                 />
                             )}

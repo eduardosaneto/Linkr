@@ -47,6 +47,7 @@ export default function Mylikes(){
                 setIsError(false)
             } else{
                 setIsError(true)
+                setPosts([])
             }; 
             setIsLoading(false);setHasMorePosts(false)})
     }
@@ -71,7 +72,7 @@ export default function Mylikes(){
             return
         }
         if(posts.length !== 0){
-            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?offset=20}`, config)
+            const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/liked/posts?olderThan=${posts[posts.length - 1].id}`, config)
     
             request.then( response => {
                 if(response.data.posts.length < 10){
@@ -81,7 +82,7 @@ export default function Mylikes(){
 
             })
     
-            request.catch( () => {setIsError(true); setIsLoading(false); setHasMorePosts(false)})
+            request.catch( () => {setIsError(true); setPosts([]); setIsLoading(false); setHasMorePosts(false)})
         }
     }
     function OpenModal(e){

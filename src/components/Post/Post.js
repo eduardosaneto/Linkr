@@ -13,7 +13,7 @@ import '../../styles/react-confirm-alert.css'
 
 import UserContext from "../../contexts/UserContext";
 
-export default function Post({post, likes, reloadingPosts, loadMyPosts, location, OpenModal}) {
+export default function Post({post, likes, reloadingPosts, location, OpenModal}) {
   const { user, setUser } = useContext(UserContext);
   const [showComments, setShowComments] = useState(false)
   const localstorage = JSON.parse(localStorage.user);
@@ -43,11 +43,7 @@ export default function Post({post, likes, reloadingPosts, loadMyPosts, location
     
     request.then(() => {
       setUser(localStorage.user);
-      if (location.pathname === "/timeline") {
-        reloadingPosts();
-      } else if (location.pathname === "/my-posts") {
-        loadMyPosts();
-      }
+      reloadingPosts()
     });
   
     request.catch(() => {
@@ -59,8 +55,8 @@ export default function Post({post, likes, reloadingPosts, loadMyPosts, location
     <>
     {post.hasOwnProperty("repostedBy") ? <Repost post={post} moveToTrash={moveToTrash}/> : null}
     <PostContainer>
-      <Bar post={post} setShowComments={setShowComments} showComments={showComments} likes={likes}/>
-      <Content post={post} OpenModal={OpenModal} location={location} loadMyPosts={loadMyPosts} reloadingPosts={reloadingPosts} moveToTrash={moveToTrash} />
+      <Bar post={post} reloadingPosts={reloadingPosts} setShowComments={setShowComments} showComments={showComments} likes={likes}/>
+      <Content post={post} OpenModal={OpenModal} location={location} reloadingPosts={reloadingPosts} moveToTrash={moveToTrash} />
     </PostContainer>
     {showComments ? <Comments post={post} /> : null}
     </>

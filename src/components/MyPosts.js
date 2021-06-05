@@ -121,7 +121,7 @@ useInterval(updateMyPosts, 15000);
                     post={post}
                     postUser={post.user}
                     likes={post.likes}
-                    loadMyPosts={updateMyPosts}
+                    reloadingPosts={loadMyPosts}
                     location={location}
                     OpenModal={OpenModal}
                   />
