@@ -4,8 +4,7 @@ import ReactHashtag from "react-hashtag";
 import { Link } from 'react-router-dom'
 import UserContext from "../contexts/UserContext";
 import styled from 'styled-components'
-import { IoPaperPlaneOutline } from 'react-icons/io5'
-import { GoPrimitiveDot } from 'react-icons/go'
+import { DotIcon, PlaneIcon } from '../styledComponents/IconStyles'
 
 export default function Comments({id, postUser}) {
     const {followingUsers} = useContext(UserContext);
@@ -219,13 +218,7 @@ const CommentBox = styled.div`
         word-break: break-all;
     }
 `
-const PlaneIcon = styled(IoPaperPlaneOutline)`
-    color: #FFF;
-    font-size: 16px;
-`
-const DotIcon = styled(GoPrimitiveDot)`
-    padding: 4px 4px 0 4px;
-`
+
 const Span = styled.span`
     font-weight: 400;
     color: #565656;

@@ -233,7 +233,7 @@ export default function Post({
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
     
   }
-  console.log(post)
+
   return (
     <>
     { post.hasOwnProperty("repostedBy") ?<Repost post={post}/> : null}
