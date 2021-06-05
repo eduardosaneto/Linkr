@@ -137,7 +137,7 @@ export default function Timeline(){
                         <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading} alt="Loading"/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
-                                    key={post.id} id={post.id} post={post} 
+                                    key={post.repostId || post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
                                     reloadingPosts={updatePosts}
                                     location={location} OpenModal={OpenModal}

@@ -15,7 +15,7 @@ export default function Post({post, postUser, likes, reloadingPosts, loadMyPosts
   return (
     <>
     {post.hasOwnProperty("repostedBy") ? <Repost post={post}/> : null}
-    <PostContainer key={postUser.id}>
+    <PostContainer>
       <Bar post={post} setShowComments={setShowComments} showComments={showComments} likes={likes}/>
       <Content post={post} OpenModal={OpenModal} location={location} loadMyPosts={loadMyPosts} reloadingPosts={reloadingPosts} />
     </PostContainer>

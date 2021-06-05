@@ -116,7 +116,7 @@ useInterval(updateMyPosts, 15000);
             <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchMyPosts}>
               {posts.map((post) => (
                   <Post
-                    key={post.id}
+                    key={post.repostId || post.id}
                     id={post.id}
                     post={post}
                     postUser={post.user}

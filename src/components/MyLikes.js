@@ -115,7 +115,7 @@ export default function Mylikes(){
                         <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
-                                    key={post.id} id={post.id} post={post} 
+                                key={post.repostId || post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
                                     OpenModal={OpenModal}
                                 />)

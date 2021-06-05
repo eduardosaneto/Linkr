@@ -202,7 +202,7 @@ export default function User() {
                         <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                         {userPosts.map((post) => (
                             <Post
-                                key={post.id}
+                                key={post.repostId || post.id}
                                 id={post.id}
                                 post={post}
                                 postUser={post.user}
