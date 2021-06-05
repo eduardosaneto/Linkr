@@ -1,6 +1,6 @@
 import Modal from "react-modal";
 import styled from "styled-components";
-import { IoMdClose } from "react-icons/io";
+import { CloseIcon } from "../styledComponents/IconStyles";
 
 export default function ModalMap({ openMaps, setOpenMaps, post }) {
   const { geolocation } = post;
@@ -21,8 +21,7 @@ export default function ModalMap({ openMaps, setOpenMaps, post }) {
         <ContainerModal>
           <div>
             <p>{post.user.username}'s location</p>
-            <IoMdClose
-              className='close-icon'
+            <CloseIcon
               onClick={() => setOpenMaps(false)}
               color='#fff'
               height='31px'
@@ -65,9 +64,6 @@ const ContainerModal = styled.div`
       font-size: 32px;
       font-weight: bold;
       font-family: "Oswald", sans-serif;
-    }
-    .close-icon {
-      cursor: pointer;
     }
     @media (max-width: 570px) {
       p {
