@@ -391,7 +391,7 @@ export default function Post({
                 <p>{post.link}</p>
               </div>
             </Text>
-            <img src={post.linkImage} alt='website' />
+            <img src={post.linkImage} onError={(e)=>{e.target.onerror = null; e.target.src=(linkrLogo)}} alt='website' />
           </LinkSnippet>)
           )}
       </Content>

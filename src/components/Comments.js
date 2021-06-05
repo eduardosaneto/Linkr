@@ -163,11 +163,12 @@ const SeeMore = styled.div`
 
 const ProfilePicture = styled.div`
     margin-right: 18px;
-
     img{
         height: 39px;
         width: 39px;
         border-radius: 50%;
+        object-fit: cover;
+        background-position: center;
     }
 `
 const InputBox = styled.div`
