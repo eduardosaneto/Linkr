@@ -213,34 +213,41 @@ export const Text = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  //overflow-y: scroll;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
-  overflow: hidden;
+  overflow: hidden; 
   word-break: break-word;
 > h2 {
     font-size: 16px;
     color: #cecece;
     margin-bottom: 10px;
     text-overflow: ellipsis;
-    //overflow: hidden;
-    //white-space: nowrap;
+    height: 30%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-
-   /* display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden; */
 
 > p {
     color: #9b9595;
     font-size: 11px;
-    line-height: 15px;
+    line-height: 13px;
     margin-bottom: 15px;
+    height: 50%;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
-> div {
+ > div {
+  height: 20%;
     width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 > div p {
     color: #cecece;
