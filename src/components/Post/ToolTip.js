@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Tippy from "@tippyjs/react";
 import styled from 'styled-components'
 

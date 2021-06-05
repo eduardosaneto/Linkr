@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { confirmAlert } from "react-confirm-alert";
 
 import { CommentIcon, HeartIconEmpty, HeartIconFill, RespostIcon } from '../../styledComponents/IconStyles'
-import { Profile, Image } from './PostStyles'
+import { BarContainer, Image } from './PostStyles'
 
 import ToolTip from './ToolTip'
 
@@ -89,7 +89,7 @@ export default function Bar({post, likes, showComments, setShowComments}) {
       }
 
     return (
-        <Profile>
+        <BarContainer>
             <Link to={`/user/${post.user.id}`}>
             <Image avatar={post.user.avatar}></Image>
             </Link>
@@ -109,6 +109,6 @@ export default function Bar({post, likes, showComments, setShowComments}) {
                 <RespostIcon className="button" onClick={DoYouWannaRepost}/>
                 <p>{post.repostCount} re-posts</p>
             </div>
-      </Profile>
+      </BarContainer>
     )
 }
