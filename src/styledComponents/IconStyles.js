@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { AiOutlineComment } from 'react-icons/ai';
 import { BiRepost } from 'react-icons/bi'
-import { FaHeart, FaTrash, FaPencilAlt, FaMapMarkerAlt} from "react-icons/fa";
+import { FaHeart, FaTrash, FaPencilAlt, FaMapMarkerAlt, FaHashtag} from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { GoPrimitiveDot } from 'react-icons/go'
 import { IoPaperPlaneOutline } from 'react-icons/io5'
@@ -56,8 +56,21 @@ cursor: pointer;
 export const PlaneIcon = styled(IoPaperPlaneOutline)`
 color: #FFF;
 font-size: 16px;
+cursor: pointer;
 `;
 
 export const DotIcon = styled(GoPrimitiveDot)`
 padding: 4px 4px 0 4px;
+cursor: pointer;
+`;
+
+export const HashtagIcon = styled(FaHashtag)`
+color: #FFF;
+font-size: 19px;
+line-height: 23px;
+margin-left: 10px;
+position: absolute;
+top: 8px;
+left: 17px;
+cursor: pointer;
 `;

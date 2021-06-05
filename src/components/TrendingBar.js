@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Usercontext from "../contexts/UserContext";
 import ReactHashtag from "react-hashtag";
-import { FaHashtag } from "react-icons/fa";
+import { HashtagIcon } from "../styledComponents/IconStyles";
 
 export default function TrendingBar() {
   const { user, setUser } = useContext(Usercontext);
@@ -59,7 +59,7 @@ export default function TrendingBar() {
           placeholder='type a hashtag'
           onChange={(e) => setSearchHashtags(e.target.value)}
          /></form>
-        <FaHashtagAlt className='hashtag-icon' />
+        <HashtagIcon />
       </div>
     </>
   );
@@ -71,16 +71,6 @@ const Hashtag = styled.span`
   line-height: 23px;
 `;
 
-const FaHashtagAlt = styled(FaHashtag)`
-  color: #FFF;
-  font-size: 19px;
-  line-height: 23px;
-  cursor: pointer;
-  margin-left: 10px;
-  position: absolute;
-  top: 8px;
-  left: 17px;
-`;
 const Input = styled.input`
   ::placeholder{
     color: #FFF;
