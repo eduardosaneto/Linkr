@@ -7,7 +7,7 @@ import styled from "styled-components";
 import Navbar from "./Navbar";
 import Usercontext from "../contexts/UserContext";
 import TrendingBar from "./TrendingBar";
-import Post from "./Post";
+import Post from "./Post/Post";
 import useInterval from 'react-useinterval';
 import loading from '../img/loading.svg'
 

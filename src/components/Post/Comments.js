@@ -2,9 +2,9 @@ import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
 import ReactHashtag from "react-hashtag";
 import { Link } from 'react-router-dom'
-import UserContext from "../contexts/UserContext";
+import UserContext from "../../contexts/UserContext";
 import styled from 'styled-components'
-import { DotIcon, PlaneIcon } from '../styledComponents/IconStyles'
+import { DotIcon, PlaneIcon } from '../../styledComponents/IconStyles'
 
 export default function Comments({id, postUser}) {
     const {followingUsers} = useContext(UserContext);

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { RespostIcon } from '../styledComponents/IconStyles'
+import { RespostIcon } from '../../styledComponents/IconStyles'
 
 export default function Repost({post}) {
     const localstorage = JSON.parse(localStorage.user);

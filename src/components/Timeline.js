@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import { useState, useContext, useEffect } from 'react';
 import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import Navbar from "./Navbar";
-import Post from "./Post";
+import Post from "./Post/Post";
 import { useLocation } from "react-router-dom";
 import UserContext from "../contexts/UserContext";
 import loading from '../img/loading.svg'

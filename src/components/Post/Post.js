@@ -1,18 +1,22 @@
-import { useState, useContext, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import ModalMap from './ModalMap'
-import styled from "styled-components";
+import { useState, useContext, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import ReactHashtag from "react-hashtag";
-import { CommentIcon, TrashIcon, PencilIcon, HeartIconEmpty, HeartIconFill, RespostIcon, MapMarkerIcon } from '../styledComponents/IconStyles'
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
 import { confirmAlert } from "react-confirm-alert";
-import "../styles/react-confirm-alert.css";
-import Comments from './Comments';
-import linkrLogo from '../img/linkrLogo.JPG';
+import Tippy from "@tippyjs/react";
+
+import ModalMap from '../ModalMap'
 import Repost from './Repost'
-import UserContext from "../contexts/UserContext";
+import Comments from './Comments';
+
+import styled from "styled-components";
+import { CommentIcon, TrashIcon, PencilIcon, HeartIconEmpty, HeartIconFill, RespostIcon, MapMarkerIcon } from '../../styledComponents/IconStyles'
+import "tippy.js/dist/tippy.css";
+import '../../styles/react-confirm-alert.css'
+
+import linkrLogo from '../../img/linkrLogo.JPG';
+
+import UserContext from "../../contexts/UserContext";
 
 export default function Post({
   post,
@@ -33,10 +37,8 @@ export default function Post({
   const [controler, setControler] = useState(false);
   const [editText, setEditText] = useState(post.text);
   const inputRefText = useRef(null);
-  const [isDisabled, setIsDisabled] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const [showComments, setShowComments] = useState(false)
-  const [locationOfPost, setLocationOfPost] = useState({});
   const[openMaps, setOpenMaps] = useState(false);
 
   useEffect(() => {

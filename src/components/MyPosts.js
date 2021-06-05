@@ -6,7 +6,7 @@ import Usercontext from "../contexts/UserContext";
 import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import useInterval from 'react-useinterval';
 import Navbar from "./Navbar";
-import Post from "./Post";
+import Post from "./Post/Post"
 import TrendingBar from "./TrendingBar";
 import loading from '../img/loading.svg'
 import { ContainerModal,Modal } from '../styledComponents/Content';
