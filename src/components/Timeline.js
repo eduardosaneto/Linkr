@@ -10,7 +10,6 @@ import loading from '../img/loading.svg'
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
 import useInterval from 'react-useinterval';
-import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
 import { ContainerModal, Modal } from '../styledComponents/Content'
 
 export default function Timeline(){
@@ -133,7 +132,7 @@ export default function Timeline(){
                         { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading} alt="Loading"/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
                                     key={post.id} id={post.id} post={post} 

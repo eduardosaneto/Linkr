@@ -6,7 +6,7 @@ import UserContext from "../../contexts/UserContext";
 import styled from 'styled-components'
 import { DotIcon, PlaneIcon } from '../../styledComponents/IconStyles'
 
-export default function Comments({id, postUser}) {
+export default function Comments({post}) {
     const {followingUsers} = useContext(UserContext);
     const [comments, setComments] = useState([])
     const [show, setShow] = useState(false)
@@ -22,7 +22,7 @@ export default function Comments({id, postUser}) {
     useEffect( () => loadingComments(""),[])
    
     function loadingComments(param) {
-        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comments`, config)
+        const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/comments`, config)
 
         request.then( response  => {
             const data = response.data.comments
@@ -33,7 +33,7 @@ export default function Comments({id, postUser}) {
                         return
                     }
                 })
-                if(comment.user.id === postUser.id){
+                if(comment.user.id === post.user.id){
                     comment.who = "post's author"
                 }
             })
@@ -51,7 +51,7 @@ export default function Comments({id, postUser}) {
     function sendComment(e){
         e.preventDefault();
         const body = {text};
-        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${id}/comment`, body, config)
+        const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/comment`, body, config)
 
         request.then( () => {
             setText("")

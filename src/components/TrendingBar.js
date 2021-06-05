@@ -18,8 +18,6 @@ export default function TrendingBar() {
   useEffect(() => trendingTopics(), [searchHashtags]);
 
   function trendingTopics() {
-    const params ={};
-
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const request = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending",
@@ -63,12 +61,6 @@ export default function TrendingBar() {
     </>
   );
 }
-
-const Hashtag = styled.span`
-  color: #fff;
-  font-size: 19px !important;
-  line-height: 23px;
-`;
 
 const Input = styled.input`
   ::placeholder{

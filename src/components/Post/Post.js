@@ -9,7 +9,7 @@ import { PostContainer } from './PostStyles'
 import "tippy.js/dist/tippy.css";
 import '../../styles/react-confirm-alert.css'
 
-export default function Post({post, id, postUser, likes, reloadingPosts, loadMyPosts, location, OpenModal}) {
+export default function Post({post, postUser, likes, reloadingPosts, loadMyPosts, location, OpenModal}) {
   const [showComments, setShowComments] = useState(false)
 
   return (
@@ -19,7 +19,7 @@ export default function Post({post, id, postUser, likes, reloadingPosts, loadMyP
       <Bar post={post} setShowComments={setShowComments} showComments={showComments} likes={likes}/>
       <Content post={post} OpenModal={OpenModal} location={location} loadMyPosts={loadMyPosts} reloadingPosts={reloadingPosts} />
     </PostContainer>
-    {showComments ? <Comments id={id} postUser={post.user} /> : null}
+    {showComments ? <Comments post={post} /> : null}
     </>
   );
 }
