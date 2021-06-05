@@ -215,7 +215,7 @@ export default function Post({
       buttons: [
         {
           label: "Sim, compartilhar!",
-          onClick: () => Repost(),
+          onClick: () => Reposts(),
           className: "yesShare",
         },
         {
@@ -226,17 +226,17 @@ export default function Post({
     });
   }
 
-  function Repost(){
+  function Reposts(){
     const config = {
       headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.post(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/share`,{},config);
     
   }
-
+  console.log(post)
   return (
     <>
-    {post.hasOwnProperty('repostedBy') ? <Repost post={post}/> : "" }
+    { post.hasOwnProperty("repostedBy") ?<Repost post={post}/> : null}
     <PostContainer key={postUser.id}>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
@@ -388,11 +388,34 @@ export default function Post({
   );
 }
 
-const RespostIcon = styled(BiRepost)`
-  font-size: 23px;
-  color: #fff;
-  cursor: pointer;
-`
+const RepostContainer = styled.div`
+  height: 44px;
+  display: flex;
+  position: relative;
+  top:12px;
+  justify-content: flex-start;
+  align-items: center;
+  border-radius: 16px 16px 0 0;
+  background-color:#1E1E1E;
+  
+  .RepostBar{
+    cursor: default;
+    margin-left: 24px;
+    margin-bottom: 10px;
+  }
+
+  p{
+    font-size:11px;
+    margin-left: 6px;
+    color: #FFF;
+    margin-bottom: 10px;
+
+    span{
+      font-weight: bold;
+    }
+  }
+`;
+
 const YoutubePlayer = styled.div`
   display: flex;
   flex-direction: column;

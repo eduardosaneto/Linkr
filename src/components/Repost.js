@@ -1,5 +1,5 @@
-import { BiRepost } from 'react-icons/bi'
 import styled from 'styled-components'
+import { RespostIcon } from '../styledComponents/IconStyles'
 
 export default function Repost({post}) {
     const localstorage = JSON.parse(localStorage.user);
@@ -40,9 +40,3 @@ const RepostContainer = styled.div`
     }
   }
 `;
-
-const RespostIcon = styled(BiRepost)`
-  font-size: 23px;
-  color: #fff;
-  cursor: pointer;
-`
