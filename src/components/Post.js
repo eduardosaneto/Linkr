@@ -116,7 +116,7 @@ export default function Post({
       headers: { Authorization: `Bearer ${token}` },
     };
     const request = axios.delete(
-      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.user.id}`,
+      `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
       config
     );
     request.then(() => {
