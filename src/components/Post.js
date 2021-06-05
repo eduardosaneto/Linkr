@@ -16,8 +16,7 @@ import "../styles/react-confirm-alert.css";
 import Comments from './Comments';
 import { AiOutlineComment } from 'react-icons/ai';
 import linkrLogo from '../img/linkrLogo.JPG';
-import { BiRepost } from 'react-icons/bi'
-
+import Repost from './Repost'
 import UserContext from "../contexts/UserContext";
 
 export default function Post({
@@ -242,13 +241,7 @@ export default function Post({
 
   return (
     <>
-    {post.hasOwnProperty('repostedBy')
-    ? <RepostContainer>
-        <RespostIcon className="RepostBar"></RespostIcon>
-        <p>re-posted by <span>{localstorage.user.id===post.repostedBy['id']?'You':post.repostedBy['username']}</span></p>
-      </RepostContainer>
-    : ""
-    }
+    {post.hasOwnProperty('repostedBy') ? <Repost post={post}/> : "" }
     <PostContainer key={postUser.id}>
       <Profile>
         <Link to={`/user/${postUser.id}`}>
