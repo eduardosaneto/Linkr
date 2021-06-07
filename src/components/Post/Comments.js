@@ -20,7 +20,7 @@ export default function Comments({post}) {
     const [index, setIndex] = useState(limit)
 
     useEffect( () => loadingComments(""),[])
-   
+
     function loadingComments(param) {
         const request = axios.get(`https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}/comments`, config)
 

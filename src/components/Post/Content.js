@@ -46,7 +46,7 @@ export default function Content({post, OpenModal, moveToTrash}) {
       const body = { text: editText };
   
       const request = axios.put(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.id}`,
+        `https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/posts/${post.repostId || post.id}`,
         body,config);
      
       request.then((response) => {

@@ -265,14 +265,19 @@ export const Text = styled.div`
       margin-top: 5px;
       font-size: 11px;
       line-height: 13px;
+      height: 20%;
+      -webkit-line-clamp: 1;
     }
     p {
       font-size: 9px;
       line-height: 9px;
+      height: 48%;
     }
     div {
       font-size: 9px;
       line-height: 9px;
+      -webkit-line-clamp: 1;
+      height: 14%;
     }
   }
 `;
@@ -289,8 +294,13 @@ export const YoutubePlayer = styled.div`
       width: 100%;
       iframe{
         width:100%;
-        height:100%;
+        height:90%;
       }
+    }
+    p {
+      text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
     }
 `
 
