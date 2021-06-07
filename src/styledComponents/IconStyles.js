@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { AiOutlineComment } from 'react-icons/ai';
-import { BiRepost } from 'react-icons/bi'
+import { BiRepost, BiMap } from 'react-icons/bi'
 import { FaHeart, FaTrash, FaPencilAlt, FaMapMarkerAlt, FaHashtag} from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { GoPrimitiveDot } from 'react-icons/go'
@@ -45,6 +45,9 @@ export const HeartIconFill = styled(FaHeart)`
     cursor: pointer;
 `;
 
+export const MapIcon = styled(BiMap)`
+    font-size: 15px;
+`
 export const MapMarkerIcon = styled(FaMapMarkerAlt)`
     color: #FFF;
     font-size:16px;

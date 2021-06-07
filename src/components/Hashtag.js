@@ -1,14 +1,15 @@
+import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
+import useInterval from 'react-useinterval';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal,Modal } from "../styledComponents/Content";
+import loading from '../img/loading.svg'
+
 import Navbar from './Navbar';
 import Post from "./Post/Post"
-import loading from '../img/loading.svg'
 import TrendingBar from "./TrendingBar";
-import useInterval from 'react-useinterval';
-import { ContainerModal,Modal } from '../styledComponents/Content';
 
 import UserContext from "../contexts/UserContext";
 

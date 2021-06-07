@@ -2,14 +2,16 @@ import axios from "axios";
 import InfiniteScroll from 'react-infinite-scroller';
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Usercontext from "../contexts/UserContext";
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
 import useInterval from 'react-useinterval';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal,Modal } from "../styledComponents/Content";
+import loading from '../img/loading.svg'
+
 import Navbar from "./Navbar";
 import Post from "./Post/Post"
 import TrendingBar from "./TrendingBar";
-import loading from '../img/loading.svg'
-import { ContainerModal,Modal } from '../styledComponents/Content';
+
+import Usercontext from "../contexts/UserContext";
 
 export default function MyPosts() {
   const { user, setUser } = useContext(Usercontext);

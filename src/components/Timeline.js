@@ -1,16 +1,18 @@
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
 import { useState, useContext, useEffect } from 'react';
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
+import { useLocation } from "react-router-dom";
+import useInterval from 'react-useinterval';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal, Modal } from "../styledComponents/Content";
+import loading from '../img/loading.svg'
+
 import Navbar from "./Navbar";
 import Post from "./Post/Post";
-import { useLocation } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
-import loading from '../img/loading.svg'
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
-import useInterval from 'react-useinterval';
-import { ContainerModal, Modal } from '../styledComponents/Content'
+
+import UserContext from "../contexts/UserContext";
 
 export default function Timeline(){
     const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);

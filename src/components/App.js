@@ -1,6 +1,8 @@
 import {BrowserRouter, Switch, Route } from 'react-router-dom';
 import { useState } from 'react';
+
 import GlobalStyle from '../styles/GlobalStyle';
+
 import Hashtag from './Hashtag';
 import LogIn from './LogIn';
 import Mylikes from './MyLikes';

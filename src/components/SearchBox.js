@@ -1,10 +1,11 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import { IoIosSearch } from "react-icons/io";
-import styled from 'styled-components';
 import {DebounceInput} from 'react-debounce-input';
 import ClickAwayListener from 'react-click-away-listener';
+
+import styled from 'styled-components';
 
 export default function SearchBox() {
 

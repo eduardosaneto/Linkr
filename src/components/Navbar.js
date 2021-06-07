@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import { IoIosArrowDown } from "react-icons/io";
 import ClickAwayListener from 'react-click-away-listener';
+
+import styled from 'styled-components';
+
 import SearchBox from './SearchBox';
 
 export default function Navbar() {

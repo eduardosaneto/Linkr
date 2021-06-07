@@ -1,13 +1,14 @@
-import { useState, useContext, useEffect } from 'react';
 import axios from 'axios'
+import { useState, useContext, useEffect } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import useInterval from 'react-useinterval';
+
 import loading from '../img/loading.svg'
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal,Modal } from "../styledComponents/Content";
+
 import Navbar from './Navbar';
 import Post from "./Post/Post"
 import TrendingBar from "./TrendingBar";
-import useInterval from 'react-useinterval';
-import { ContainerModal,Modal } from '../styledComponents/Content';
 
 import UserContext from "../contexts/UserContext";
 

@@ -1,7 +1,8 @@
-import styled from "styled-components";
-import { useState } from "react";
 import axios from "axios";
+import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+
+import styled from "styled-components";
 
 export default function SignUp() {
     const [email, setEmail] = useState("");

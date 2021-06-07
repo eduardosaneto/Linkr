@@ -1,8 +1,12 @@
-import styled from "styled-components";
-import { useContext, useState} from "react";
 import axios from "axios";
+import { useContext, useState} from "react";
+
+import { MapIcon } from "../styledComponents/IconStyles";
+import styled from "styled-components";
+
 import Usercontext from "../contexts/UserContext";
-import { BiMap } from "react-icons/bi";
+
+
 
 export default function CreatePosts({loadingPosts}) {
   const [link, setLink] = useState("");
@@ -104,7 +108,7 @@ export default function CreatePosts({loadingPosts}) {
             maxlength="185">              
             </StyledinputText>
             <Localization color={enableLocation} onClick={getLocation}>
-              <BiMap className="map-icon"/>
+              <MapIcon/>
               <p>{enableLocation ? "Localização ativada" : "Localização desativada"}</p>
             </Localization>
             <Button
@@ -133,9 +137,6 @@ const Localization = styled.div`
   align-items: center;
   cursor: pointer;
   color: ${props => props.color ? "#238700" : "#949494"};
-  .map-icon {
-    font-size: 15px;
-  }
   p {
     font-size: 13px;
     margin-left: 5px;

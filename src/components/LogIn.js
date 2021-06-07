@@ -1,9 +1,11 @@
-import UserContext from '../contexts/UserContext'
-import { useContext } from 'react';
-import styled from "styled-components";
-import { useState } from "react";
 import axios from "axios";
+import { useContext } from 'react';
+import { useState } from "react";
 import { useHistory, Link } from "react-router-dom";
+
+import styled from "styled-components";
+
+import UserContext from '../contexts/UserContext'
 
 export default function LogIn(){
     const { setUser } = useContext(UserContext);

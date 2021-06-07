@@ -1,9 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect, useState,  } from "react";
 import { Link, useHistory } from "react-router-dom";
+
 import styled from "styled-components";
-import Usercontext from "../contexts/UserContext";
 import { HashtagIcon } from "../styledComponents/IconStyles";
+
+import Usercontext from "../contexts/UserContext";
 
 export default function TrendingBar() {
   const { user, setUser } = useContext(Usercontext);
