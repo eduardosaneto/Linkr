@@ -1,10 +1,11 @@
 import axios from "axios";
 import { useContext, useEffect, useState,  } from "react";
 import { Link, useHistory } from "react-router-dom";
+
 import styled from "styled-components";
+import { HashtagIcon } from "../styledComponents/IconStyles";
+
 import Usercontext from "../contexts/UserContext";
-import ReactHashtag from "react-hashtag";
-import { FaHashtag } from "react-icons/fa";
 
 export default function TrendingBar() {
   const { user, setUser } = useContext(Usercontext);
@@ -19,8 +20,6 @@ export default function TrendingBar() {
   useEffect(() => trendingTopics(), [searchHashtags]);
 
   function trendingTopics() {
-    const params ={};
-
     const config = { headers: { Authorization: `Bearer ${token}` } };
     const request = axios.get(
       "https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/hashtags/trending",
@@ -59,28 +58,12 @@ export default function TrendingBar() {
           placeholder='type a hashtag'
           onChange={(e) => setSearchHashtags(e.target.value)}
          /></form>
-        <FaHashtagAlt className='hashtag-icon' />
+        <HashtagIcon />
       </div>
     </>
   );
 }
 
-const Hashtag = styled.span`
-  color: #fff;
-  font-size: 19px !important;
-  line-height: 23px;
-`;
-
-const FaHashtagAlt = styled(FaHashtag)`
-  color: #FFF;
-  font-size: 19px;
-  line-height: 23px;
-  cursor: pointer;
-  margin-left: 10px;
-  position: absolute;
-  top: 8px;
-  left: 17px;
-`;
 const Input = styled.input`
   ::placeholder{
     color: #FFF;

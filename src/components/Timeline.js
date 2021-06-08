@@ -1,17 +1,18 @@
 import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
 import { useState, useContext, useEffect } from 'react';
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
-import Navbar from "./Navbar";
-import Post from "./Post";
 import { useLocation } from "react-router-dom";
-import UserContext from "../contexts/UserContext";
+import useInterval from 'react-useinterval';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal, Modal } from "../styledComponents/Content";
 import loading from '../img/loading.svg'
+
+import Navbar from "./Navbar";
+import Post from "./Post/Post";
 import TrendingBar from './TrendingBar';
 import CreatePosts from './CreatePosts';
-import useInterval from 'react-useinterval';
-import { FaDoorClosed, FaHourglassEnd } from 'react-icons/fa';
-import { ContainerModal, Modal } from '../styledComponents/Content'
+
+import UserContext from "../contexts/UserContext";
 
 export default function Timeline(){
     const {user, setUser, followingUsers, setFollowingUsers} = useContext(UserContext);
@@ -27,8 +28,6 @@ export default function Timeline(){
 
     const [modal, setModal] = useState(false);
     const [link, setLink ] = useState("");
-
-    console.log(posts);
 
     useEffect(() => checkFollowingUsers(),[])
 
@@ -50,6 +49,7 @@ export default function Timeline(){
     }
 
     function loadingPosts() {
+        setPosts([])
         setIsLoading(true)
         const request = axios.get('https://mock-api.bootcamp.respondeai.com.br/api/v2/linkr/following/posts', config)
 
@@ -131,16 +131,16 @@ export default function Timeline(){
                 </PageTitle>
                 <div>
                     <Posts>
-                        <CreatePosts loadingPosts = {loadingPosts}/>
+                        <CreatePosts loadingPosts = {updatePosts}/>
                         { isLoading ? <Load><div><img src={loading} alt="Loading"/>Loading...</div></Load>  : ""}
                         { isError ? <Load>Houve uma falha ao obter os posts, <br/> por favor atualize a página</Load> : ""}
                         { posts === undefined || (posts.length === 0 && afterLoading === null) || posts.length !== 0 ? "" : afterLoading}
-                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
+                        <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading} alt="Loading"/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                                 <Post 
-                                    key={post.id} id={post.id} post={post} 
+                                    key={post.repostId || post.id} id={post.id} post={post} 
                                     postUser={post.user} likes={post.likes}
-                                    reloadingPosts={updatePosts}
+                                    reloadingPosts={loadingPosts}
                                     location={location} OpenModal={OpenModal}
                                 />
                             )}

@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Container, Posts, Trending, Load, PageTitle, ContainerModal, Modal } from "../styledComponents/Content";
 import InfiniteScroll from 'react-infinite-scroller';
-import styled from "styled-components";
-import Navbar from "./Navbar";
-import Usercontext from "../contexts/UserContext";
-import TrendingBar from "./TrendingBar";
-import Post from "./Post";
 import useInterval from 'react-useinterval';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal, Modal } from "../styledComponents/Content";
+import styled from "styled-components";
 import loading from '../img/loading.svg'
+
+import Navbar from "./Navbar";
+import TrendingBar from "./TrendingBar";
+import Post from "./Post/Post";
+
+import Usercontext from "../contexts/UserContext";
 
 export default function User() {
     const { user, setUser } = useContext(Usercontext);
@@ -202,7 +205,7 @@ export default function User() {
                         <InfiniteScroll pageStart={0} loader={<Load><div><img src={loading}/>Loading more posts...</div></Load> } hasMore={hasMorePosts} loadMore={fetchPosts}>
                         {userPosts.map((post) => (
                             <Post
-                                key={post.id}
+                                key={post.repostId || post.id}
                                 id={post.id}
                                 post={post}
                                 postUser={post.user}

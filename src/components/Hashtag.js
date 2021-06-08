@@ -1,14 +1,15 @@
+import axios from 'axios'
 import { useState, useContext, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import axios from 'axios'
 import InfiniteScroll from 'react-infinite-scroller';
-import { Container, Posts, Trending, Load, PageTitle } from "../styledComponents/Content";
-import Navbar from './Navbar';
-import Post from './Post';
-import loading from '../img/loading.svg'
-import TrendingBar from "./TrendingBar";
 import useInterval from 'react-useinterval';
-import { ContainerModal,Modal } from '../styledComponents/Content';
+
+import { Container, Posts, Trending, Load, PageTitle, ContainerModal,Modal } from "../styledComponents/Content";
+import loading from '../img/loading.svg'
+
+import Navbar from './Navbar';
+import Post from "./Post/Post"
+import TrendingBar from "./TrendingBar";
 
 import UserContext from "../contexts/UserContext";
 
@@ -116,7 +117,7 @@ export default function Hashtag(){
                         <InfiniteScroll pageStart={0} loader={loadingMore} hasMore={hasMorePosts} loadMore={fetchPosts}>
                             {posts.map( post => 
                             <Post 
-                                key={post.id} id={post.id} post={post} 
+                                key={post.repostId || post.id} id={post.id} post={post} 
                                 postUser={post.user} likes={post.likes}
                                 loadingHashtag={loadingHashtag}
                                 location={location} OpenModal={OpenModal}
