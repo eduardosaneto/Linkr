@@ -1,70 +1,74 @@
-# Getting Started with Create React App
+# linkr:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Your link sharing social network.
 
-## Available Scripts
+## About 🔎
 
-In the project directory, you can run:
+This web aplication ia a social network to share links in you find interesting and interact with other people..
 
-### `npm start`
+## Feel free to try it:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+[linkr.vercel.app/](https://grupo-7-linkr.vercel.app/)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Implemented features :heavy_check_mark:
 
-### `npm test`
+- [x] Register, Login and Logout
+- [x] Create a post with a link to share
+- [x] Edit or delete a post you've made
+- [x] Choose whether to share your location in your post or not
+- [x] Like/Dislike a post
+- [x] Comment on a post
+- [x] Repost other users's post
+- [x] Follow/unfollow a user
+- [x] Show following users post in timeline
+- [x] Show your posts and user's posts on the respective pages
+- [x] Show posts that I like in MyIlkes page
+- [x] Progressive post loading in every page with posts
+- [x] Search for user in a searchbox
+- [x] Text a hashtag in your post
+- [x] Show worldwide trending hashtag
+- [x] Go to the hashtag page and check every post regarding it
+- [x] Responsive design
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Future improvements 🔮
 
-### `npm run build`
+- [ ] Option to set more infos and characteristics to your profile
+- [ ] Show user infos on user's page
+- [ ] Edit logged user info
+- [ ] Webchat to talk to other people in private
+- [ ] Suggestions of people to follow
+- [ ] Option to block users if you want to
+- [ ] Edit or delete a comment in a post
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tech tools 🔧
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+The following tools and frameworks were used in the construction of the project:<br>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<p>
+  <img style='margin: 5px;' src='https://img.shields.io/badge/styled-components%20-%2320232a.svg?&style=for-the-badge&color=b8679e&logo=styled-components&logoColor=%3a3a3a'>
+  <img style='margin: 5px;' src='https://img.shields.io/badge/axios%20-%2320232a.svg?&style=for-the-badge&color=informational'>
+  <img style='margin: 5px;' src="https://img.shields.io/badge/react-app%20-%2320232a.svg?&style=for-the-badge&color=60ddf9&logo=react&logoColor=%2361DAFB"/>
+  <img style='margin: 5px;' src="https://img.shields.io/badge/react_route%20-%2320232a.svg?&style=for-the-badge&logo=react&logoColor=%2361DAFB"/>
+</p>
 
-### `npm run eject`
+## How to run ⚙️
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+1. Clone this repository
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm i
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+2. Run the front-end with
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+npm start
+```
 
-## Learn More
+3. You can optionally build the project running
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm run build
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+4. Finally access http://localhost:3000 on your favorite browser
